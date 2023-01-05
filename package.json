@@ -1,0 +1,27 @@
+{
+  "name": "meetup",
+  "version": "1.0.0",
+  "description": "## Database Schema Design",
+  "scripts": {
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dmytro-Yakovenko/MeetUp.git"
+  },
+  "keywords": [],
+  "author": "Dmytro Yakovenko",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "dotenv-cli": "^6.0.0",
+    "express": "^4.18.2",
+    "express-async-errors": "^3.1.1",
+    "sequelize": "^6.28.0",
+    "sequelize-cli": "^6.5.2",
+    "sqlite3": "^5.1.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
