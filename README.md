@@ -2,7 +2,7 @@
 
 ## Database Schema Design
 
-![](<https://res.cloudinary.com/dr1ekjmf4/image/upload/v1673583105/meetUp2_ldyacc.png>)
+![](<https://res.cloudinary.com/dr1ekjmf4/image/upload/v1673674635/meet_up_2_xmssah.png>)
 
 
 
