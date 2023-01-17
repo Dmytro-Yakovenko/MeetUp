@@ -14,19 +14,19 @@ const { handleValidationErrors } = require('../../utils/validation');
 // ...
 
 // Sign up
-router.post(
-    '/',
-    async (req, res) => {
-      const { email, password, username } = req.body;
-      const user = await User.signup({ email, username, password });
+// router.post(
+//     '/',
+//     async (req, res) => {
+//       const { email, password, username,firstName, lastName } = req.body;
+//       const user = await User.signup({ email, username, password, firstName, lastName });
+// 
+//       await setTokenCookie(res, user);
   
-      await setTokenCookie(res, user);
-  
-      return res.json({
-        user
-      });
-    }
-  );
+//       return res.json({
+//         user
+//       });
+//     }
+//   );
 
 
   
@@ -53,6 +53,10 @@ const validateSignup = [
       .exists({ checkFalsy: true })
       .isLength({ min: 6 })
       .withMessage('Password must be 6 characters or more.'),
+      check('firstName')
+      .exists({ checkFalsy: true }),
+      check('lastName')
+      .exists({ checkFalsy: true }),
     handleValidationErrors
   ];
 
@@ -66,8 +70,10 @@ router.post(
     '/',
     validateSignup,
     async (req, res) => {
-      const { email, password, username } = req.body;
-      const user = await User.signup({ email, username, password });
+     
+      const { email, password, username, firstName, lastName } = req.body;
+
+      const user = await User.signup({ email, username, password, firstName, lastName  });
   
       await setTokenCookie(res, user);
   
