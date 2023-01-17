@@ -1,0 +1,25 @@
+{
+  "name": "meetup",
+  "version": "1.0.0",
+  "description": "<<<<<<< HEAD # `MeetUp` ======= MeetUp Database Schema Design >>>>>>> f25cb596d688e1a0b16d10b4195a51e3f53b5128",
+  "main": "index.js",
+  "scripts": {
+    "install": "npm --prefix backend install backend",
+    "dev:backend": "npm install --prefix backend start",
+    "sequelize": "npm run --prefix backend sequelize",
+    "sequelize-cli": "npm run --prefix backend sequelize-cli",
+    "start": "npm start --prefix backend",
+    "build": "npm run --prefix backend build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dmytro-Yakovenko/MeetUp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dmytro-Yakovenko/MeetUp/issues"
+  },
+  "homepage": "https://github.com/Dmytro-Yakovenko/MeetUp#readme"
+}
