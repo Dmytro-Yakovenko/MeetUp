@@ -1,5 +1,11 @@
 'use strict';
 
+let options = {};
+options.tableName= "users"
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;  // define your schema in options object
+}
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
@@ -10,8 +16,8 @@ module.exports = {
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
 
-    await queryInterface.addColumn('Users', 'firstName', { type: Sequelize.STRING, allowNull:false });
-    await queryInterface.addColumn('Users', 'lastName', { type: Sequelize.STRING, allowNull:false });
+    await queryInterface.addColumn(options, 'firstName', { type: Sequelize.STRING, allowNull:false });
+    await queryInterface.addColumn(options, 'lastName', { type: Sequelize.STRING, allowNull:false });
   },
 
   async down (queryInterface, Sequelize) {
@@ -21,8 +27,8 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-    await queryInterface.removeColumn('Users', 'firstName', { /* query options */ });
+    await queryInterface.removeColumn(options, 'firstName', { /* query options */ });
 
-    await queryInterface.removeColumn('Users', 'lastName', { /* query options */ });
+    await queryInterface.removeColumn(options, 'lastName', { /* query options */ });
   }
 };
