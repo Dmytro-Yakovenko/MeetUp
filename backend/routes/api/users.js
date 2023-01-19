@@ -83,5 +83,39 @@ router.post(
     }
   );
   
+
+
+  // Get current User 
+
+  router.get("/:id", async (req, res, next)=>{
+    try{
+      const user = await User.scope("currentUser").findByPk(req.params.id)
+      console.log(user)
+      if(!user){
+        next({
+          status: 404,
+          message: 'Could not find user',
+          details: `User ${req.params.id} not found`,
+      });
+      return;
+      }
+      const csrfToken = req.csrfToken();
+      res.cookie("XSRF-TOKEN", csrfToken);
+      return res.json({
+        user,
+        'XSRF-Token': csrfToken
+      })
+    }catch(err){
+next({
+ 
+    status: 404,
+    message: `Could not find user ${req.params.id}`,
+    
+  });
+
+    }
+  return
+  
+  })
   
 module.exports = router;
