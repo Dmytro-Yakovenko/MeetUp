@@ -13,7 +13,14 @@ module.exports = {
         type: Sequelize.STRING
       },
       organizerId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+     
+          references: {
+              model: 'Users',
+              key: 'id',
+          },
+          onDelete: 'cascade'
+      
       },
       about: {
         type: Sequelize.STRING
@@ -33,9 +40,9 @@ module.exports = {
       numMembers: {
         type: Sequelize.INTEGER
       },
-      // previewImage: {
-      //   type: Sequelize.STRING
-      // },
+        previewImage: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
