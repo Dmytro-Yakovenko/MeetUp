@@ -25,7 +25,12 @@ module.exports = (sequelize, DataTypes) => {
     url: {
       type:DataTypes.STRING,
       allowNull:false
-    }
+    },
+    allGroupId:{
+      type: DataTypes.INTEGER,
+      allowNull:false
+    },
+
   }, {
     sequelize,
     modelName: 'GroupImages',
