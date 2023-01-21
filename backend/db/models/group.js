@@ -83,7 +83,29 @@ module.exports = (sequelize, DataTypes) => {
             'previewImage'
         ]
       }
-    }
+    },
+    scopes:{
+      withoutPreview:{
+        attributes:{
+          exclude:["previewImage"]
+        }
+      },
+     
+      groupWithImages(allGroupsId){
+        const {GroupImages} = require("../models")
+              return {
+                  where: { 
+                      allGroupsId
+                  },
+                  include: [ 
+                      { model: GroupImages } 
+                  ]
+              }
+
+          }
+      }
+       
+    
   });
   return Group;
 };

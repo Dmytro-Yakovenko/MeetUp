@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.STRING,
       allowNull:false
     },
-    allGroupId:{
+    allGroupsId:{
       type: DataTypes.INTEGER,
       allowNull:false
     },

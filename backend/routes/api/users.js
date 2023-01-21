@@ -80,6 +80,20 @@ router.post(
       });
     }
   );
+
+//Get all users
+router.get("/", async(req, res, next)=>{
+  console.log()
+  try{
+const users =await User.findAll();
+res.json({
+  users
+})
+  }catch{
+
+  }
+})
+
   
 
 
@@ -115,5 +129,12 @@ next({
   return
   
   })
-  
+  // fetch('/api/groups/auth', {
+  //   method: "GET",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //     "XSRF-TOKEN": `gUPFDtfC-1LmvPj6y7aAezkYKs75t8SmgJGg`
+  //   },
+    
+  // }).then(res => res.json()).then(data => console.log(data));
 module.exports = router;
