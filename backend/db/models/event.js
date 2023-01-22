@@ -11,6 +11,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Event.hasMany(models.EventImages, {
+        foreignKey:'eventId',
+        onDelete:'Cascade',
+        hooks:true
+      })
+
+
       Event.belongsTo(models.Location,{
         foreignKey:'locationId'
       })
