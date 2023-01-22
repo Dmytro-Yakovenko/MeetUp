@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Event.belongsTo(models.Location,{
+        foreignKey:'locationId'
+      })
       
         // Your code here
         Event.belongsTo(models.Group,{

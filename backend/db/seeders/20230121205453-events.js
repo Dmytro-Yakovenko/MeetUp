@@ -71,8 +71,9 @@ module.exports = {
      * Add commands to revert seed here.
      *
      * Example:
+     *  await queryInterface.bulkDelete('GroupImages', {[Op.or]:groups});
      * await queryInterface.bulkDelete('People', null, {});
      */
-    await queryInterface.bulkDelete('Events', null, {});
+    await queryInterface.bulkDelete('Events', {[Op.or]:events});
   }
 };
