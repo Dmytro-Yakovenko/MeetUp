@@ -1,21 +1,10 @@
-<<<<<<< HEAD
 # `MeetUp`
-=======
-MeetUp
-Database Schema Design
->>>>>>> f25cb596d688e1a0b16d10b4195a51e3f53b5128
 
 
-<<<<<<< HEAD
-![](<https://res.cloudinary.com/dr1ekjmf4/image/upload/v1673674635/meet_up_2_xmssah.png>)
-
-
-=======
 API Documentation
 USER AUTHENTICATION/AUTHORIZATION
 All endpoints that require authentication
 All endpoints that require a current user to be logged in.
->>>>>>> f25cb596d688e1a0b16d10b4195a51e3f53b5128
 
 Request: endpoints that require authentication
 Error Response: Require authentication
@@ -60,15 +49,11 @@ Successful Response when there is a logged in user
 
 Status Code: 200
 
-<<<<<<< HEAD
 * Require Authentication: true
 * Request
   * Method: GET
   * URL: /api/auth
   * Body: none
-=======
-Headers:
->>>>>>> f25cb596d688e1a0b16d10b4195a51e3f53b5128
 
 Content-Type: application/json
 Body:
@@ -97,7 +82,6 @@ Body:
 Log In a User
 Logs in a current user with valid credentials and returns the current user's information.
 
-<<<<<<< HEAD
 * Require Authentication: false
 * Request
   * Method: POST
@@ -105,9 +89,6 @@ Logs in a current user with valid credentials and returns the current user's inf
   * Headers:
     * Content-Type: application/json
   * Body:
-=======
-Require Authentication: false
->>>>>>> f25cb596d688e1a0b16d10b4195a51e3f53b5128
 
 Request
 
@@ -133,7 +114,6 @@ Headers:
 Content-Type: application/json
 Body:
 
-<<<<<<< HEAD
 * Require Authentication: false
 * Request
   * Method: POST
@@ -141,19 +121,6 @@ Body:
   * Headers:
     * Content-Type: application/json
   * Body:
-=======
-{
-  "user": {
-    "id": 1,
-    "firstName": "John",
-    "lastName": "Smith",
-    "email": "john.smith@gmail.com",
-    "username": "JohnSmith",
-    "token": ""
-  }
-}
-Error Response: Invalid credentials
->>>>>>> f25cb596d688e1a0b16d10b4195a51e3f53b5128
 
 Status Code: 401
 
@@ -190,15 +157,11 @@ Require Authentication: false
 
 Request
 
-<<<<<<< HEAD
 * Require Authentication: false
 * Request
   * Method: GET
   * URL: /api/groups
   * Body: none
-=======
-Method: POST
->>>>>>> f25cb596d688e1a0b16d10b4195a51e3f53b5128
 
 URL: /api/users/
 
@@ -215,15 +178,11 @@ Body:
 }
 Successful Response
 
-<<<<<<< HEAD
 * Require Authentication: true
 * Request
   * Method: GET
   * URL: /api/groups/auth
   * Body: none
-=======
-Status Code: 200
->>>>>>> f25cb596d688e1a0b16d10b4195a51e3f53b5128
 
 Headers:
 
@@ -282,18 +241,11 @@ Require Authentication: false
 
 Request
 
-<<<<<<< HEAD
 * Require Authentication: false
 * Request
   * Method: GET
   * URL: URL: /api/groups/:groupId
   * Body: none
-=======
-Method: GET
-URL: /api/groups
-Body: none
-Successful Response
->>>>>>> f25cb596d688e1a0b16d10b4195a51e3f53b5128
 
 Status Code: 200
 
@@ -332,7 +284,6 @@ URL: /api/groups/auth
 Body: none
 Successful Response
 
-<<<<<<< HEAD
 * Require Authentication: true
 * Request
   * Method: POST
@@ -340,9 +291,6 @@ Successful Response
   * Headers:
     * Content-Type: application/json
   * Body:
-=======
-Status Code: 200
->>>>>>> f25cb596d688e1a0b16d10b4195a51e3f53b5128
 
 Headers:
 
@@ -383,7 +331,6 @@ Status Code: 200
 
 Headers:
 
-<<<<<<< HEAD
 * Require Authentication: true
 * Require proper authorization: Current User must be the organizer for the group
 * Request
@@ -392,10 +339,6 @@ Headers:
   * Headers:
     * Content-Type: application/json
   * Body:
-=======
-Content-Type: application/json
-Body:
->>>>>>> f25cb596d688e1a0b16d10b4195a51e3f53b5128
 
 {
   "id": 1,
@@ -454,7 +397,6 @@ Body:
 Create a Group
 Creates and returns a new group.
 
-<<<<<<< HEAD
 * Require Authentication: true
 * Require proper authorization: Group must belong to the current user
 * Request
@@ -463,73 +405,6 @@ Creates and returns a new group.
   * Headers:
     * Content-Type: application/json
   * Body:
-=======
-Require Authentication: true
-
-Request
-
-Method: POST
-
-URL: /api/groups/
-
-Headers:
-
-Content-Type: application/json
-Body:
-
-{
-  "name": "Evening Tennis on the Water",
-  "about": "Enjoy rounds of tennis with a tight-nit group of people on the water facing the Brooklyn Bridge. Singles or doubles.",
-  "type": "In person",
-  "private": true,
-  "city": "New York",
-  "state": "NY",
-}
-Successful Response
-
-Status Code: 201
-
-Headers:
-
-Content-Type: application/json
-Body:
-
-{
-  "id": 1,
-  "organizerId": 1,
-  "name": "Evening Tennis on the Water",
-  "about": "Enjoy rounds of tennis with a tight-nit group of people on the water facing the Brooklyn Bridge. Singles or doubles.",
-  "type": "In person",
-  "private": true,
-  "city": "New York",
-  "state": "NY",
-  "createdAt": "2021-11-19 20:39:36",
-  "updatedAt": "2021-11-19 20:39:36"
-}
-Error Response: Body validation error
-
-Status Code: 400
-
-Headers:
-
-Content-Type: application/json
-Body:
-
-{
-  "message": "Validation Error",
-  "statusCode": 400,
-  "errors": [
-    "Name must be 60 characters or less",
-    "About must be 50 characters or more",
-    "Type must be 'Online' or 'In person'",
-    "Private must be a boolean",
-    "City is required",
-    "State is required",
-  ]
-}
-Add an Image to a Group based on the Group's id
-Create and return a new image for a group specified by id.
->>>>>>> f25cb596d688e1a0b16d10b4195a51e3f53b5128
 
 Require Authentication: true
 
@@ -554,16 +429,12 @@ Successful Response
 
 Status Code: 200
 
-<<<<<<< HEAD
 * Require Authentication: true
 * Require proper authorization: Group must belong to the current user
 * Request
   * Method: DELETE
   * URL: /api/groups/:groupId
   * Body: none
-=======
-Headers:
->>>>>>> f25cb596d688e1a0b16d10b4195a51e3f53b5128
 
 Content-Type: application/json
 Body:
@@ -591,7 +462,6 @@ Updates and returns an existing group.
 
 Require Authentication: true
 
-<<<<<<< HEAD
 * Require Authentication: true
 * Require Authentication: Current User must be the organizer of the group or a member of
   the group with a status of "co-host"
@@ -624,9 +494,6 @@ Require Authentication: true
   }
   
   ```
-=======
-Require proper authorization: Group must belong to the current user
->>>>>>> f25cb596d688e1a0b16d10b4195a51e3f53b5128
 
 Request
 
@@ -636,7 +503,6 @@ URL: /api/groups/groupId
 
 Headers:
 
-<<<<<<< HEAD
 * Require Authentication: true
 * Require Authentication: Current User must be the organizer of the group or a member of
   the group with a status of "co-host"
@@ -656,10 +522,6 @@ Headers:
     "lng": -122.4730327,
   }
   ```
-=======
-Content-Type: application/json
-Body:
->>>>>>> f25cb596d688e1a0b16d10b4195a51e3f53b5128
 
 {
   "name": "Evening Tennis on the Water",
@@ -699,7 +561,6 @@ Headers:
 Content-Type: application/json
 Body:
 
-<<<<<<< HEAD
 * Require Authentication: true
 * Require Authentication: Current User must be the organizer of the group or a member of
   the group with a status of "co-host"
@@ -719,21 +580,6 @@ Body:
     "lng": -122.4730327,
   }
   ```
-=======
-{
-  "message": "Validation Error",
-  "statusCode": 400,
-  "errors": [
-    "Name must be 60 characters or less",
-    "About must be 50 characters or more",
-    "Type must be 'Online' or 'In person'",
-    "Private must be a boolean",
-    "City is required",
-    "State is required",
-  ]
-}
-Error response: Couldn't find a Group with the specified id
->>>>>>> f25cb596d688e1a0b16d10b4195a51e3f53b5128
 
 Status Code: 404
 
@@ -762,15 +608,11 @@ Successful Response
 
 Status Code: 200
 
-<<<<<<< HEAD
 * Require Authentication: false
 * Request
   * Method: GET
   * URL:  /api/events/
   * Body: none
-=======
-Headers:
->>>>>>> f25cb596d688e1a0b16d10b4195a51e3f53b5128
 
 Content-Type: application/json
 Body:
@@ -785,16 +627,11 @@ Status Code: 404
 
 Headers:
 
-<<<<<<< HEAD
 * Require Authentication: false
 * Request
   * Method: GET
   * URL: /api/groups/:groupId/events
   * Body: none
-=======
-Content-Type: application/json
-Body:
->>>>>>> f25cb596d688e1a0b16d10b4195a51e3f53b5128
 
 {
   "message": "Group couldn't be found",
@@ -839,15 +676,11 @@ Error response: Couldn't find a Group with the specified id
 
 Status Code: 404
 
-<<<<<<< HEAD
 * Require Authentication: false
 * Request
   * Method: GET
   * URL: /api/events/:eventId
   * Body: none
-=======
-Headers:
->>>>>>> f25cb596d688e1a0b16d10b4195a51e3f53b5128
 
 Content-Type: application/json
 Body:
@@ -1074,7 +907,6 @@ Status Code: 200
 
 Headers:
 
-<<<<<<< HEAD
 * Require Authentication: true
 * Require Authorization: Current User must be the organizer of the group or a member of
   the group with a status of "co-host"
@@ -1086,13 +918,6 @@ Headers:
   * Body:
 
     ```json
-=======
-Content-Type: application/json
-Body:
-
-{
-  "Events": [
->>>>>>> f25cb596d688e1a0b16d10b4195a51e3f53b5128
     {
       "id": 1,
       "groupId": 1,
@@ -1164,7 +989,6 @@ Status Code: 200
 
 Headers:
 
-<<<<<<< HEAD
 * Require Authentication: true
 * Require proper authorization: Current User must be an attendee of the event
 * Request
@@ -1173,10 +997,6 @@ Headers:
   * Headers:
     * Content-Type: application/json
   * Body:
-=======
-Content-Type: application/json
-Body:
->>>>>>> f25cb596d688e1a0b16d10b4195a51e3f53b5128
 
 {
   "id": 1,
@@ -1368,7 +1188,6 @@ Body:
 Edit an Event specified by its id
 Edit and returns an event specified by its id
 
-<<<<<<< HEAD
 * Require Authentication: true
 * Require Authorization: Current User must be the organizer of the group or a member of
   the group with a status of "co-host"
@@ -1391,9 +1210,6 @@ Edit and returns an event specified by its id
       "endDate": "2021-11-19 22:00:00",
     }
     ```
-=======
-Require Authentication: true
->>>>>>> f25cb596d688e1a0b16d10b4195a51e3f53b5128
 
 Require Authorization: Current User must be the organizer of the group or a member of the group with a status of "co-host"
 
@@ -1491,7 +1307,6 @@ Body:
 Delete an Event specified by its id
 Delete an event specified by its id
 
-<<<<<<< HEAD
 * Require Authentication: true
 * Require Authorization: Current User must be the organizer of the group or a member of
   the group with a status of "co-host"
@@ -1511,9 +1326,6 @@ Delete an event specified by its id
       "message": "Successfully deleted"
     }
     ```
-=======
-Require Authentication: true
->>>>>>> f25cb596d688e1a0b16d10b4195a51e3f53b5128
 
 Require Authorization: Current User must be the organizer of the group or a member of the group with a status of "co-host"
 
@@ -1551,15 +1363,11 @@ MEMBERSHIPS
 Get all Members of a Group specified by its id
 Returns the members of a group specified by its id.
 
-<<<<<<< HEAD
 * Require Authentication: false
 * Request
   * Method: GET
   * URL: /api/groups/:groudId/members
   * Body: none
-=======
-Require Authentication: false
->>>>>>> f25cb596d688e1a0b16d10b4195a51e3f53b5128
 
 Request
 
@@ -1648,7 +1456,6 @@ Body:
 Request a Membership for a Group based on the Group's id
 Request a new membership for a group specified by id.
 
-<<<<<<< HEAD
 * Require Authentication: true
 * Request
   * Method:  GET
@@ -1670,9 +1477,6 @@ Request a new membership for a group specified by id.
       "status": "pending"
     }
     ```
-=======
-Require Authentication: true
->>>>>>> f25cb596d688e1a0b16d10b4195a51e3f53b5128
 
 Request
 
@@ -1737,7 +1541,6 @@ Body:
 Change the status of a membership for a group specified by id
 Change the status of a membership for a group specified by id.
 
-<<<<<<< HEAD
 * Require Authentication: true
 * Require proper authorization:
   * To change the status from "pending" to "member":
@@ -1758,9 +1561,6 @@ Change the status of a membership for a group specified by id.
       "status": "member"
     }
     ```
-=======
-Require Authentication: true
->>>>>>> f25cb596d688e1a0b16d10b4195a51e3f53b5128
 
 Require proper authorization:
 
@@ -1859,7 +1659,6 @@ Body:
 Delete membership to a group specified by id
 Delete a membership to a group specified by id.
 
-<<<<<<< HEAD
 * Require Authentication: true
 * Require proper authorization: Current User must be the host of the group, or
   the user whose membership is being deleted
@@ -1875,9 +1674,6 @@ Delete a membership to a group specified by id.
       "memberId": 1
     }
     ```
-=======
-Require Authentication: true
->>>>>>> f25cb596d688e1a0b16d10b4195a51e3f53b5128
 
 Require proper authorization: Current User must be the host of the group, or the user whose membership is being deleted
 
@@ -1953,7 +1749,6 @@ ATTENDEES
 Get all Attendees of an Event specified by its id
 Returns the attendees of an event specified by its id.
 
-<<<<<<< HEAD
 * Require Authentication: false
 * Request
   * Method: GET
@@ -1998,20 +1793,6 @@ Returns the attendees of an event specified by its id.
       ]
     }
     ```
-=======
-Require Authentication: false
-
-Request
-
-Method: GET
-URL: /api/events/:eventId/attendees
-Body: none
-Successful Response: If you ARE the organizer of the group or a member of the group with a status of "co-host". Shows all attendees including those with a status of "pending".
-
-Status Code: 200
-
-Headers:
->>>>>>> f25cb596d688e1a0b16d10b4195a51e3f53b5128
 
 Content-Type: application/json
 Body:
@@ -2089,7 +1870,6 @@ Body:
 Request to Attend an Event based on the Event's id
 Request attendance for an event specified by id.
 
-<<<<<<< HEAD
 * Require Authentication: true
 * Require Authorization: Current User must be a member of the group
 * Request
@@ -2112,9 +1892,6 @@ Request attendance for an event specified by id.
       "status": "pending"
     }
     ```
-=======
-Require Authentication: true
->>>>>>> f25cb596d688e1a0b16d10b4195a51e3f53b5128
 
 Require Authorization: Current User must be a member of the group
 
@@ -2181,7 +1958,6 @@ Body:
 Change the status of an attendance for an event specified by id
 Change the status of an attendance for an event specified by id.
 
-<<<<<<< HEAD
 * Require Authentication: true
 * Require proper authorization: Current User must already be the organizer or
   have a membership to the group with the status of "co-host"
@@ -2198,9 +1974,6 @@ Change the status of an attendance for an event specified by id.
       "status": "member"
     }
     ```
-=======
-Require Authentication: true
->>>>>>> f25cb596d688e1a0b16d10b4195a51e3f53b5128
 
 Require proper authorization: Current User must already be the organizer or have a membership to the group with the status of "co-host"
 
@@ -2276,7 +2049,6 @@ Body:
 Delete attendance to an event specified by id
 Delete an attendance to an event specified by id.
 
-<<<<<<< HEAD
 * Require Authentication: true
 * Require proper authorization: Current User must be the host of the group, or
   the user whose attendance is being deleted
@@ -2292,9 +2064,6 @@ Delete an attendance to an event specified by id.
       "userId": 1
     }
     ```
-=======
-Require Authentication: true
->>>>>>> f25cb596d688e1a0b16d10b4195a51e3f53b5128
 
 Require proper authorization: Current User must be the host of the group, or the user whose attendance is being deleted
 
@@ -2367,7 +2136,6 @@ IMAGES
 Delete an Image for a Group
 Delete an existing image for a Group.
 
-<<<<<<< HEAD
 * Require Authentication: true
 * Require proper authorization: Current user must be the organizer or "co-host"
   of the Group
@@ -2388,9 +2156,6 @@ Delete an existing image for a Group.
       "statusCode": 200
     }
     ```
-=======
-Require Authentication: true
->>>>>>> f25cb596d688e1a0b16d10b4195a51e3f53b5128
 
 Require proper authorization: Current user must be the organizer or "co-host" of the Group
 
@@ -2428,7 +2193,6 @@ Body:
 Delete an Image for an Event
 Delete an existing image for an Event.
 
-<<<<<<< HEAD
 * Require Authentication: true
 * Require proper authorization: Current user must be the organizer or "co-host"
   of the Group that the Event belongs to
@@ -2449,9 +2213,6 @@ Delete an existing image for an Event.
       "statusCode": 200
     }
     ```
-=======
-Require Authentication: true
->>>>>>> f25cb596d688e1a0b16d10b4195a51e3f53b5128
 
 Require proper authorization: Current user must be the organizer or "co-host" of the Group that the Event belongs to
 
@@ -2489,7 +2250,6 @@ Body:
 Add Query Filters to Get All Events
 Return events filtered by query parameters.
 
-<<<<<<< HEAD
 * Require Authentication: false
 * Request
   * Method: GET
@@ -2554,11 +2314,6 @@ Return events filtered by query parameters.
       ]
     }
     ```
-=======
-Require Authentication: false
-
-Request
->>>>>>> f25cb596d688e1a0b16d10b4195a51e3f53b5128
 
 Method: GET
 URL: /api/events
