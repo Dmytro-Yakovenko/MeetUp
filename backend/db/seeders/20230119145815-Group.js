@@ -9,8 +9,7 @@ const groups = [
   private:false,
   city:"San Francisco",
   state:"California",
-  numMembers:28,
-  previewImage:"https://res.cloudinary.com/dr1ekjmf4/image/upload/v1674141915/istockphoto-1398323118-2048x2048_jqlaxl.jpg"
+  
 
 },
 { name: "SF Gay Men's Poker Group",
@@ -20,8 +19,6 @@ type:"inPerson",
 private:false,
 city:"San Francisco",
 state:"California",
-numMembers:28,
-previewImage:"https://res.cloudinary.com/dr1ekjmf4/image/upload/v1674187985/mariya-georgieva-0O6Fv3Ff_XI-unsplash_alivz5.jpg"
 
 },
 

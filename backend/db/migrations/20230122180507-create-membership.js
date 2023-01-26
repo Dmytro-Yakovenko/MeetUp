@@ -10,7 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
      
-      allGroupsId: {
+      groupId: {
         type: Sequelize.INTEGER,
         allowNull:false,
         onDelete:"Cascade",

@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
           // Your code here
           GroupImages.belongsTo(models.Group,{
-            foreignKey:'allGroupsId'
+            foreignKey:'groupId'
           })
     }
   }
@@ -26,10 +26,14 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.STRING,
       allowNull:false
     },
-    allGroupsId:{
+    groupId:{
       type: DataTypes.INTEGER,
       allowNull:false
     },
+    preview:{
+      type: DataTypes.BOOLEAN,
+      defaultValue:false
+    }
 
   }, {
     sequelize,

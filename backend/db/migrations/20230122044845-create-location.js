@@ -24,6 +24,16 @@ module.exports = {
       longtitude: {
         type: Sequelize.FLOAT
       },
+      groupId:{
+        type: Sequelize.INTEGER,
+            references: {
+                model: 'Groups',
+                key: 'id',
+            },
+            onDelete: 'cascade'
+        
+      },
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -37,5 +47,6 @@ module.exports = {
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Locations');
+    
   }
 };

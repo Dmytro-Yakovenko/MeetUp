@@ -14,6 +14,11 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
 
+      Location.belongsTo(models.Group,{
+        foreignKey:'groupId'
+      })
+
+
       Location.hasOne(models.Event,{
         foreignKey:'locationId'
       })
@@ -38,6 +43,10 @@ module.exports = (sequelize, DataTypes) => {
     } ,
     longtitude:{
       type:DataTypes.FLOAT,
+      allowNull:false
+    } ,
+    groupId:{
+      type:DataTypes.INTEGER,
       allowNull:false
     } 
   }, {

@@ -3,37 +3,37 @@ const { Op } = require("sequelize")
 
 const membership = [
   {
-    allGroupsId: 2,
+    groupId: 2,
     userId: 1,
     status: true
   },
   {
-    allGroupsId: 2,
+    groupId: 2,
     userId: 2,
     status: true
   },
   {
-    allGroupsId: 2,
+    groupId: 2,
     userId: 3,
     status: true
   },
   {
-    allGroupsId: 1,
+    groupId: 1,
     userId: 4,
     status: true
   },
   {
-    allGroupsId: 1,
+    groupId: 1,
     userId: 5,
     status: true
   },
   {
-    allGroupsId: 1,
+    groupId: 1,
     userId: 6,
     status: true
   },
   {
-    allGroupsId: 1,
+    groupId: 1,
     userId: 2,
     status: true
   },

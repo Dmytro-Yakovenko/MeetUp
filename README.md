@@ -35,7 +35,7 @@ Body:
   "message": "Forbidden",
   "statusCode": 403
 }
-Get the Current User
+Get the Current User - task-1
 Returns the information about the current user that is logged in.
 
 Require Authentication: true
@@ -79,7 +79,7 @@ Body:
 {
   "user": null
 }
-Log In a User
+Log In a User  - task -2
 Logs in a current user with valid credentials and returns the current user's information.
 
 * Require Authentication: false
@@ -113,6 +113,7 @@ Headers:
 
 Content-Type: application/json
 Body:
+
 
 * Require Authentication: false
 * Request
@@ -150,7 +151,20 @@ Body:
     "Password is required"
   ]
 }
-Sign Up a User
+<!-- fetch('/api/session', {
+  method: 'POST',
+  headers: {
+    "Content-Type": "application/json",
+    "XSRF-TOKEN": `xDsF1Yuz-pA38pTd5BFbLDSQHv01z1-lhxDo`
+  },
+  body: JSON.stringify({ credential: 'fakeUser', password: 'password' })
+}).then(res => res.json()).then(data => console.log(data)); -->
+
+
+
+
+
+Sign Up a User - task -3
 Creates a new user, logs them in as the current user, and returns the current user's information.
 
 Require Authentication: false
@@ -176,6 +190,10 @@ Body:
   "email": "john.smith@gmail.com",
   "password": "secret password"
 }
+
+
+
+
 Successful Response
 
 * Require Authentication: true
@@ -233,8 +251,22 @@ Body:
     "Last Name is required"
   ]
 }
+<!-- fetch('/api/session', {
+  method: 'POST',
+  headers: {
+    "Content-Type": "application/json",
+    "XSRF-TOKEN": `6iVaNGvF-Az2Spb8SaUZRXFYQ65hI_Chi4-k`
+  },
+  body: JSON.stringify({ credential: 'Demo-lition', password: 'password' })
+}).then(res => res.json()).then(data => console.log(data)); -->
+
+
+
+
+
+
 GROUPS
-Get all Groups
+Get all Groups  - task - 4 / done
 Returns all the groups.
 
 Require Authentication: false
@@ -244,7 +276,7 @@ Request
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: URL: /api/groups/:groupId
+  * URL: URL: /api/groups/
   * Body: none
 
 Status Code: 200
@@ -272,7 +304,7 @@ Body:
     }
   ]
 }
-Get all Groups joined or organized by the Current User
+Get all Groups joined or organized by the Current User - task - 5 - done
 Returns all the groups.
 
 Require Authentication: true
@@ -315,7 +347,7 @@ Body:
     }
   ]
 }
-Get details of a Group from an id
+Get details of a Group from an id  - task -6 - done
 Returns the details of a group specified by its id.
 
 Require Authentication: false

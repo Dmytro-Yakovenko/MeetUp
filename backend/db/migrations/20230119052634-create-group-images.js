@@ -16,7 +16,7 @@ module.exports = {
       url: {
         type: Sequelize.STRING
       },
-      allGroupId:{
+      groupId:{
         type: Sequelize.INTEGER,
       
           references: {
@@ -25,6 +25,10 @@ module.exports = {
           },
           onDelete: 'cascade'
       
+      },
+      preview:{
+        type: Sequelize.BOOLEAN,
+        defaultValue:false
       },
       createdAt: {
         allowNull: false,
