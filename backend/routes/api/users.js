@@ -93,12 +93,11 @@ router.post(
         'XSRF-Token': csrfToken
       })
     }catch(err){
-next({
- 
-    status: 404,
-    message: `Could not find user ${req.params.id}`,
-    
+      next({        
+        status: 404,
+        message: `Could not find user ${req.params.id}`    
+      })
+    }
   });
-
 
 module.exports = router;
