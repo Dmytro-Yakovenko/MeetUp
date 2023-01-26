@@ -1,9 +1,11 @@
 'use strict';
+
+
 const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class GroupImages extends Model {
+  class Location extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,37 +13,45 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-          // Your code here
-          GroupImages.belongsTo(models.Group,{
 
-            foreignKey:'groupId'
+      Location.belongsTo(models.Group,{
+        foreignKey:'groupId'
+      })
 
-          })
+
+      Location.hasOne(models.Event,{
+        foreignKey:'locationId'
+      })
     }
   }
-  GroupImages.init({
-    title:{
+  Location.init({
+    city:{
       type:DataTypes.STRING,
       allowNull:false
     } ,
-    url: {
+    state:{
       type:DataTypes.STRING,
       allowNull:false
-
     },
-    groupId:{
-      type: DataTypes.INTEGER,
+    address:{
+      type:DataTypes.STRING,
       allowNull:false
-    },
-    preview:{
-      type: DataTypes.BOOLEAN,
-      defaultValue:false
-    }
-
-
+    } ,
+    latitude:{
+      type:DataTypes.FLOAT,
+      allowNull:false
+    } ,
+    longtitude:{
+      type:DataTypes.FLOAT,
+      allowNull:false
+    } ,
+    groupId:{
+      type:DataTypes.INTEGER,
+      allowNull:false
+    } 
   }, {
     sequelize,
-    modelName: 'GroupImages',
+    modelName: 'Location',
   });
-  return GroupImages;
+  return Location;
 };

@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class GroupImages extends Model {
+  class EventImages extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,37 +11,28 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-          // Your code here
-          GroupImages.belongsTo(models.Group,{
-
-            foreignKey:'groupId'
-
-          })
+      EventImages.belongsTo(models.Event,{
+        foreignKey:'eventId'
+      })
     }
   }
-  GroupImages.init({
+  EventImages.init({
+    eventId:{
+      type:DataTypes.INTEGER,
+      allowNull:false
+    } ,
     title:{
       type:DataTypes.STRING,
       allowNull:false
     } ,
-    url: {
+    url:{
       type:DataTypes.STRING,
       allowNull:false
 
-    },
-    groupId:{
-      type: DataTypes.INTEGER,
-      allowNull:false
-    },
-    preview:{
-      type: DataTypes.BOOLEAN,
-      defaultValue:false
-    }
-
-
+    } 
   }, {
     sequelize,
-    modelName: 'GroupImages',
+    modelName: 'EventImages',
   });
-  return GroupImages;
+  return EventImages;
 };

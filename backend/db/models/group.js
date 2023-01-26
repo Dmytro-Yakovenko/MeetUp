@@ -12,8 +12,29 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
 
+
+      Group.hasMany(models.Location, {
+        foreignKey:'groupId',
+        onDelete:'Cascade',
+        hooks:true
+      })
+
+      
+      Group.belongsToMany(models.User,{
+        through:models.Membership
+      })
+
       Group.hasMany(models.GroupImages, {
-        foreignKey:'allGroupsId',
+        foreignKey:'groupId',
+
+  
+        onDelete:'Cascade',
+        hooks:true
+      })
+
+
+      Group.hasMany(models.Event, {
+        foreignKey:'groupId',
         onDelete:'Cascade',
         hooks:true
       })
@@ -54,20 +75,48 @@ module.exports = (sequelize, DataTypes) => {
     state:{
       type: DataTypes.STRING,
       allowNull:false
-    } ,
-    numMembers:{
-      type: DataTypes.STRING,
-      allowNull:false
-    },
-    previewImage:{
-      type: DataTypes.STRING,
-      allowNull:false
     } 
+    
   }, {
     sequelize,
     modelName: 'Group',
 
+    defaultScope:{
+      attributes:{
+        include:[
+          'id', 
+          'organizerId',
+          'name', 
+          'about',
+          'type', 
+          'private',
+           'city', 
+           'state',
+            'createdAt', 
+            'updatedAt', 
+        
+            
+        ]
+      }
+    },
+    scopes:{
+     
+     
+      groupWithImages(groupId){
+        const {GroupImages} = require("../models")
+              return {
+                  where: { 
+                      groupId
+                  },
+                  include: [ 
+                      { model: GroupImages } 
+                  ]
+              }
 
+          }
+      }
+       
+    
   });
   return Group;
 };

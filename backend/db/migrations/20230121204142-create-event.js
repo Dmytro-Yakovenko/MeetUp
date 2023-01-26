@@ -2,42 +2,40 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Groups', {
+    await queryInterface.createTable('Events', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      groupId: {
+        type: Sequelize.INTEGER
+      },
+      description: {
+        type: Sequelize.STRING
+      },
+      capacity: {
+        type: Sequelize.INTEGER
+      },
       name: {
         type: Sequelize.STRING
       },
-      organizerId: {
-        type: Sequelize.INTEGER,
-     
-          references: {
-              model: 'Users',
-              key: 'id',
-          },
-          onDelete: 'cascade'
-      
+      dateOfStart: {
+        type: Sequelize.DATE
       },
-      about: {
-        type: Sequelize.STRING
+      dateOfEnd: {
+        type: Sequelize.DATE
       },
-      type: {
-        type: Sequelize.STRING
+      locationId: {
+        type: Sequelize.INTEGER
       },
-      private: {
-        type: Sequelize.BOOLEAN
+      attendees: {
+        type: Sequelize.INTEGER
       },
-      city: {
-        type: Sequelize.STRING
+      price: {
+        type: Sequelize.DOUBLE
       },
-      state: {
-        type: Sequelize.STRING
-      },
-     
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -51,6 +49,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Groups');
+    await queryInterface.dropTable('Events');
   }
 };
