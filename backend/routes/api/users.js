@@ -6,6 +6,28 @@ const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
 const { handleValidationErrors } = require('../../utils/validation');
 
+// ...
+
+// backend/routes/api/users.js
+// ...
+
+// Sign up
+// router.post(
+//     '/',
+//     async (req, res) => {
+//       const { email, password, username,firstName, lastName } = req.body;
+//       const user = await User.signup({ email, username, password, firstName, lastName });
+// 
+//       await setTokenCookie(res, user);
+  
+//       return res.json({
+//         user
+//       });
+//     }
+//   );
+
+
+
 const validateSignup = [
   check('email')
     .exists({ checkFalsy: true })
@@ -32,29 +54,51 @@ const validateSignup = [
 
 // Sign up - task 3
 router.post(
-  '/',
-  validateSignup,
-  async (req, res) => {
-    const { email, password, username, firstName, lastName } = req.body;
-    const user = await User.signup({ email, username, password, firstName, lastName });
-    await setTokenCookie(res, user);
-    return res.json({
-      user,
-    });
-  }
-);
+    '/',
+    validateSignup,
+    async (req, res) => {
+     
+      const { email, password, username, firstName, lastName } = req.body;
 
-//Get all users
-router.get("/", async (req, res, next) => {
-  console.log()
-  try {
-    const users = await User.findAll();
-    res.json({
-      users
-    })
-  } catch {
+      const user = await User.signup({ email, username, password, firstName, lastName  });
+  
+      await setTokenCookie(res, user);
+  
+      return res.json({
+        user,
+      });
+    }
+  );
+  
 
-  }
-})
+
+  // Get current User 
+
+  router.get("/:id", async (req, res, next)=>{
+    try{
+      const user = await User.scope("currentUser").findByPk(req.params.id)
+      console.log(user)
+      if(!user){
+        next({
+          status: 404,
+          message: 'Could not find user',
+          details: `User ${req.params.id} not found`,
+      });
+      return;
+      }
+      const csrfToken = req.csrfToken();
+      res.cookie("XSRF-TOKEN", csrfToken);
+      return res.json({
+        user,
+        'XSRF-Token': csrfToken
+      })
+    }catch(err){
+next({
+ 
+    status: 404,
+    message: `Could not find user ${req.params.id}`,
+    
+  });
+
 
 module.exports = router;
