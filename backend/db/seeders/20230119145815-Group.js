@@ -3,7 +3,7 @@ const {Op}=require("sequelize")
 
 const groups = [
   { name: "San Francisco Mother's Group",
-  organizerId:1,
+  organizerId:4,
   about:"In person gatherings for women raising the next generation. Open to single moms, married moms, mothers through adoption and fostering, from pregnancy through high school. Every mom is welcome here.",
   type:"inPerson",
   private:false,

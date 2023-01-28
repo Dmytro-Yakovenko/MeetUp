@@ -20,10 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   GroupImages.init({
-    title:{
-      type:DataTypes.STRING,
-      allowNull:false
-    } ,
+  
     url: {
       type:DataTypes.STRING,
       allowNull:false

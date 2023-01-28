@@ -12,17 +12,11 @@ module.exports = {
       eventId: {
         type: Sequelize.INTEGER,
         allowNull:false,
-        onDelete:"Cascade",
-        references:{
-            model:"Events"
-          }
+    
         },
       userId: {
         type: Sequelize.INTEGER,
-        onDelete:"Cascade",
-        references:{
-            model:"Users"
-          }
+      
       },
       createdAt: {
         allowNull: false,

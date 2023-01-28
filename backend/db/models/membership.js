@@ -25,7 +25,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull:false
     } ,
     status:{
-      type:DataTypes.BOOLEAN
+      type:DataTypes.STRING,
+      validate:{
+        isIn: [['organaizer', 'co-host', 'member','pending',"waitlist"]]
+      }
     } 
   }, {
     sequelize,

@@ -30,9 +30,7 @@ module.exports = {
       locationId: {
         type: Sequelize.INTEGER
       },
-      attendees: {
-        type: Sequelize.INTEGER
-      },
+     
       price: {
         type: Sequelize.DOUBLE
       },

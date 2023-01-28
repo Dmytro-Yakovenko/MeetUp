@@ -21,7 +21,7 @@ router.use('/groups', groupsRouter);
 router.use('/events', eventsRouter);
 router.use('/venues', venuesRouter);
 router.use('/auth', authRouter);
-router.use('/groupimages', groupimagesRouter);
+router.use('/group-images', groupimagesRouter);
 router.post('/test', (req, res) => {
   res.json({ requestBody: req.body });
 });
