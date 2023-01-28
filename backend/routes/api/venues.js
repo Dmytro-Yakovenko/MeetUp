@@ -23,32 +23,34 @@ const validateVenues=[
     .withMessage('Latitude is not valid'),
   check('lng')
     .exists({ checkFalsy: true })
-    .withMessage('Longitude is not valid'),
+    .withMessage('Longtitude is not valid'),
   handleValidationErrors
 ]
 
 //Edit a Venue specified by its id ??? edit validate venue - task 13
-router.post("/:id/venues", [requireAuth, restoreUser, validateVenues], async (req, res, next) => {
+router.put("/:id", [requireAuth, restoreUser, validateVenues], async (req, res, next) => {
+  console.log(req.params.id)
     try {
-      const group = await Group.findByPk(req.params.id)
+     
+      const venue = await Location.findByPk(req.params.id)
       const {
         address, 
         city, 
         state, 
         lat, 
         lng} =req.body
-      if(!group){
-        const err = new Error({
+      if(!venue){
+        next({
           message: "Group could not be found",
           status: 404
         })
       }
-      const venue = await Location.create({
+       await venue.update({
         address,
         city, 
         state, 
         latitude:lat, 
-        longitude:lng, 
+        longtitude:lng, 
         groupId:req.params.id})
       res.json({
         venue

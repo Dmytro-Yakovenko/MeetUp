@@ -19,7 +19,7 @@ const { handleValidationErrors } = require('../../utils/validation');
 //       const user = await User.signup({ email, username, password, firstName, lastName });
 // 
 //       await setTokenCookie(res, user);
-  
+
 //       return res.json({
 //         user
 //       });
@@ -54,35 +54,35 @@ const validateSignup = [
 
 // Sign up - task 3
 router.post(
-    '/',
-    validateSignup,
-    async (req, res) => {
-     
-      const { email, password, username, firstName, lastName } = req.body;
+  '/',
+  validateSignup,
+  async (req, res) => {
 
-      const user = await User.signup({ email, username, password, firstName, lastName  });
-  
-      await setTokenCookie(res, user);
-  
-      return res.json({
-        user,
-      });
-    }
-  );
-  
+    const { email, password, username, firstName, lastName } = req.body;
+
+    const user = await User.signup({ email, username, password, firstName, lastName });
+
+    await setTokenCookie(res, user);
+
+    return res.json({
+      user,
+    });
+  }
+);
 
 
-  // Get current User 
 
-  router.get("/:id", async (req, res, next)=>{
-    try{
-      const user = await User.scope("currentUser").findByPk(req.params.id)
-      console.log(user)
-      if(!user){
-        next({
-          status: 404,
-          message: 'Could not find user',
-          details: `User ${req.params.id} not found`,
+// Get current User 
+
+router.get("/:id", async (req, res, next) => {
+  try {
+    const user = await User.scope("currentUser").findByPk(req.params.id)
+    console.log(user)
+    if (!user) {
+      next({
+        status: 404,
+        message: 'Could not find user',
+        details: `User ${req.params.id} not found`,
       });
       return;
       }

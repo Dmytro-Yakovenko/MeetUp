@@ -9,7 +9,6 @@ const events = [
     dateOfStart:"Friday, March 24, 2023 at 7:00 PM PDT",
     dateOfEnd:"March 24, 2023 at 11:30 PM PDT",
     locationId:1,
-    attendees:7,
     price:60.00
 
   },
@@ -21,7 +20,6 @@ const events = [
     dateOfStart:"Friday, April 21, 2023 at 7:00 PM PDT",
     dateOfEnd:"April 21, 2023 at 11:30 PM PDT",
     locationId:1,
-    attendees:5,
     price:60.00
 
   },
@@ -33,7 +31,6 @@ const events = [
     dateOfStart:"Monday, January 23, 2023 at 7:00 PM PST",
     dateOfEnd:"Monday, January 23, 2023 at 9:00 PM PST",
     locationId:2,
-    attendees:8,
     price:25.00
 
   },
@@ -45,7 +42,6 @@ const events = [
     dateOfStart:"Friday, April 21, 2023 at 7:00 PM PDT",
     dateOfEnd:"April 21, 2023 at 11:30 PM PDT",
     locationId:2,
-    attendees:6,
     price:25.00
 
   }

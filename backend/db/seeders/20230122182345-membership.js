@@ -5,37 +5,37 @@ const membership = [
   {
     groupId: 2,
     userId: 1,
-    status: true
+    status: "co-host"
   },
   {
     groupId: 2,
     userId: 2,
-    status: true
+    status: "organizer"
   },
   {
     groupId: 2,
     userId: 3,
-    status: true
+    status: "member"
   },
   {
     groupId: 1,
     userId: 4,
-    status: true
+    status: "organizer"
   },
   {
     groupId: 1,
     userId: 5,
-    status: true
+    status: "co-host"
   },
   {
     groupId: 1,
     userId: 6,
-    status: true
+    status: "member"
   },
   {
     groupId: 1,
     userId: 2,
-    status: true
+    status: "pending"
   },
 ]
 

@@ -4,7 +4,7 @@ const { check } = require('express-validator');
 const { json } = require('sequelize');
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { Event, EventImages, Attendees, Group } = require('../../db/models');
+const { Event, EventImages, Attendees, Group, Location, User} = require('../../db/models');
 const { handleValidationErrors } = require('../../utils/validation');
 const { restoreUser } = require('../../utils/auth.js');
 router.use(restoreUser)
@@ -18,11 +18,11 @@ const validateEvents = [
     .withMessage('Name must be at least 5 characters'),
   check('type')
     .exists({ checkFalsy: true })
-    .isBoolean()
+    
     .withMessage("Type must be Online or In person"),
   check('capacity')
     .exists({ checkFalsy: true })
-    .isBoolean()
+   
     .withMessage('Capacity must be an integer'),
     check('price')
     .exists({ checkFalsy: true })
@@ -40,33 +40,38 @@ const validateEvents = [
 ]
 
 //Add an Image to a Event based on the Event's id ???addImage - task 18
-router.post("/:id/image", [restoreUser, requireAuth, validateEvents], async (req, res, next) => {
+router.post("/:id/images", [restoreUser, requireAuth], async (req, res, next) => {
   try {
     const event = await Event.findByPk(req.params.id);
-    const {
-      url,
-      preview
-      } = req.body
+   
     if (!event) {
-      const err = new Error({
+      next({
         message: "Event couldn't be found",
         status: 404
       })
     }
-    const newImage = await EventImages.create({
-      url,
-      preview
-    })
-    res.json({
-      newImage
-    })
+    if(event){
+      const {
+        url,
+        preview
+        } = req.body
+      const newImage = await EventImages.create({
+        url,
+        preview,
+        eventId:+req.params.id
+      })
+      res.json({
+        newImage
+      })
+    }
+    
   } catch (err) {
     next(err)
   }
 })
 
 //Add an Image to a Event based on the Event's id ???addImage - task 30
-router.post("/:id/eventimages", [restoreUser, requireAuth], async (req, res, next) => {
+router.delete("/:id/images", [restoreUser, requireAuth], async (req, res, next) => {
   try {
     const event = await Event.findByPk(req.params.id);
     const {
@@ -74,11 +79,12 @@ router.post("/:id/eventimages", [restoreUser, requireAuth], async (req, res, nex
       preview
       } = req.body
     if (!event) {
-      const err = new Error({
+      next({
         message: "Event couldn't be found",
         status: 404
       })
     }
+   
     res.json({
       "message": "Successfully deleted",
       status: 200
@@ -91,14 +97,24 @@ router.post("/:id/eventimages", [restoreUser, requireAuth], async (req, res, nex
 //Get all Attendees of an Event specified by its id - task 25
 router.get("/:id/attendees", async (req, res, next) => {
   try {
-    const group = await Group.findByPk(req.params.id)
-    if(!group){
-      const err = new Error({
-        message: "Group could not be found",
+    const event = await Event.findByPk(req.params.id)
+    if(!event){
+      next({
+        message: "Event could not be found",
         status: 404
       })
     }
-    const attendees = await Attendees.findAll()
+    const attendees = await Attendees.findAll({
+      where:{
+        eventId:+req.params.id
+      },
+       include:[
+        {
+          model:User,
+          attributes:["firstName", "lastName"]
+        }
+       ]
+    })
     res.json({
       "Attendees": attendees
     })
@@ -108,15 +124,16 @@ router.get("/:id/attendees", async (req, res, next) => {
 })
 
 //Get all Attendees of an Event specified by its id ??? how compare- task 26
-router.get("/:id/atendens", async (req, res, next) => {
+router.get("/:id/atendens",[restoreUser, requireAuth], async (req, res, next) => {
   try {
-    const group = await Group.findByPk(req.params.id)
-    if(!group){
-      const err = new Error({
+    const event = await Event.findByPk(req.params.id)
+    if(!event){
+     next({
         message: "Group could not be found",
         status: 404
       })
     }
+    const user = req.user.id
     const atendees = await Attendees.findOne()
     res.json({
       "Attendees": atendees
@@ -131,7 +148,7 @@ router.put("/:id/attendens", async (req, res, next) => {
   try {
     const group = await Group.findByPk(req.params.id)
     if(!group){
-      const err = new Error({
+      next({
         message: "Group could not be found",
         status: 404
       })
@@ -150,7 +167,7 @@ router.delete("/:id/attendens", async (req, res, next) => {
   try {
     const group = await Group.findByPk(req.params.id)
     if(!group){
-      const err = new Error({
+      next({
         message: "Group could not be found",
         status: 404
       })
@@ -167,9 +184,10 @@ router.delete("/:id/attendens", async (req, res, next) => {
 //Get all Attendees of an Event specified by its id - task 25
 router.get("/:id/attendees", async (req, res, next) => {
   try {
+    console.log(req.user)
     const group = await Group.findByPk(req.params.id)
     if(!group){
-      const err = new Error({
+      next({
         message: "Group could not be found",
         status: 404
       })
@@ -197,12 +215,21 @@ router.put("/:id", [restoreUser, requireAuth, validateEvents], async (req, res, 
       endDate
       } = req.body
     if (!event) {
-      const err = new Error({
+      next({
         message: "Event couldn't be found",
         status: 404
       })
     }
+await event.update({
+  name, 
+  type, 
+  capacity, 
+  price, 
+  description, 
+  dateOfStart:startDate, 
+  dateOfEnd:endDate
 
+})
     res.json({
       event
     })
@@ -211,17 +238,17 @@ router.put("/:id", [restoreUser, requireAuth, validateEvents], async (req, res, 
   }
 })
 
-//Delete an Event specified by its id ???delete event - task 20
+//Delete an Event specified by its id delete event - task 20
 router.delete("/:id", [restoreUser, requireAuth], async (req, res, next) => {
   try {
     const event = await Event.findByPk(req.params.id);
     if (!event) {
-      const err = new Error({
+      next({
         message: "Event couldn't be found",
         status: 404
       })
     }
-
+await event.destroy()
     res.json({
       "message": "Successfully deleted"
     })
@@ -230,17 +257,31 @@ router.delete("/:id", [restoreUser, requireAuth], async (req, res, next) => {
   }
 })
 
-//Get details of an Event specified by its id ???eventImage get venue get - task 16
-router.get("/:id", async (req, res, next) => {
+//Get details of an Event specified by its id eventImage get venue get - task 16
+router.get("/:id",  async (req, res, next) => {
   try {
-    const event = await Event.findByPk(req.params.id);
+    const event = await Event.findByPk(req.params.id,{
+      include:[
+        {
+          model:Group,
+          attributes:["id", "name", "private", "city", "state"]
+        },
+        {
+          model:Location,
+          attributes:["address", "city", "state", "latitude", "longtitude"]
+        },
+        {
+          model:EventImages,
+          attributes:["id", "url", "preview"]
+        }
+      ]
+    });
     if (!event) {
-      const err = new Error({
+      next({
         message: "Event couldn't be found",
         status: 404
       })
     }
-
     res.json({
       event
     })

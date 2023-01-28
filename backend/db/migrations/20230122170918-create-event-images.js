@@ -12,7 +12,7 @@ module.exports = {
       eventId: {
         type: Sequelize.INTEGER
       },
-      title: {
+      preview: {
         type: Sequelize.STRING
       },
       url: {
