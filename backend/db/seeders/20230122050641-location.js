@@ -1,5 +1,9 @@
 'use strict';
 const {Op}=require("sequelize")
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;  // define your schema in options object
+}
 
 const location = [
   {
@@ -33,7 +37,9 @@ module.exports = {
      * }], {});
     */
 
-    await queryInterface.bulkInsert('Locations', location,
+    options.tableName = 'Locations';
+
+    return queryInterface.bulkInsert(options, location,
        {});
   },
 
@@ -45,6 +51,7 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      * 
      */
-    await queryInterface.bulkDelete('Locations', {[Op.or]:location});
+    options.tableName = 'Locations';
+    return  queryInterface.bulkDelete(options, {[Op.or]:location});
   }
 };

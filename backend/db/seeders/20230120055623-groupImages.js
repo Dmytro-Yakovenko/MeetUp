@@ -1,6 +1,10 @@
 'use strict';
 
 const { Op } = require("sequelize")
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;  // define your schema in options object
+}
 const data = [
   {
  
@@ -53,7 +57,8 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    await queryInterface.bulkInsert('GroupImages', data,
+    options.tableName = 'GroupImages';
+    return queryInterface.bulkInsert('GroupImages', data,
       {});
   },
 
@@ -64,6 +69,7 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    await queryInterface.bulkDelete('GroupImages', { [Op.or]: groups });
+    options.tableName = 'GroupImages';
+    return queryInterface.bulkDelete(options, { [Op.or]: groups });
   }
 };

@@ -1,5 +1,9 @@
 'use strict';
 const {Op}=require("sequelize")
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;  // define your schema in options object
+}
 const events = [
   {
     groupId:2,
@@ -59,7 +63,8 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    await queryInterface.bulkInsert('Events', events, {});
+    options.tableName = 'Events';
+    return queryInterface.bulkInsert(options, events, {});
   },
 
   async down (queryInterface, Sequelize) {
@@ -70,6 +75,7 @@ module.exports = {
      *  await queryInterface.bulkDelete('GroupImages', {[Op.or]:groups});
      * await queryInterface.bulkDelete('People', null, {});
      */
-    await queryInterface.bulkDelete('Events', {[Op.or]:events});
+    options.tableName = 'Events';
+    await queryInterface.bulkDelete(options, {[Op.or]:events});
   }
 };
