@@ -70,6 +70,6 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      */
     options.tableName = 'GroupImages';
-    return queryInterface.bulkDelete(options, { [Op.or]: groups });
+    return queryInterface.bulkDelete(options, { [Op.or]: groups }, {});
   }
 };

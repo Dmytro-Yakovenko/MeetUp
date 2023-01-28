@@ -104,19 +104,26 @@ router.get("/:id/attendees", async (req, res, next) => {
         status: 404
       })
     }
-    const attendees = await Attendees.findAll({
+    const attend = await Attendees.findOne({
       where:{
         eventId:+req.params.id
-      },
-       include:[
-        {
-          model:User,
-          attributes:["firstName", "lastName"]
-        }
-       ]
+      }
     })
+    console.log(attend)
+    // const user = await User
+    // const attendees = await Attendees.findAll({
+    //   where:{
+    //     eventId:+req.params.id
+    //   },
+    //    include:[
+    //     {
+    //       model:User,
+    //       attributes:["firstName", "lastName"]
+    //     }
+    //    ]
+   // })
     res.json({
-      "Attendees": attendees
+      // "Attendees": attendees
     })
   } catch (err) {
     next(err)

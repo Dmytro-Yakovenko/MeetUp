@@ -21,7 +21,13 @@ module.exports = (sequelize, DataTypes) => {
     userId:{
       type:DataTypes.INTEGER,
       allowNull:false
-    } 
+    } ,
+    status:{
+      type:DataTypes.STRING,
+      validate:{
+        isIn: [['organaizer', 'co-host', 'member','pending',"waitlist","attending"]]
+      }
+    }
   }, {
     sequelize,
     modelName: 'Attendees',

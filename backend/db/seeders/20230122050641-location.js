@@ -52,6 +52,6 @@ module.exports = {
      * 
      */
     options.tableName = 'Locations';
-    return  queryInterface.bulkDelete(options, {[Op.or]:location});
+    return  queryInterface.bulkDelete(options, {[Op.or]:location},{});
   }
 };

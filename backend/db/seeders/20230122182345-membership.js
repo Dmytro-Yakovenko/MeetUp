@@ -55,7 +55,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    options.tableName = 'Membership';
+    options.tableName = 'Memberships';
 
     return queryInterface.bulkInsert(options, membership,
     {});
@@ -68,7 +68,7 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    options.tableName = 'Membership';
-    return queryInterface.bulkDelete(options, {[Op.or]:membership});
+    options.tableName = 'Memberships';
+  return queryInterface.bulkDelete(options, {[Op.or]:membership},{});
 }
 }

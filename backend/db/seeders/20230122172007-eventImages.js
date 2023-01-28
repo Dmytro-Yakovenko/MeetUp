@@ -75,6 +75,6 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      */
     options.tableName = 'EventImages';
-    return queryInterface.bulkDelete(options, {[Op.or]:eventImages});
+    return queryInterface.bulkDelete(options, {[Op.or]:eventImages},{});
   }
 };
