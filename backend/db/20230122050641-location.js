@@ -5,6 +5,25 @@ if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;  // define your schema in options object
 }
 
+const location = [
+  {
+    city:"San Francisco",
+    state:"California",
+    address:"355 London Street",
+    groupId:2,
+    latitude:37.723350,
+    longtitude:-122.434490
+  },
+  {
+    city:"San Francisco",
+    state:"California",
+    address:"55 Mission Street",
+    groupId:1,
+    latitude:37.723350,
+    longtitude:-122.434490
+  }
+
+]
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
@@ -18,11 +37,10 @@ module.exports = {
      * }], {});
     */
 
+    options.tableName = 'Locations';
 
-    options.tableName = 'EventImages';
-    return  queryInterface.bulkInsert(options, {},
-    {});
-
+    return queryInterface.bulkInsert(options, location,
+       {});
   },
 
   async down (queryInterface, Sequelize) {
@@ -31,8 +49,9 @@ module.exports = {
      *
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
+     * 
      */
-    options.tableName = 'EventImages';
-    return queryInterface.bulkDelete(options, {},{});
+    options.tableName = 'Locations';
+    return  queryInterface.bulkDelete(options, {[Op.or]:location},{});
   }
 };
