@@ -207,24 +207,24 @@ router.get("/:id/members", [requireAuth, restoreUser], async (req, res, next) =>
 }) 
 
 //Request a Membership for a Group based on the Group's id - task 22
-router.get("/:id/membership", [requireAuth, restoreUser], async (req, res, next) => {
-  try {
-    const group = await Group.findByPk(req.params.id)
-    if(!group){
-      next({
-        message: "Group could not be found",
-        status: 404
-      })
-    }
+// router.get("/:id/membership", [restoreUser, requireAuth], async (req, res, next) => {
+//   try {
+//     const group = await Group.findByPk(req.params.id)
+//     if(!group){
+//       next({
+//         message: "Group could not be found",
+//         status: 404
+//       })
+//     }
     
-    const members = await Membership.findAll()
-    res.json({
-      "Members": members
-    })
-  } catch (err) {
-    next(err)
-  }
-})
+//     const members = await Membership.findAll()
+//     res.json({
+//       "Members": members
+//     })
+//   } catch (err) {
+//     next(err)
+//   }
+// })
 
 
 
@@ -241,21 +241,22 @@ router.post("/:id/membership", [requireAuth, restoreUser], async (req, res, next
       })
     }
     
-    const userId= req.user.id
+    const userId= +req.user.id
     const membership = await Membership.findOne({
       where:{
         userId:userId,
-        groupId:group.dataValues.id
+        groupId:group.id
       }
     })
-   if(membership.dataValues.status==="pending"){
+
+   if(membership && membership.dataValues.status==="pending"){
     next({
       "message": "Membership has already been requested",
       "statusCode": 400
     })
    }
 
-   if(membership.dataValues.status==="member"){
+   if(membership && membership.dataValues.status==="member"){
     next({
       "message": "Membership has already been requested",
       "statusCode": 400

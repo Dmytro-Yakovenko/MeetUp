@@ -4,7 +4,7 @@ const { check } = require('express-validator');
 const { json } = require('sequelize');
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { Event, EventImages, Attendees, Group, Location, User} = require('../../db/models');
+const { Event, EventImages, Attendees, Group, Location, User, Membership} = require('../../db/models');
 const { handleValidationErrors } = require('../../utils/validation');
 const { restoreUser } = require('../../utils/auth.js');
 router.use(restoreUser)
@@ -95,21 +95,21 @@ router.delete("/:id/images", [restoreUser, requireAuth], async (req, res, next) 
 })
 
 //Get all Attendees of an Event specified by its id - task 25
-router.get("/:id/attendees", async (req, res, next) => {
-  try {
-    const event = await Event.findByPk(req.params.id)
-    if(!event){
-      next({
-        message: "Event could not be found",
-        status: 404
-      })
-    }
-    const attend = await Attendees.findOne({
-      where:{
-        eventId:+req.params.id
-      }
-    })
-    console.log(attend)
+// router.get("/:id/attendees", async (req, res, next) => {
+//   try {
+//     const event = await Event.findByPk(req.params.id)
+//     if(!event){
+//       next({
+//         message: "Event could not be found",
+//         status: 404
+//       })
+//     }
+//     const attend = await Attendees.findOne({
+//       where:{
+//         eventId:+req.params.id
+//       }
+//     })
+//     console.log(attend)
     // const user = await User
     // const attendees = await Attendees.findAll({
     //   where:{
@@ -122,13 +122,13 @@ router.get("/:id/attendees", async (req, res, next) => {
     //     }
     //    ]
    // })
-    res.json({
+    // res.json({
       // "Attendees": attendees
-    })
-  } catch (err) {
-    next(err)
-  }
-})
+  //   })
+  // } catch (err) {
+  //   next(err)
+  // }
+// })
 
 //Get all Attendees of an Event specified by its id ??? how compare- task 26
 router.get("/:id/atendens",[restoreUser, requireAuth], async (req, res, next) => {
@@ -191,22 +191,60 @@ router.delete("/:id/attendens", async (req, res, next) => {
 //Get all Attendees of an Event specified by its id - task 25
 router.get("/:id/attendees", async (req, res, next) => {
   try {
-    console.log(req.user)
-    const group = await Group.findByPk(req.params.id)
-    if(!group){
+    const event = await Event.findByPk(req.params.id)
+    if(!event){
       next({
-        message: "Group could not be found",
+        message: "Event could not be found",
         status: 404
       })
     }
-    const attendees = await Attendees.findAll()
+    const groupId = event.groupId;
+    let currentUserMembership=undefined;
+    if(req.user)
+    { currentUserMembership= Membership.findAll({
+      where:{
+        userId:req.user.id,
+        groupId:groupId
+      }
+      });
+    }
+    const attendees = await Attendees.findAll({
+where:{
+  eventId:event.id
+}
+    });
+
+const userList = [];
+for(let i=0; i<attendees.length; i++){
+  let membership = await Membership.findOne({
+    where:{
+      userId:attendees[i].userId,
+      groupId:groupId
+    }
+  });
+  console.log(membership);
+ if(membership.status!=="pending" ||
+    (currentUserMembership && 
+      (currentUserMembership.status=="co-host" || currentUserMembership.status=="organaizer"))){
+    let user =await User.findByPk(attendees[i].userId)
+    userList.push({
+      id:user.id,
+      "firstName":user.firstName,
+      "lastName":user.lastName,
+      "Attndance":{
+        "status":membership.status
+      }
+    })
+   }  
+  
+}
     res.json({
-      "Attendees": attendees
+      "Attendees": userList
     })
   } catch (err) {
     next(err)
   }
-})
+});
 
 //Edit an Event specified by its id ???edit event - task 19
 router.put("/:id", [restoreUser, requireAuth, validateEvents], async (req, res, next) => {
