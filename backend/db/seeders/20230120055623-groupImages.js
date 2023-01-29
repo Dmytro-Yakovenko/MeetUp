@@ -58,7 +58,7 @@ module.exports = {
      * }], {});
     */
     options.tableName = 'GroupImages';
-    return queryInterface.bulkInsert('GroupImages', data,
+    return queryInterface.bulkInsert(options, data,
       {});
   },
 
