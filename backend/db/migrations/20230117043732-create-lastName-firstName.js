@@ -16,8 +16,8 @@ module.exports = {
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
 
-    await queryInterface.addColumn(options, 'firstName', { type: Sequelize.STRING, allowNull:false });
-    await queryInterface.addColumn(options, 'lastName', { type: Sequelize.STRING, allowNull:false });
+    await queryInterface.addColumn(options, 'firstName', { type: Sequelize.STRING, allowNull:true });
+    await queryInterface.addColumn(options, 'lastName', { type: Sequelize.STRING, allowNull:true });
   },
 
   async down (queryInterface, Sequelize) {
