@@ -68,11 +68,11 @@ module.exports = (sequelize, DataTypes) => {
     {
       firstName:{
         type: DataTypes.STRING,
-        allowNull:false
+        allowNull:true
       },
       lastName:{
         type: DataTypes.STRING,
-        allowNull:false
+        allowNull:true
       },
 
       username: {
