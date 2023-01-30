@@ -40,9 +40,20 @@ router.post(
       return next(err);
     }
     const token = await setTokenCookie(res, user);
-    return res.json({
-      user, token
-    });
+    const csrfToken = req.csrfToken();
+      res.cookie("XSRF-TOKEN", csrfToken);
+      const userResponse = {user:{
+        id:user.id,
+        firstName,
+        lastName, 
+        username,
+        email, 
+        token:csrfToken 
+       }}
+       return res.json(
+         userResponse
+       )
+  
   }
 );
 

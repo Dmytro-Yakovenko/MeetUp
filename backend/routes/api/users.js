@@ -28,6 +28,9 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 
 
+
+
+
 const validateSignup = [
   check('email')
     .exists({ checkFalsy: true })
@@ -62,11 +65,21 @@ router.post(
 
     const user = await User.signup({ email, username, password, firstName, lastName });
 
-    await setTokenCookie(res, user);
-
-    return res.json({
-      user,
-    });
+   const token = await setTokenCookie(res, user);
+   const csrfToken = req.csrfToken();
+   res.cookie("XSRF-TOKEN", csrfToken);
+   const userResponse = {user:{
+    id:user.id,
+    firstName,
+    lastName, 
+    username,
+    email, 
+    token:csrfToken 
+   }}
+   return res.json(
+     userResponse
+   )
+  
   }
 );
 
@@ -77,7 +90,7 @@ router.post(
 router.get("/:id", async (req, res, next) => {
   try {
     const user = await User.scope("currentUser").findByPk(req.params.id)
-    console.log(user)
+ 
     if (!user) {
       next({
         status: 404,

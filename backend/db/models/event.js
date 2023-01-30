@@ -68,7 +68,12 @@ module.exports = (sequelize, DataTypes) => {
     price: {
 type:DataTypes.DOUBLE,
 allowNull:false
-    } 
+    } ,
+    type:{
+      type:DataTypes.STRING,
+      allowNull:false
+    } ,
+
   }, {
     sequelize,
     modelName: 'Event',
