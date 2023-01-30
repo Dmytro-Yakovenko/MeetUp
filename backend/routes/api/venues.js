@@ -28,8 +28,7 @@ const validateVenues=[
 ]
 
 //Edit a Venue specified by its id ??? edit validate venue - task 13
-router.put("/:id", [requireAuth, restoreUser, validateVenues], async (req, res, next) => {
-  console.log(req.params.id)
+router.put("/:id", [requireAuth, validateVenues], async (req, res, next) => {
     try {
      
       const venue = await Location.findByPk(req.params.id)
@@ -45,16 +44,25 @@ router.put("/:id", [requireAuth, restoreUser, validateVenues], async (req, res, 
           status: 404
         })
       }
+     
        await venue.update({
         address,
         city, 
         state, 
         latitude:lat, 
-        longtitude:lng, 
-        groupId:req.params.id})
-      res.json({
-        venue
+        longtitude:lng
+        
       })
+      const resObj={
+        address,
+        city, 
+        state, 
+        latitude:lat, 
+        longtitude:lng
+      }
+      res.json(
+        resObj
+      )
     } catch (err) {
       next(err)
     }
