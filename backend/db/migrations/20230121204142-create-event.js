@@ -37,7 +37,7 @@ module.exports = {
       price: {
         type: Sequelize.DOUBLE
       },
-      type:{
+      type: {
         type: Sequelize.STRING
       },
       createdAt: {
