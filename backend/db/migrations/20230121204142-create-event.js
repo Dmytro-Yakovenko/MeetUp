@@ -38,7 +38,8 @@ module.exports = {
         type: Sequelize.DOUBLE
       },
       type: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue:'Online'
       },
       createdAt: {
         allowNull: false,

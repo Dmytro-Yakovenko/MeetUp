@@ -71,7 +71,7 @@ allowNull:false
     } ,
     type:{
       type:DataTypes.STRING,
-      allowNull:false
+      defaultValue:"Online"
     } ,
 
   }, {
