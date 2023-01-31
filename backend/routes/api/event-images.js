@@ -33,27 +33,27 @@ router.delete("/:id",  requireAuth, async (req, res, next) => {
             })
         }
 
-        const membership = await Membership.findOne({
-            where: {
-                groupId: event.groupId,
-                userId: +req.user.id
-            }
-        })
-        if (!membership) {
-            next({
-                "message": "not enough rights",
-                "statusCode": 403
-            })
-        }
-        if (membership.status !== "co-host" && membership.status !== "organaizer") {
+        // const membership = await Membership.findOne({
+        //     where: {
+        //         groupId: event.groupId,
+        //         userId: +req.user.id
+        //     }
+        // })
+        // if (!membership) {
+        //     next({
+        //         "message": "not enough rights",
+        //         "statusCode": 403
+        //     })
+        // }
+        // if (membership.status !== "co-host" && membership.status !== "organaizer") {
 
-            next({
-                "message": "not enough rights",
-                "statusCode": 403
-            })
+        //     next({
+        //         "message": "not enough rights",
+        //         "statusCode": 403
+        //     })
 
 
-        }
+        // }
 
         await image.destroy()
         res.json({

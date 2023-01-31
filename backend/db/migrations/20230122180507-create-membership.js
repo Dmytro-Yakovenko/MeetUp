@@ -7,6 +7,8 @@ if (process.env.NODE_ENV === 'production') {
 
     up:async (queryInterface, Sequelize) =>{
     return queryInterface.createTable('Memberships', {
+  
+
       id: {
         allowNull: false,
         autoIncrement: true,

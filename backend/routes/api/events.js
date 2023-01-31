@@ -55,7 +55,7 @@ router.post("/:id/images", requireAuth, async (req, res, next) => {
     if (!event) {
       next({
         message: "Event couldn't be found",
-        status: 404
+        statusCode: 404
       })
     }
     if (event) {
@@ -97,16 +97,18 @@ router.post("/:id/attendance", requireAuth, async (req, res, next) => {
     if (!event) {
       next({
         message: "Event could not be found",
-        status: 404
+        statusCode: 404
       })
     }
     const attendees = await Attendees.create({
       userId: +req.user.id,
-      eventId: +req.params.id
+      eventId: +req.params.id,
+      status:"pending"
     })
     const resObj = {
       userId: +req.user.id,
-      eventId: +req.params.id
+      eventId: +req.params.id,
+      status:"pending"
     }
     res.status(201).json(
       resObj
@@ -126,7 +128,7 @@ router.get("/:id/atendens", [restoreUser, requireAuth], async (req, res, next) =
     if (!event) {
       next({
         message: "Group could not be found",
-        status: 404
+        statusCode: 404
       })
     }
     const user = req.user.id
@@ -146,7 +148,7 @@ router.put("/:id/attendance", requireAuth, async (req, res, next) => {
     if (!event) {
       next({
         message: "Event could not be found",
-        status: 404
+        statusCode: 404
       })
     }
     const user = req.user.id
@@ -155,10 +157,10 @@ router.put("/:id/attendance", requireAuth, async (req, res, next) => {
         userId: user
       }
     })
-    const status = membership.dataValues.status
-    if (status === "organaizer" || status === "co-host") {
+    // const status = membership.dataValues.status
+    // if (status === "organaizer" || status === "co-host") {
       const attendees = await Attendees.update({
-        userId: +user,
+        userId: req.body.userId,
         eventId: +req.params.id,
         status: req.body.status
       }, {
@@ -176,13 +178,13 @@ router.put("/:id/attendance", requireAuth, async (req, res, next) => {
       res.json(
         resObg
       )
-    } else {
-      next({
-        status: 403,
-        message: "you can not change it"
+    // } else {
+    //   next({
+    //     statusCode: 403,
+    //     message: "you can not change it"
 
-      })
-    }
+    //   })
+    // }
 
 
   } catch (err) {
@@ -199,56 +201,56 @@ router.delete("/:id/attendance", [restoreUser, requireAuth], async (req, res, ne
     if (!event) {
       next({
         message: "Event could not be found",
-        status: 404
+        statusCode: 404
       })
     }
-    const userId = req.user.id
-    if (!userId) {
-      next({
-        message: "You ara not autorized",
-        status: 403
-      })
-    }
-    if (!req.body.memberId) {
-      next({
-        message: "No member id",
-        status: 404
-      })
-    }
-    if (req.body.memberId !== userId) {
-      const membership = await Membership.findOne({
-        where: {
-          userId,
-          groupId: event.id
-        }
-      })
-      if (!membership) {
-        next({
-          message: "You ara not autorized",
-          status: 403
-        })
-      }
-      const status = membership.dataValues.status
+    // const userId = req.user.id
+    // if (!userId) {
+    //   next({
+    //     message: "You ara not autorized",
+    //     statusCode: 403
+    //   })
+    // }
+    // if (!req.body.memberId) {
+    //   next({
+    //     message: "No member id",
+    //     statusCode: 404
+    //   })
+    // }
+    // if (req.body.memberId !== userId) {
+    //   const membership = await Membership.findOne({
+    //     where: {
+    //       userId,
+    //       groupId: event.id
+    //     }
+    //   })
+    //   if (!membership) {
+    //     next({
+    //       message: "You ara not autorized",
+    //       statusCode: 403
+    //     })
+    //   }
+    //   const status = membership.dataValues.status
 
-      if (status !== "organaizer" && status !== "co-host") {     
-        next({
-          "message": "Only the User or organizer may delete an Attendance",
-          "statusCode": 403
-        });
-      }
-    }
-    const attendees = await Attendees.findOne({
-      where: {
-        userId: +req.body.memberId,
-        eventId: +req.params.id,
-      }
-    })
-    if (!attendees) {
-      next({
-        "message": "Attendance does not exist for this User",
-        "statusCode": 404
-      })
-    }
+    //   if (status !== "organaizer" && status !== "co-host") {     
+    //     next({
+    //       "message": "Only the User or organizer may delete an Attendance",
+    //       "statusCode": 403
+    //     });
+    //   }
+    // }
+    // const attendees = await Attendees.findOne({
+    //   where: {
+    //     userId: +req.body.memberId,
+    //     eventId: +req.params.id,
+    //   }
+    // })
+    // if (!attendees) {
+    //   next({
+    //     "message": "Attendance does not exist for this User",
+    //     "statusCode": 404
+    //   })
+    // }
    
 
     await Attendees.destroy({
@@ -279,7 +281,7 @@ router.get("/:id/attendees", async (req, res, next) => {
     if (!event) {
       next({
         message: "Event could not be found",
-        status: 404
+        statusCode: 404
       })
     }
     const groupId = event.groupId;
@@ -346,7 +348,7 @@ router.put("/:id", [requireAuth, validateEvents], async (req, res, next) => {
     if (!event) {
       next({
         message: "Event couldn't be found",
-        status: 404
+        statusCode: 404
       })
     }
 await event.update({
@@ -391,7 +393,7 @@ router.put("/:id/attendance", [requireAuth, validateEvents], async (req, res, ne
     if (!event) {
       next({
         message: "Event could not be found",
-        status: 404
+        statusCode: 404
       })
     }
     const userId = req.user.id
@@ -440,7 +442,7 @@ router.put("/:id/attendance", [requireAuth, validateEvents], async (req, res, ne
       )
     } else {
       next({
-        status: 403,
+        statusCode: 403,
         message: "you can not change it"
       })
     }
@@ -458,34 +460,39 @@ router.delete("/:id", [restoreUser, requireAuth], async (req, res, next) => {
     if (!event) {
       next({
         message: "Event couldn't be found",
-        status: 404
+        statusCode: 404
       })
     }
-    const group = await Group.findOne({
-      where:{
-          id:event.groupId
-      }
-  });
-  const membership = await Membership.findOne({
-      where:{
-          groupId:group.dataValues.id
-      }
-  })
-  if(membership.dataValues.status==="co-host" ||membership.dataValues.status==="organaizer" ){
-      res.json(  {
-          "message": "Successfully deleted",
-          "statusCode": 200
-  
-          
-        })
-  }else{
-      await event.destroy()
+  //   const group = await Group.findOne({
+  //     where:{
+  //         id:event.groupId
+  //     }
+  // });
+  // const membership = await Membership.findOne({
+  //     where:{
+  //         groupId:event.groupId
+  //     }
     
-        next({
-          "message": "Only the co-host or organizer may delete an event",
-          "statusCode": 403
+  // })
+  
+
+  
+  // if(!membership || membership.status!=="co-host" && membership.status!=="organaizer" ){
+  //   next({
+  //     "message": "Only the co-host or organizer may delete an event",
+  //     "statusCode": 403
+  // })
+    
+  // }
+      await event.destroy()
+      res.json(  {
+        "message": "Successfully deleted",
+        "statusCode": 200
+
+        
       })
-  }
+  
+  
     // await event.destroy()
     // res.json({
     //   "message": "Successfully deleted"
@@ -517,7 +524,7 @@ router.get("/:id", async (req, res, next) => {
     if (!event) {
       next({
         message: "Event couldn't be found",
-        status: 404
+        statusCode: 404
       })
     }
     res.json({
@@ -529,23 +536,60 @@ router.get("/:id", async (req, res, next) => {
 })
 
 //Get all Events  Add Query Filters to Get All Events - task 14 + 31
+
+
+
+
 router.get("/", async (req, res, next) => {
   try {
     const events = await Event.findAll({
       include:[
-        {
-          model:Location,
-          attributes:["city", "id", "state"]
-        },
+      {
+model:Location,
+attributes:['city', 'id', 'state']
+      },
         {
           model:Group,
           attributes:["id", "name", "city", "state"]
+        },
+        {
+          model:EventImages,
+          attributes:['preview', "url"]
         }
       ]
     });
-    res.json({
-      events
-    })
+const list=[]
+const resObg ={}
+for(let i=0; i<events.length; i++){
+  const item=events[i].dataValues
+console.log(item.Location.dataValues)
+  const numAttending = await Attendees.findAll({
+    where:{
+      eventId:item.id
+    }
+  })
+list.push({
+  "id": item.id,
+  "groupId": item.groupId,
+  "venueId": (item.Location)?item.Location.dataValues.id:null,
+  "name":item.name,
+  "type": item.type,
+  "startDate": item.dateOfStart,
+  "endDate": item.dateOfEnd,
+  "numAttending": numAttending.length,
+  "previewImage":(item.EventImages.length>0)?item.EventImages[0].url:"no photo",
+  "Group":item.Group,
+  "Venue": (item.Location)?item.Location.dataValues:null
+
+})
+}
+resObg.Events=list
+
+
+
+    res.json(
+      resObg
+    )
   } catch (err) {
     next(err)
   }
