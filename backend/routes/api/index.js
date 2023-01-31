@@ -6,7 +6,7 @@ const { restoreUser } = require("../../utils/auth.js");
 const groupsRouter = require('./groups.js');
 const eventsRouter = require('./events.js')
 const venuesRouter = require('./venues.js')
-const groupimagesRouter = require('./groupimages.js')
+const groupimagesRouter = require('./group-images.js')
 const eventimagesRouter = require('./event-images.js')
 const authRouter = require('./auth.js')
 

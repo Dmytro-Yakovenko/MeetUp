@@ -1,21 +1,19 @@
 const express = require('express');
 
 const { restoreUser, requireAuth } = require('../../utils/auth');
-const { EventImages, Event, Group, Membership} = require('../../db/models');
+const { GroupImages, Group, Membership } = require('../../db/models');
 
 const router = express.Router();
 
+router.delete("/:id", [restoreUser, requireAuth], async (req, res, next) => {
 
-//Delete an Image to a Event based on the Event's id ???addImage - task 30
-router.delete("/:id",  requireAuth, async (req, res, next) => {
-   
     try {
 
-        const image = await EventImages.findByPk(+req.params.id);
+        const image = await GroupImages.findByPk(+req.params.id);
 
         if (!image) {
             next({
-                "message": "Event Image couldn't be found",
+                "message": "Group Image couldn't be found",
                 "statusCode": 404
             })
         }
@@ -24,18 +22,10 @@ router.delete("/:id",  requireAuth, async (req, res, next) => {
         //         id: image.groupId
         //     }
         // });
-        const event = await Event.findByPk(image.eventId)
-
-        if(!event){
-            next({
-                "message": "Event  couldn't be found",
-                "statusCode": 404
-            })
-        }
 
         const membership = await Membership.findOne({
             where: {
-                groupId: event.groupId,
+                groupId: image.groupId,
                 userId: +req.user.id
             }
         })
@@ -64,9 +54,11 @@ router.delete("/:id",  requireAuth, async (req, res, next) => {
     } catch (err) {
         next(err)
     }
-  })
-  
-  
+})
+
+
+
+
 
 
 module.exports = router;
