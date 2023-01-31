@@ -108,7 +108,7 @@ router.get("/current",  requireAuth, async (req, res, next) => {
         attributes:["preview"]
       }
     })
-    console.log(groups)
+  
     const resObj ={
 
     }
@@ -450,10 +450,10 @@ attributes:[
 //Create an Event for a Group specified by its id ??? find events - task 17
 
 router.post("/:id/events", [requireAuth, validateEvents], async (req, res, next) => {
-  console.log(req.params.id)
+  
   try {
     const group = await Group.findByPk(req.params.id)
-    console.log(group)
+ 
     if(!group){
       next({
         message: "Group could not be found",
@@ -653,7 +653,7 @@ router.get("/:id", async (req, res, next) => {
 })
 
 //Delete a Group - task 10
-router.delete("/:id", [requireAuth, restoreUser], async (req, res, next) => {
+router.delete("/:id", requireAuth, async (req, res, next) => {
   try {
     const group = await Group.findByPk(req.params.id)
     if(!group){
@@ -662,11 +662,20 @@ router.delete("/:id", [requireAuth, restoreUser], async (req, res, next) => {
         status: 404
       })
     }
-    await group.destroy()
-    res.json(  {
-      "message": "Successfully deleted",
-      status: 200
-    })
+    const userId=req.user.id
+    if(group.organizerId===userId){
+      await group.destroy()
+      res.json(  {
+        "message": "Successfully deleted",
+        status: 200
+      })
+    }else{
+      next({
+        message: "Only owner can delete a group",
+        status: 403
+      })
+    }
+  
   } catch (err) {
     next(err)
   }

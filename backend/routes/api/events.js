@@ -84,30 +84,6 @@ router.post("/:id/images", requireAuth, async (req, res, next) => {
   }
 })
 
-//Add an Image to a Event based on the Event's id ???addImage - task 30
-router.delete("/:id/images", [restoreUser, requireAuth], async (req, res, next) => {
-  try {
-    const event = await Event.findByPk(req.params.id);
-    const {
-      url,
-      preview
-    } = req.body
-    if (!event) {
-      next({
-        message: "Event couldn't be found",
-        status: 404
-      })
-    }
-
-    res.json({
-      "message": "Successfully deleted",
-      status: 200
-    })
-  } catch (err) {
-    next(err)
-  }
-})
-
 
 
 
@@ -115,7 +91,7 @@ router.delete("/:id/images", [restoreUser, requireAuth], async (req, res, next) 
 
 //Request Attendance to an Event
 router.post("/:id/attendance", requireAuth, async (req, res, next) => {
-  console.log(req.user.id)
+  
   try {
     const event = await Event.findByPk(req.params.id)
     if (!event) {
@@ -141,41 +117,7 @@ router.post("/:id/attendance", requireAuth, async (req, res, next) => {
 })
 
 
-//Get all Attendees of an Event specified by its id - task 25
-// router.get("/:id/attendees", async (req, res, next) => {
-//   try {
-//     const event = await Event.findByPk(req.params.id)
-//     if(!event){
-//       next({
-//         message: "Event could not be found",
-//         status: 404
-//       })
-//     }
-//     const attend = await Attendees.findOne({
-//       where:{
-//         eventId:+req.params.id
-//       }
-//     })
-//     console.log(attend)
-// const user = await User
-// const attendees = await Attendees.findAll({
-//   where:{
-//     eventId:+req.params.id
-//   },
-//    include:[
-//     {
-//       model:User,
-//       attributes:["firstName", "lastName"]
-//     }
-//    ]
-// })
-// res.json({
-// "Attendees": attendees
-//   })
-// } catch (err) {
-//   next(err)
-// }
-// })
+/
 
 //Get all Attendees of an Event specified by its id ??? how compare- task 26
 router.get("/:id/atendens", [restoreUser, requireAuth], async (req, res, next) => {
@@ -307,7 +249,7 @@ router.delete("/:id/attendance", [restoreUser, requireAuth], async (req, res, ne
         "statusCode": 404
       })
     }
-    console.log(attendees.id)
+   
 
     await Attendees.destroy({
       where: {
@@ -364,7 +306,7 @@ router.get("/:id/attendees", async (req, res, next) => {
           groupId: groupId
         }
       });
-      console.log(membership);
+     
       if (membership.status !== "pending" ||
         (currentUserMembership &&
           (currentUserMembership.status == "co-host" || currentUserMembership.status == "organaizer"))) {
@@ -519,10 +461,35 @@ router.delete("/:id", [restoreUser, requireAuth], async (req, res, next) => {
         status: 404
       })
     }
-    await event.destroy()
-    res.json({
-      "message": "Successfully deleted"
-    })
+    const group = await Group.findOne({
+      where:{
+          id:event.groupId
+      }
+  });
+  const membership = await Membership.findOne({
+      where:{
+          groupId:group.dataValues.id
+      }
+  })
+  if(membership.dataValues.status==="co-host" ||membership.dataValues.status==="organaizer" ){
+      res.json(  {
+          "message": "Successfully deleted",
+          "statusCode": 200
+  
+          
+        })
+  }else{
+      await event.destroy()
+    
+        next({
+          "message": "Only the co-host or organizer may delete an event",
+          "statusCode": 403
+      })
+  }
+    // await event.destroy()
+    // res.json({
+    //   "message": "Successfully deleted"
+    // })
   } catch (err) {
     next(err)
   }

@@ -10,7 +10,7 @@ router.delete("/:id", [restoreUser, requireAuth], async (req, res , next)=>{
     try{
 
 const image = await GroupImages.findByPk(req.params.id);
- console.log(image)
+ 
 if(!image){
     next({
         "message": "Group Image couldn't be found",
@@ -22,20 +22,13 @@ const group = await Group.findOne({
         id:image.groupId
     }
 });
-console.log(group.dataValues.id, 1111)
+
 const membership = await Membership.findOne({
     where:{
         groupId:group.dataValues.id
     }
 })
-// console.log(membership)
-// if(!membership){
-//     next({
-//         "message": " Image couldn't be found",
-//         "statusCode": 404
-//     })
-// }
-console.log(membership.dataValues.status)
+
 if(membership.dataValues.status==="co-host" ||membership.dataValues.status==="organaizer" ){
     res.json(  {
         "message": "Successfully deleted",
