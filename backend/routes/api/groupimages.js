@@ -19,13 +19,13 @@ if(!image){
 }
 const group = await Group.findOne({
     where:{
-        id:image.groupId
+        id:image.GroupId
     }
 });
 console.log(group.dataValues.id, 1111)
 const membership = await Membership.findOne({
     where:{
-        groupId:group.dataValues.id
+        GroupId:group.dataValues.id
     }
 })
 // console.log(membership)

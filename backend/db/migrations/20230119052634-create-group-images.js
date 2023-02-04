@@ -16,7 +16,7 @@ module.exports = {
         type: Sequelize.STRING
       },
 
-      groupId:{
+      GroupId:{
         type: Sequelize.INTEGER,
       
           references: {

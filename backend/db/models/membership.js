@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Membership.init({
-    groupId:{
+    GroupId:{
       type:DataTypes.INTEGER,
       allowNull:false
     } ,

@@ -12,7 +12,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      groupId: {
+      GroupId: {
         type: Sequelize.INTEGER
       },
       description: {

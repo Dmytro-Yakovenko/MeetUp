@@ -7,37 +7,37 @@ if (process.env.NODE_ENV === 'production') {
 
 const membership = [
   {
-    groupId: 1,
+    GroupId: 1,
     userId: 1,
     status: "co-host"
   },
   {
-    groupId: 1,
+    GroupId: 1,
     userId: 2,
     status: "organizer"
   },
   {
-    groupId: 1,
+    GroupId: 1,
     userId: 3,
     status: "member"
   },
   {
-    groupId: 2,
+    GroupId: 2,
     userId: 4,
     status: "organizer"
   },
   {
-    groupId: 2,
+    GroupId: 2,
     userId: 5,
     status: "co-host"
   },
   {
-    groupId: 2,
+    GroupId: 2,
     userId: 6,
     status: "member"
   },
   {
-    groupId: 2,
+    GroupId: 2,
     userId: 2,
     status: "pending"
   },

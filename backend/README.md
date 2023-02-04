@@ -314,7 +314,7 @@ Returns the details of a group specified by its id.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: URL: /api/groups/:groupId
+  * URL: URL: /api/groups/:GroupId
   * Body: none
 
 * Successful Response
@@ -356,7 +356,7 @@ Returns the details of a group specified by its id.
       "Venues": [
         {
           "id": 1,
-          "groupId": 1,
+          "GroupId": 1,
           "address": "123 Disney Lane",
           "city": "New York",
           "state": "NY",
@@ -453,7 +453,7 @@ Create and return a new image for a group specified by id.
 * Require proper authorization: Current User must be the organizer for the group
 * Request
   * Method: POST
-  * URL: /api/groups/:groupId/images
+  * URL: /api/groups/:GroupId/images
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -500,7 +500,7 @@ Updates and returns an existing group.
 * Require proper authorization: Group must belong to the current user
 * Request
   * Method: PUT
-  * URL: /api/groups/groupId
+  * URL: /api/groups/GroupId
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -579,7 +579,7 @@ Deletes an existing group.
 * Require proper authorization: Group must belong to the current user
 * Request
   * Method: DELETE
-  * URL: /api/groups/:groupId
+  * URL: /api/groups/:GroupId
   * Body: none
 
 * Successful Response
@@ -619,7 +619,7 @@ Returns all venues for a group specified by its id
   the group with a status of "co-host"
 * Request
   * Method: GET
-  * URL: /api/groups/:groupId/venues
+  * URL: /api/groups/:GroupId/venues
   * Headers:
     * Content-Type: application/json
   * Body: none
@@ -635,7 +635,7 @@ Returns all venues for a group specified by its id
     "Venues": [
       {
         "id": 1,
-        "groupId": 1,
+        "GroupId": 1,
         "address": "123 Disney Lane",
         "city": "New York",
         "state": "NY",
@@ -669,7 +669,7 @@ Creates and returns a new venue for a group specified by its id
   the group with a status of "co-host"
 * Request
   * Method: POST
-  * URL: /api/groups/:groupId/venues
+  * URL: /api/groups/:GroupId/venues
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -693,7 +693,7 @@ Creates and returns a new venue for a group specified by its id
   ```json
   {
     "id": 1,
-    "groupId": 1,
+    "GroupId": 1,
     "address": "123 Disney Lane",
     "city": "New York",
     "state": "NY",
@@ -768,7 +768,7 @@ Edit a new venue specified by its id
   ```json
   {
     "id": 1,
-    "groupId": 1,
+    "GroupId": 1,
     "address": "123 Disney Lane",
     "city": "New York",
     "state": "NY",
@@ -833,7 +833,7 @@ Returns all the events.
       "Events": [
         {
           "id": 1,
-          "groupId": 1,
+          "GroupId": 1,
           "venueId": null,
           "name": "Tennis Group First Meet and Greet",
           "type": "Online",
@@ -851,7 +851,7 @@ Returns all the events.
         },
         {
           "id": 1,
-          "groupId": 1,
+          "GroupId": 1,
           "venueId": 1,
           "name": "Tennis Singles",
           "type": "In Person",
@@ -882,7 +882,7 @@ Returns all the events of a group specified by its id
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: /api/groups/:groupId/events
+  * URL: /api/groups/:GroupId/events
   * Body: none
 
 * Successful Response
@@ -896,7 +896,7 @@ Returns all the events of a group specified by its id
       "Events": [
         {
           "id": 1,
-          "groupId": 1,
+          "GroupId": 1,
           "venueId": null,
           "name": "Tennis Group First Meet and Greet",
           "type": "Online",
@@ -914,7 +914,7 @@ Returns all the events of a group specified by its id
         },
         {
           "id": 1,
-          "groupId": 1,
+          "GroupId": 1,
           "venueId": 1,
           "name": "Tennis Singles",
           "type": "In Person",
@@ -970,7 +970,7 @@ Returns the details of an event specified by its id.
     ```json
     {
       "id": 1,
-      "groupId": 1,
+      "GroupId": 1,
       "venueId": 1,
       "name": "Tennis Group First Meet and Greet",
       "description": "First meet and greet event for the evening tennis on the water group! Join us online for happy times!",
@@ -1032,7 +1032,7 @@ Creates and returns a new event for a group specified by its id
   the group with a status of "co-host"
 * Request
   * Method: POST
-  * URL: /api/groups/groupId/events
+  * URL: /api/groups/GroupId/events
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1059,7 +1059,7 @@ Creates and returns a new event for a group specified by its id
     ```json
     {
       "id": 1,
-      "groupId": 1,
+      "GroupId": 1,
       "venueId": 1,
       "name": "Tennis Group First Meet and Greet",
       "type": "Online",
@@ -1190,7 +1190,7 @@ Edit and returns an event specified by its id
     ```json
     {
       "id": 1,
-      "groupId": 1,
+      "GroupId": 1,
       "venueId": 1,
       "name": "Tennis Group First Meet and Greet",
       "type": "Online",
@@ -1388,7 +1388,7 @@ Request a new membership for a group specified by id.
 * Require Authentication: true
 * Request
   * Method:  GET
-  * URL: /api/groups/:groupId/membership
+  * URL: /api/groups/:GroupId/membership
   * Headers:
     * Content-Type: application/json
   * Body: none
@@ -1401,7 +1401,7 @@ Request a new membership for a group specified by id.
 
     ```json
     {
-      "groupId": 1,
+      "GroupId": 1,
       "memberId": 2,
       "status": "pending"
     }
@@ -1460,7 +1460,7 @@ Change the status of a membership for a group specified by id.
     * Current User must already be the organizer
 * Request
   * Method: PUT
-  * URL: /api/groups/:groupId/membership
+  * URL: /api/groups/:GroupId/membership
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1481,7 +1481,7 @@ Change the status of a membership for a group specified by id.
     ```json
     {
       "id": 1,
-      "groupId": 1,
+      "GroupId": 1,
       "memberId": 2,
       "status": "member"
     }
@@ -1554,7 +1554,7 @@ Delete a membership to a group specified by id.
   the user whose membership is being deleted
 * Request
   * Method: DELETE
-  * URL: /api/groups/:groupId/membership
+  * URL: /api/groups/:GroupId/membership
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -2034,7 +2034,7 @@ Return events filtered by query parameters.
       "Events": [
         {
           "id": 1,
-          "groupId": 1,
+          "GroupId": 1,
           "venueId": null,
           "name": "Tennis Group First Meet and Greet",
           "type": "Online",
@@ -2052,7 +2052,7 @@ Return events filtered by query parameters.
         },
         {
           "id": 1,
-          "groupId": 1,
+          "GroupId": 1,
           "venueId": 1,
           "name": "Tennis Singles",
           "type": "In Person",

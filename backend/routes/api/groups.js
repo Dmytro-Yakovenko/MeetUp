@@ -117,7 +117,7 @@ router.get("/current",  requireAuth, async (req, res, next) => {
     
       let membership = await Membership.findAll({
         where: {
-          groupId: groups[i].dataValues.id
+          GroupId: groups[i].dataValues.id
         }
       });
       const obj ={
@@ -185,7 +185,7 @@ router.post("/:id/images", requireAuth, async (req, res, next) => {
     const image = await GroupImages.create({
       url,
       preview,
-      groupId:+req.params.id
+      GroupId:+req.params.id
     })
     const resObj={
       "id":image.id,
@@ -212,7 +212,7 @@ router.post("/:id/images", requireAuth, async (req, res, next) => {
 //     }
 //      await GroupImages.destroy({
 //      where:{
-//       groupId:+req.params.id
+//       GroupId:+req.params.id
 //      }
 //     })
 //     res.json({
@@ -282,7 +282,7 @@ router.post("/:id/membership", requireAuth, async (req, res, next) => {
     const membership = await Membership.findOne({
       where:{
         userId:userId,
-        groupId:group.id
+        GroupId:group.id
       }
     })
 
@@ -303,13 +303,13 @@ router.post("/:id/membership", requireAuth, async (req, res, next) => {
 
     const member = await Membership.create({
       userId:+req.user.id,
-      groupId:+req.params.id,
+      GroupId:+req.params.id,
       status:"pending"
     })
     const resObj ={
       memberId:member.userId,
       status:member.status,
-      groupId:member.groupId
+      GroupId:member.GroupId
     }
     res.status(201).json(
       resObj
@@ -366,7 +366,7 @@ router.delete("/:id/membership", requireAuth, async (req, res, next) => {
     const membership = await Membership.findOne({
       where:{
         userId:userId,
-        groupId:group.dataValues.id
+        GroupId:group.dataValues.id
       }
     })
     if(!membership){
@@ -378,7 +378,7 @@ router.delete("/:id/membership", requireAuth, async (req, res, next) => {
     if(membership.dataValues.status==="co-host" || membership.dataValues.status==="organaizer" || membership.dataValues.userId===userId ){
        await Membership.destroy({
         where:{
-          groupId:+req.params.id
+          GroupId:+req.params.id
         }
       })
       res.json({
@@ -405,7 +405,7 @@ router.get("/:id/events", async (req, res, next) => {
     }
 const event = await Event.findAll({
   where:{
-    groupId:req.params.id
+    GroupId:req.params.id
   },
   include:[
     {
@@ -480,12 +480,12 @@ router.post("/:id/events", [requireAuth, validateEvents], async (req, res, next)
         description,
         dateOfStart:startDate,
         dateOfEnd:endDate,
-        groupId:+req.params.id,
+        GroupId:+req.params.id,
         locationId:venueId
       })
       const resObg={
         "id": event.id,
-        "groupId": event.groupId,
+        "GroupId": event.GroupId,
         "venueId": event.locationId,
         "name":event.name,
         "type": event.type,
@@ -518,7 +518,7 @@ router.get("/:id/venues", [requireAuth, restoreUser], async (req, res, next) => 
     }
     const venues = await Location.findAll({
       where:{
-        groupId:req.params.id
+        GroupId:req.params.id
       }
     })
     const resObj={
@@ -528,7 +528,7 @@ router.get("/:id/venues", [requireAuth, restoreUser], async (req, res, next) => 
     for(let i=0; i<venues.length; i++){
 list.push({
   "id": venues[i].id,
-  "groupId": venues[i].groupId,
+  "GroupId": venues[i].GroupId,
   "address": venues[i].address,
   "city": venues[i].city,
   "state": venues[i].state,
@@ -567,10 +567,10 @@ router.post("/:id/venues", [requireAuth, restoreUser, validateVenues], async (re
       state, 
       latitude:lat, 
       longtitude:lng, 
-      groupId:req.params.id})
+      GroupId:req.params.id})
       const resObj={
         "id": venue.id,
-        "groupId": venue.groupId,
+        "GroupId": venue.GroupId,
         "address": venue.address,
         "city": venue.city,
         "state": venue.state,
@@ -625,7 +625,7 @@ router.get("/:id", async (req, res, next) => {
         model:Location,
         attributes:[  
           "id",
-        "groupId",
+        "GroupId",
         "address",
         "city",
         "state",
@@ -691,7 +691,7 @@ router.post("/", [requireAuth,validateGroups], async (req, res, next) => {
     await Membership.create({
       status:"organaizer",
       userId:+req.user.id,
-      groupId:+group.id
+      GroupId:+group.id
     })
    
     res.status(201).json(
@@ -721,7 +721,7 @@ router.get("/", async (req, res, next) => {
     
       let membership = await Membership.findAll({
         where: {
-          groupId: groups[i].dataValues.id
+          GroupId: groups[i].dataValues.id
         }
       });
       const obj ={

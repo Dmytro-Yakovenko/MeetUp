@@ -6,7 +6,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 const events = [
   {
-    groupId:2,
+    GroupId:2,
     description:" (For Hold Em & Omaha games, we do not use big/little blinds, but it is table stakes. It's a $20 buy-in to start and you're able to buy $20 stacks of chips. You can win a lot/lose a lot, based on how you play. No hard drinkers/drugs, 420 is fine)",
     capacity:10,
     name:"March 24",
@@ -17,7 +17,7 @@ const events = [
     type:"In person"
   },
   {
-    groupId:2,
+    GroupId:2,
     description:" (For Hold Em & Omaha games, we do not use big/little blinds, but it is table stakes. It's a $20 buy-in to start and you're able to buy $20 stacks of chips. You can win a lot/lose a lot, based on how you play. No hard drinkers/drugs, 420 is fine)",
     capacity:10,
     name:"April 22",
@@ -28,7 +28,7 @@ const events = [
     type:"In person"
   },
   {
-    groupId:1,
+    GroupId:1,
     description:"Our San Francisco Mother's evening group meets on the 4th Monday of the month from 7 p.m. to 9 p.m. at 65 Dorland Street. ",
     capacity:10,
     name:"Morning Mother's Group",
@@ -40,7 +40,7 @@ const events = [
 
   },
   {
-    groupId:1,
+    GroupId:1,
     description:"Our San Francisco Mother's evening group meets on the 4th Monday of the month from 7 p.m. to 9 p.m. at 65 Dorland Street. ",
     capacity:10,
     name:"Evening Mother's Group",

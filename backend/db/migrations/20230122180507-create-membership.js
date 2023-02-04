@@ -14,7 +14,7 @@ if (process.env.NODE_ENV === 'production') {
         type: Sequelize.INTEGER
       },
      
-      groupId: {
+      GroupId: {
         type: Sequelize.INTEGER,
         allowNull:false,
         onDelete:"Cascade",
