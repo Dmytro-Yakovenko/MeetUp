@@ -833,48 +833,49 @@ router.get("/", async (req, res, next) => {
           model: GroupImages,
           attributes: ['preview']
         },
+     
       ]
     })
     console.log(groups)
-    // const resObj = {
+    const resObj = {
 
-    // }
-    // const list = []
-    // for (let i = 0; i < groups.length; i++) {
-    //   console.log(33333)
-    //   let membership = await Membership.findAll({
-    //     where: {
-    //       GroupId: groups[i].dataValues.id
-    //     }
-    //   });
-    //   console.log(44444)
-    //   const previewImage = await GroupImages.findAll({
-    //     where: {
-    //       GroupId: groups[i].dataValues.id,
-    //       preview: true
-    //     }
-    //   });
-    //   const obj = {
-    //     id: groups[i].dataValues.id,
-    //     groupId: groups[i].dataValues.id,
-    //     name: groups[i].dataValues.name,
-    //     organizerId: groups[i].dataValues.organizerId,
-    //     about: groups[i].dataValues.about,
-    //     type: groups[i].dataValues.type,
-    //     private: groups[i].dataValues.private,
-    //     city: groups[i].dataValues.city,
-    //     state: groups[i].dataValues.state,
-    //     createdAt: groups[i].dataValues.createdAt,
-    //     updatedAt: groups[i].dataValues.updatedAt,
-    //     previewImage:previewImage.length > 0 && previewImage[0].url,
-    //     numMembers: membership.length
-    //   }
-    //   list.push(obj)
-    // }
-    // resObj.Groups = list
+    }
+    const list = []
+    for (let i = 0; i < groups.length; i++) {
+      console.log(33333)
+      let membership = await Membership.findAll({
+        where: {
+          GroupId: groups[i].id
+        }
+      });
+      console.log(44444)
+      const previewImage = await GroupImages.findAll({
+        where: {
+          GroupId: groups[i].id,
+          preview: true
+        }
+      });
+      const obj = {
+        id: groups[i].id,
+        groupId: groups[i].id,
+        name: groups[i].name,
+        organizerId: groups[i].organizerId,
+        about: groups[i].about,
+        type: groups[i].type,
+        private: groups[i].private,
+        city: groups[i].city,
+        state: groups[i].state,
+        createdAt: groups[i].createdAt,
+        updatedAt: groups[i].updatedAt,
+        previewImage:previewImage.length > 0 && previewImage[0].url,
+        numMembers: membership.length
+      }
+      list.push(obj)
+    }
+    resObj.Groups = list
 
     res.json(
-      groups
+      resObj
     )
     return;
   } catch (err) {
