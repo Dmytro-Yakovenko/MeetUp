@@ -850,7 +850,7 @@ router.get("/", async (req, res, next) => {
       console.log(44444)
       const previewImage = await GroupImages.findAll({
         where: {
-          groupId: groups[i].id,
+          GroupId: groups[i].id,
           preview: true
         }
       });
@@ -866,7 +866,7 @@ router.get("/", async (req, res, next) => {
         state: groups[i].dataValues.state,
         createdAt: groups[i].dataValues.createdAt,
         updatedAt: groups[i].dataValues.updatedAt,
-        previewImage: previewImage && previewImage.length > 0,
+        previewImage:previewImage.length > 0 && previewImage[0].url,
         numMembers: membership.length
       }
       list.push(obj)
