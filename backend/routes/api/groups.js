@@ -806,6 +806,7 @@ router.post("/", [requireAuth, validateGroups], async (req, res, next) => {
 //Get all Groups - task 4
 router.get("/", async (req, res, next) => {
   try {
+    console.log(11111)
     const groups = await Group.findAll({
       include: [
         {
@@ -814,17 +815,19 @@ router.get("/", async (req, res, next) => {
         },
       ]
     })
+    console.log(222222)
     const resObj = {
 
     }
     const list = []
     for (let i = 0; i < groups.length; i++) {
-
+      console.log(33333)
       let membership = await Membership.findAll({
         where: {
           groupId: groups[i].dataValues.id
         }
       });
+      console.log(44444)
       const previewImage = await GroupImages.findAll({
         where: {
           groupId: groups[i].id,
@@ -833,6 +836,7 @@ router.get("/", async (req, res, next) => {
       });
       const obj = {
         id: groups[i].dataValues.id,
+        groupId: groups[i].dataValues.id,
         name: groups[i].dataValues.name,
         organizerId: groups[i].dataValues.organizerId,
         about: groups[i].dataValues.about,
