@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
           // Your code here
           GroupImages.belongsTo(models.Group,{
 
-            foreignKey:'groupId'
+            foreignKey:'GroupId'
 
           })
     }
@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull:false
 
     },
-    groupId:{
+    GroupId:{
       type: DataTypes.INTEGER,
       allowNull:false,
       

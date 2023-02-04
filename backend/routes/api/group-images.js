@@ -19,13 +19,13 @@ router.delete("/:id", [restoreUser, requireAuth], async (req, res, next) => {
         }
         // const group = await Group.findOne({
         //     where: {
-        //         id: image.groupId
+        //         id: image.GroupId
         //     }
         // });
 
         // const membership = await Membership.findOne({
         //     where: {
-        //         groupId: image.groupId,
+        //         GroupId: image.GroupId,
         //         userId: +req.user.id
         //     }
         // })

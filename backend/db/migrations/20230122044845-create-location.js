@@ -27,7 +27,7 @@ module.exports = {
       longtitude: {
         type: Sequelize.FLOAT
       },
-      groupId:{
+      GroupId:{
         type: Sequelize.INTEGER,
             references: {
                 model: 'Groups',

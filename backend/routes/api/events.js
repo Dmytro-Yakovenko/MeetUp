@@ -204,54 +204,54 @@ router.delete("/:id/attendance", [restoreUser, requireAuth], async (req, res, ne
         statusCode: 404
       })
     }
-    // const userId = req.user.id
-    // if (!userId) {
-    //   next({
-    //     message: "You ara not autorized",
-    //     statusCode: 403
-    //   })
-    // }
-    // if (!req.body.memberId) {
-    //   next({
-    //     message: "No member id",
-    //     statusCode: 404
-    //   })
-    // }
-    // if (req.body.memberId !== userId) {
-    //   const membership = await Membership.findOne({
-    //     where: {
-    //       userId,
-    //       groupId: event.id
-    //     }
-    //   })
-    //   if (!membership) {
-    //     next({
-    //       message: "You ara not autorized",
-    //       statusCode: 403
-    //     })
-    //   }
-    //   const status = membership.dataValues.status
+    const userId = req.user.id
+    if (!userId) {
+      next({
+        message: "You ara not autorized",
+        status: 403
+      })
+    }
+    if (!req.body.memberId) {
+      next({
+        message: "No member id",
+        status: 404
+      })
+    }
+    if (req.body.memberId !== userId) {
+      const membership = await Membership.findOne({
+        where: {
+          userId,
+          GroupId: event.id
+        }
+      })
+      if (!membership) {
+        next({
+          message: "You ara not autorized",
+          status: 403
+        })
+      }
+      const status = membership.dataValues.status
 
-    //   if (status !== "organaizer" && status !== "co-host") {     
-    //     next({
-    //       "message": "Only the User or organizer may delete an Attendance",
-    //       "statusCode": 403
-    //     });
-    //   }
-    // }
-    // const attendees = await Attendees.findOne({
-    //   where: {
-    //     userId: +req.body.memberId,
-    //     eventId: +req.params.id,
-    //   }
-    // })
-    // if (!attendees) {
-    //   next({
-    //     "message": "Attendance does not exist for this User",
-    //     "statusCode": 404
-    //   })
-    // }
-   
+      if (status !== "organaizer" && status !== "co-host") {     
+        next({
+          "message": "Only the User or organizer may delete an Attendance",
+          "statusCode": 403
+        });
+      }
+    }
+    const attendees = await Attendees.findOne({
+      where: {
+        userId: +req.body.memberId,
+        eventId: +req.params.id,
+      }
+    })
+    if (!attendees) {
+      next({
+        "message": "Attendance does not exist for this User",
+        "statusCode": 404
+      })
+    }
+    console.log(attendees.id)
 
     await Attendees.destroy({
       where: {
@@ -284,13 +284,13 @@ router.get("/:id/attendees", async (req, res, next) => {
         statusCode: 404
       })
     }
-    const groupId = event.groupId;
+    const GroupId = event.GroupId;
     let currentUserMembership = undefined;
     if (req.user) {
       currentUserMembership = Membership.findAll({
         where: {
           userId: req.user.id,
-          groupId: groupId
+          GroupId: GroupId
         }
       });
     }
@@ -305,7 +305,7 @@ router.get("/:id/attendees", async (req, res, next) => {
       let membership = await Membership.findOne({
         where: {
           userId: attendees[i].userId,
-          groupId: groupId
+          GroupId: GroupId
         }
       });
      
@@ -363,7 +363,7 @@ await event.update({
 })
 const resObj={
   "id": event.id,
-  "groupId": event.groupId,
+  "GroupId": event.GroupId,
   "venueId": event.locationId,
   "name": event.name,
   "type": event.type,
