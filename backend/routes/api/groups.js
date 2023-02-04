@@ -835,7 +835,7 @@ router.get("/", async (req, res, next) => {
         },
       ]
     })
-    console.log(222222)
+    console.log(groups)
     const resObj = {
 
     }
@@ -850,7 +850,7 @@ router.get("/", async (req, res, next) => {
       console.log(44444)
       const previewImage = await GroupImages.findAll({
         where: {
-          GroupId: groups[i].id,
+          GroupId: groups[i].dataValues.id,
           preview: true
         }
       });
