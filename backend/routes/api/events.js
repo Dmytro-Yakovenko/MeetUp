@@ -221,7 +221,7 @@ router.delete("/:id/attendance", [restoreUser, requireAuth], async (req, res, ne
       const membership = await Membership.findOne({
         where: {
           userId,
-          GroupId: event.id
+          groupId: event.id
         }
       })
       if (!membership) {
@@ -284,13 +284,13 @@ router.get("/:id/attendees", async (req, res, next) => {
         statusCode: 404
       })
     }
-    const GroupId = event.GroupId;
+    const groupId = event.groupId;
     let currentUserMembership = undefined;
     if (req.user) {
       currentUserMembership = Membership.findAll({
         where: {
           userId: req.user.id,
-          GroupId: GroupId
+          groupId: groupId
         }
       });
     }
@@ -305,7 +305,7 @@ router.get("/:id/attendees", async (req, res, next) => {
       let membership = await Membership.findOne({
         where: {
           userId: attendees[i].userId,
-          GroupId: GroupId
+          groupId: groupId
         }
       });
      
@@ -363,7 +363,7 @@ await event.update({
 })
 const resObj={
   "id": event.id,
-  "GroupId": event.GroupId,
+  "groupId": event.groupId,
   "venueId": event.locationId,
   "name": event.name,
   "type": event.type,

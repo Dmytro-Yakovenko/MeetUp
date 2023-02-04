@@ -116,7 +116,7 @@ router.get("/current", requireAuth, async (req, res, next) => {
 
       let membership = await Membership.findAll({
         where: {
-          GroupId: groups[i].dataValues.id
+          groupId: groups[i].dataValues.id
         }
       });
 
@@ -186,7 +186,7 @@ router.post("/:id/images", requireAuth, async (req, res, next) => {
     const image = await GroupImages.create({
       url,
       preview,
-      GroupId: +req.params.id
+      groupId: +req.params.id
     })
     const resObj = {
       "id": image.id,
@@ -213,7 +213,7 @@ router.post("/:id/images", requireAuth, async (req, res, next) => {
 //     }
 //      await GroupImages.destroy({
 //      where:{
-//       GroupId:+req.params.id
+//       groupId:+req.params.id
 //      }
 //     })
 //     res.json({
@@ -284,7 +284,7 @@ router.post("/:id/membership", requireAuth, async (req, res, next) => {
     const membership = await Membership.findOne({
       where: {
         userId: userId,
-        GroupId: group.id
+        groupId: group.id
       }
     })
 
@@ -305,13 +305,13 @@ router.post("/:id/membership", requireAuth, async (req, res, next) => {
 
     const member = await Membership.create({
       userId: +req.user.id,
-      GroupId: +req.params.id,
+      groupId: +req.params.id,
       status: "pending"
     })
     const resObj = {
       memberId: member.userId,
       status: member.status,
-      GroupId: member.GroupId
+      groupId: member.groupId
     }
     res.status(201).json(
       resObj
@@ -411,7 +411,7 @@ router.delete("/:id/membership", requireAuth, async (req, res, next) => {
     const membership = await Membership.findOne({
       where: {
         userId: userId,
-        GroupId: group.dataValues.id
+        groupId: group.dataValues.id
       }
     })
     if (!membership) {
@@ -423,7 +423,7 @@ router.delete("/:id/membership", requireAuth, async (req, res, next) => {
     if (membership.dataValues.status === "co-host" || membership.dataValues.status === "organaizer" || membership.dataValues.userId === userId) {
       await Membership.destroy({
         where: {
-          GroupId: +req.params.id
+          groupId: +req.params.id
         }
       })
       res.json({
@@ -449,7 +449,7 @@ router.get("/:id/events", async (req, res, next) => {
     }
     const event = await Event.findAll({
       where: {
-        GroupId: req.params.id
+        groupId: req.params.id
       },
       include: [
         {
@@ -554,12 +554,12 @@ router.post("/:id/events", [requireAuth, validateEvents], async (req, res, next)
         description,
         dateOfStart: startDate,
         dateOfEnd: endDate,
-        GroupId: +req.params.id,
+        groupId: +req.params.id,
         locationId: venueId
       })
       const resObg = {
         "id": event.id,
-        "GroupId": event.GroupId,
+        "groupId": event.groupId,
         "venueId": event.locationId,
         "name": event.name,
         "type": event.type,
@@ -592,7 +592,7 @@ router.get("/:id/venues", [requireAuth, restoreUser], async (req, res, next) => 
     }
     const venues = await Location.findAll({
       where: {
-        GroupId: req.params.id
+        groupId: req.params.id
       }
     })
     const resObj = {
@@ -602,7 +602,7 @@ router.get("/:id/venues", [requireAuth, restoreUser], async (req, res, next) => 
     for (let i = 0; i < venues.length; i++) {
       list.push({
         "id": venues[i].id,
-        "GroupId": venues[i].GroupId,
+        "groupId": venues[i].groupId,
         "address": venues[i].address,
         "city": venues[i].city,
         "state": venues[i].state,
@@ -641,11 +641,11 @@ router.post("/:id/venues", [requireAuth, restoreUser, validateVenues], async (re
       state,
       latitude: lat,
       longtitude: lng,
-      GroupId: req.params.id
+      groupId: req.params.id
     })
     const resObj = {
       "id": venue.id,
-      "GroupId": venue.GroupId,
+      "groupId": venue.groupId,
       "address": venue.address,
       "city": venue.city,
       "state": venue.state,
@@ -700,7 +700,7 @@ router.get("/:id", async (req, res, next) => {
           model: Location,
           attributes: [
             "id",
-            "GroupId",
+            "groupId",
             "address",
             "city",
             "state",
@@ -812,7 +812,7 @@ router.post("/", [requireAuth, validateGroups], async (req, res, next) => {
     await Membership.create({
       status: "organaizer",
       userId: +req.user.id,
-      GroupId: +group.id
+      groupId: +group.id
     })
 
     res.status(201).json(
@@ -826,35 +826,32 @@ router.post("/", [requireAuth, validateGroups], async (req, res, next) => {
 //Get all Groups - task 4
 router.get("/", async (req, res, next) => {
   try {
-    console.log(11111)
+  
     const groups = await Group.findAll({
       include: [
         {
           model: GroupImages,
-          attributes: ['preview']
+          attributes: ['preview', "url"]
         },
-     
+     {
+      model: User,
+            attributes:  [ 'id', 'firstName' ],
+            through: {
+              model:Membership,
+                attributes: ["status"]
+            },
+            required: true,
+     }
       ]
     })
-    console.log(groups)
+    
     const resObj = {
 
     }
     const list = []
     for (let i = 0; i < groups.length; i++) {
-      console.log(33333)
-      let membership = await Membership.findAll({
-        where: {
-          GroupId: groups[i].id
-        }
-      });
-      console.log(44444)
-      const previewImage = await GroupImages.findAll({
-        where: {
-          GroupId: groups[i].id,
-          preview: true
-        }
-      });
+     
+ 
       const obj = {
         id: groups[i].id,
         groupId: groups[i].id,
@@ -867,8 +864,8 @@ router.get("/", async (req, res, next) => {
         state: groups[i].state,
         createdAt: groups[i].createdAt,
         updatedAt: groups[i].updatedAt,
-        previewImage:previewImage.length > 0 && previewImage[0].url,
-        numMembers: membership.length
+        previewImage:groups[i].GroupImages.length > 0 && groups[i].GroupImages[0].url,
+        numMembers: groups[i].Users.length
       }
       list.push(obj)
     }

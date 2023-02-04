@@ -10,7 +10,7 @@ const location = [
     city:"San Francisco",
     state:"California",
     address:"355 London Street",
-    GroupId:2,
+    groupId:2,
     latitude:37.723350,
     longtitude:-122.434490
   },
@@ -18,7 +18,7 @@ const location = [
     city:"San Francisco",
     state:"California",
     address:"55 Mission Street",
-    GroupId:1,
+    groupId:1,
     latitude:37.723350,
     longtitude:-122.434490
   }

@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
 
       Location.belongsTo(models.Group,{
-        foreignKey:'GroupId'
+        foreignKey:'groupId'
       })
 
 
@@ -45,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.FLOAT,
       allowNull:false
     } ,
-    GroupId:{
+    groupId:{
       type:DataTypes.INTEGER,
       allowNull:false
     } 

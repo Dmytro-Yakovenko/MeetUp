@@ -21,7 +21,7 @@ router.delete("/:id",  requireAuth, async (req, res, next) => {
         }
         // const group = await Group.findOne({
         //     where: {
-        //         id: image.GroupId
+        //         id: image.groupId
         //     }
         // });
         const event = await Event.findByPk(image.eventId)
@@ -35,7 +35,7 @@ router.delete("/:id",  requireAuth, async (req, res, next) => {
 
         // const membership = await Membership.findOne({
         //     where: {
-        //         GroupId: event.GroupId,
+        //         groupId: event.groupId,
         //         userId: +req.user.id
         //     }
         // })

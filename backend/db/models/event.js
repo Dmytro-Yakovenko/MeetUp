@@ -29,13 +29,13 @@ module.exports = (sequelize, DataTypes) => {
       
         // Your code here
         Event.belongsTo(models.Group,{
-          foreignKey:'GroupId'
+          foreignKey:'groupId'
         })
       }
     
   }
   Event.init({
-    GroupId:{
+    groupId:{
       type:DataTypes.INTEGER,
       allowNull:false
     },

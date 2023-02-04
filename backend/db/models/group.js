@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
 
 
       Group.hasMany(models.Location, {
-        foreignKey:'GroupId',
+        foreignKey:'groupId',
         onDelete:'Cascade',
         hooks:true
       })
@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       })
 
       Group.hasMany(models.GroupImages, {
-        foreignKey:'GroupId',
+        foreignKey:'groupId',
 
   
         onDelete:'Cascade',
@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
 
 
       Group.hasMany(models.Event, {
-        foreignKey:'GroupId',
+        foreignKey:'groupId',
         onDelete:'Cascade',
         hooks:true
       })
@@ -102,11 +102,11 @@ module.exports = (sequelize, DataTypes) => {
     scopes:{
      
      
-      groupWithImages(GroupId){
+      groupWithImages(groupId){
         const {GroupImages} = require("../models")
               return {
                   where: { 
-                      GroupId
+                      groupId
                   },
                   include: [ 
                       { model: GroupImages } 
