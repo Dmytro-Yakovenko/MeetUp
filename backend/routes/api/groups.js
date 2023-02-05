@@ -826,85 +826,61 @@ router.post("/", [requireAuth, validateGroups], async (req, res, next) => {
 //Get all Groups - task 4
 router.get("/", async (req, res, next) => {
   try {
+   
     const groups = await Group.findAll({
       include: [
         {
           model: GroupImages,
           attributes: ['preview', "url"]
         },
-        {
-          model: User,
-          attributes: ["lastName", "firstName", "id"]
-        }
+     {
+      model: User,
+          attributes:  [ 'id', 'firstName' ],
+          through: {
+              model:Membership,
+                attributes: ["status"]
+            },
+            required: true,
+     }
       ]
-    })
+    }) 
+    
     const resObj = {
-      "groups": groups
+
     }
+    const list = []
+    for (let i = 0; i < groups.length; i++) {
+     
+ 
+      const obj = {
+        id: groups[i].id,
+        groupId: groups[i].id,
+        name: groups[i].name,
+        organizerId: groups[i].organizerId,
+        about: groups[i].about,
+        type: groups[i].type,
+        private: groups[i].private,
+        city: groups[i].city,
+        state: groups[i].state,
+        createdAt: groups[i].createdAt,
+        updatedAt: groups[i].updatedAt,
+        previewImage:groups[i].GroupImages.length > 0 && groups[i].GroupImages[0].url,
+        numMembers: groups[i].Users.length
+      
+      }
+      list.push(obj)
+    }
+    resObj.Groups = list
+
     res.json(
       resObj
     )
+    return;
   } catch (err) {
+
     next(err)
   }
+  return
 })
-
-// router.get("/", async (req, res, next) => {
-//   try {
-   
-//     const groups = await Group.findAll({
-//       include: [
-//         {
-//           model: GroupImages,
-//           attributes: ['preview', "url"]
-//         },
-//      {
-//       model: User,
-//           attributes:  [ 'id', 'firstName' ],
-//           through: {
-//               model:Membership,
-//                 attributes: ["status"]
-//             },
-//             required: true,
-//      }
-//       ]
-//     }) 
-    
-//     const resObj = {
-
-//     }
-//     const list = []
-//     for (let i = 0; i < groups.length; i++) {
-     
- 
-//       const obj = {
-//         id: groups[i].id,
-//         groupId: groups[i].id,
-//         name: groups[i].name,
-//         organizerId: groups[i].organizerId,
-//         about: groups[i].about,
-//         type: groups[i].type,
-//         private: groups[i].private,
-//         city: groups[i].city,
-//         state: groups[i].state,
-//         createdAt: groups[i].createdAt,
-//         updatedAt: groups[i].updatedAt,
-//         previewImage:groups[i].GroupImages.length > 0 && groups[i].GroupImages[0].url,
-//         numMembers: groups[i].Users.length
-      
-//       }
-//       list.push(obj)
-//     }
-//     resObj.Groups = list
-
-//     res.json(
-//       resObj
-//     )
-//     return;
-//   } catch (err) {
-//     next(err)
-//   }
-//   return
-// })
 
 module.exports = router;
