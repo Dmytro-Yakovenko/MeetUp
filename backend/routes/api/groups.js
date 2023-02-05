@@ -833,15 +833,15 @@ router.get("/", async (req, res, next) => {
           model: GroupImages,
           attributes: ['preview', "url"]
         },
-     {
-      model: User,
-            attributes:  [ 'id', 'firstName' ],
-            through: {
-              model:Membership,
-                attributes: ["status"]
-            },
-            required: true,
-     }
+     //{
+    //   model: User,
+    //         attributes:  [ 'id', 'firstName' ],
+    //         through: {
+    //           model:Membership,
+    //             attributes: ["status"]
+    //         },
+    //         required: true,
+    //  }
       ]
     })
     
@@ -865,7 +865,7 @@ router.get("/", async (req, res, next) => {
         createdAt: groups[i].createdAt,
         updatedAt: groups[i].updatedAt,
         previewImage:groups[i].GroupImages.length > 0 && groups[i].GroupImages[0].url,
-        numMembers: groups[i].Users.length
+        // numMembers: groups[i].Users.length
       }
       list.push(obj)
     }
