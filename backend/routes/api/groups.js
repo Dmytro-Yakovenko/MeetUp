@@ -833,15 +833,15 @@ router.get("/", async (req, res, next) => {
           model: GroupImages,
           attributes: ['preview', "url"]
         },
-     //{
-    //   model: User,
+     {
+      model: User,
     //         attributes:  [ 'id', 'firstName' ],
     //         through: {
     //           model:Membership,
     //             attributes: ["status"]
     //         },
     //         required: true,
-    //  }
+     }
       ]
     })
     
@@ -872,7 +872,7 @@ router.get("/", async (req, res, next) => {
     resObj.Groups = list
 
     res.json(
-      groups
+      resObj
     )
     return;
   } catch (err) {
