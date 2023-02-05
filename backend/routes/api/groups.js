@@ -872,7 +872,7 @@ router.get("/", async (req, res, next) => {
     resObj.Groups = list
 
     res.json(
-      resObj
+      groups
     )
     return;
   } catch (err) {
