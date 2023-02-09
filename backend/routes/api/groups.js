@@ -19,7 +19,7 @@ const validateGroups = [
     .withMessage('About must be 50 characters or more'),
   check('type')
     .exists({ checkFalsy: true })
-    .isIn(['OnLine', 'In person'])
+    .isIn(['On line', 'In person'])
     .withMessage("Type must be 'Online' or 'InPerson'"),
   check('private')
     .exists({ checkFalsy: true })
@@ -810,7 +810,7 @@ router.post("/", [requireAuth, validateGroups], async (req, res, next) => {
     })
 
     await Membership.create({
-      status: "organaizer",
+      status: "organizer",
       userId: +req.user.id,
       groupId: +group.id
     })
@@ -833,15 +833,15 @@ router.get("/", async (req, res, next) => {
           model: GroupImages,
           attributes: ['preview', "url"]
         },
-        // {
-        //   model: User,
-        //         attributes:  [ 'id', 'firstName' ],
-        //         through: {
-        //           model:Membership,
-        //             attributes: ["status"]
-        //         },
-        //         required: true,
-        //  }
+        {
+          model: User,
+                attributes:  [ 'id', 'firstName' ],
+                through: {
+                  model:Membership,
+                    attributes: ["status"]
+                },
+                required: true
+         }
       ]
     })
     console.log(groups)
@@ -872,7 +872,9 @@ list.forEach(item=>{
   delete item.GroupImages
   // delete item.Users
 })
-
+// list.forEach(item=>{
+//   const user=
+// })
    
 
     res.json({
