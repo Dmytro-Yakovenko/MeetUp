@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
     status:{
       type:DataTypes.STRING,
       validate:{
-        isIn: [['organaizer', 'co-host', 'member','pending',"waitlist","attending"]]
+        isIn: [['organizer', 'co-host', 'member','pending',"waitlist","attending"]]
       }
     }
   }, {

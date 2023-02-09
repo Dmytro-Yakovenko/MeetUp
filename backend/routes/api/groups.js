@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { check } = require('express-validator');
-const { json } = require('sequelize');
+const { json, useInflection } = require('sequelize');
 
 const { restoreUser, requireAuth } = require('../../utils/auth');
 const { User, Group, Membership, GroupImages, Event, Attendees, Location, EventImages } = require('../../db/models');
@@ -826,58 +826,61 @@ router.post("/", [requireAuth, validateGroups], async (req, res, next) => {
 //Get all Groups - task 4
 router.get("/", async (req, res, next) => {
   try {
-   
+  
     const groups = await Group.findAll({
       include: [
         {
           model: GroupImages,
           attributes: ['preview', "url"]
         },
-     {
-      model: User,
-          attributes:  [ 'id', 'firstName' ],
-          through: {
-              model:Membership,
-                attributes: ["status"]
-            },
-            required: true,
-     }
+        {
+          model: User,
+                attributes:  [ 'id', 'firstName' ],
+                through: {
+                  model:Membership,
+                    attributes: ["status"]
+                },
+                required: true,
+         }
       ]
-    }) 
-    
-    const resObj = {
-
-    }
+    })
+    console.log(groups)
     const list = []
-    for (let i = 0; i < groups.length; i++) {
-     
- 
-      const obj = {
-        id: groups[i].id,
-        groupId: groups[i].id,
-        name: groups[i].name,
-        organizerId: groups[i].organizerId,
-        about: groups[i].about,
-        type: groups[i].type,
-        private: groups[i].private,
-        city: groups[i].city,
-        state: groups[i].state,
-        createdAt: groups[i].createdAt,
-        updatedAt: groups[i].updatedAt,
-        previewImage:groups[i].GroupImages.length > 0 && groups[i].GroupImages[0].url,
-        numMembers: groups[i].Users.length
-      
-      }
-      list.push(obj)
-    }
-    resObj.Groups = list
+groups.forEach(group=>{
+  list.push(group.toJSON())
+})
 
-    res.json(
-      resObj
+list.forEach(item=>{
+  item.GroupImages.forEach(image=>{
+    if(image.preview===true){
+     
+      item.previewImage=image.url
+    }
+  })
+  if(!item.previewImage){
+    item.previewImage = 'no photo added'
+  }
+  let counter=0;
+
+  item.Users.forEach(user=>{
+    if(user.Membership.status==="organizer"  || user.Membership.status==="co-host" || user.Membership.status==="member"){
+      console.log(user.Membership.status)
+      counter++
+    }
+  })
+  item.numMembers=counter
+  delete item.GroupImages
+  delete item.Users
+})
+
+   
+
+    res.json({
+      Groups: list
+    }
     )
     return;
   } catch (err) {
-
     next(err)
   }
   return
