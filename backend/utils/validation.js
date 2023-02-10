@@ -19,7 +19,15 @@ const handleValidationErrors = (req, _res, next) => {
   }
   next();
 };
+// add to /backend/utils/validation.js
+const env = process.env.NODE_ENV;
+const schema = process.env.SCHEMA;
+const sqlTable = name => env ===  "production" ? schema + `."${name[0].toUpperCase().concat(name.slice(1))}"` : name;
 
-module.exports = {
-  handleValidationErrors
-};
+  module.exports = {
+    handleValidationErrors,
+    sqlTable
+  };
+// module.exports = {
+//   handleValidationErrors
+// };

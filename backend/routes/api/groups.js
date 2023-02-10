@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const { check } = require('express-validator');
-const { json, useInflection } = require('sequelize');
+const { json, useInflection, sequelize} = require('sequelize');
+
 
 const { restoreUser, requireAuth } = require('../../utils/auth');
 const { User, Group, Membership, GroupImages, Event, Attendees, Location, EventImages } = require('../../db/models');
-const { handleValidationErrors } = require('../../utils/validation');
+const { handleValidationErrors,sqlTable } = require('../../utils/validation');
 
 router.use(restoreUser)
 
@@ -314,7 +315,7 @@ router.post("/:id/membership", requireAuth, async (req, res, next) => {
       groupId: member.groupId
     }
     res.status(201).json(
-      resObj
+      member
     )
   } catch (err) {
     next(err)
@@ -828,20 +829,23 @@ router.get("/", async (req, res, next) => {
   try {
   
     const groups = await Group.findAll({
+
+
+
       include: [
         {
           model: GroupImages,
           attributes: ['preview', "url"]
         },
-        {
-          model: User,
-                attributes:  [ 'id', 'firstName' ],
-                through: {
-                  model:Membership,
-                    attributes: ["status"]
-                },
-                required: true
-         }
+        // {
+        //   model: User,
+        //         attributes:  [ 'id', 'firstName' ],
+        //         through: {
+        //           model:Membership,
+        //             attributes: ["status"]
+        //         },
+        //         required: true,
+        //  }
       ]
     })
     console.log(groups)
@@ -853,7 +857,6 @@ groups.forEach(group=>{
 list.forEach(item=>{
   item.GroupImages.forEach(image=>{
     if(image.preview===true){
-     
       item.previewImage=image.url
     }
   })
@@ -861,7 +864,6 @@ list.forEach(item=>{
     item.previewImage = 'no photo added'
   }
   // let counter=0;
-
   // item.Users.forEach(user=>{
   //   if(user.Membership.status==="organizer"  || user.Membership.status==="co-host" || user.Membership.status==="member"){
   //     console.log(user.Membership.status)
@@ -872,9 +874,7 @@ list.forEach(item=>{
   delete item.GroupImages
   // delete item.Users
 })
-// list.forEach(item=>{
-//   const user=
-// })
+
    
 
     res.json({

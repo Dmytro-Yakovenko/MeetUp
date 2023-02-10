@@ -1,6 +1,8 @@
 'use strict';
+const { handleValidationErrors,sqlTable } = require('../../utils/validation');
+
 const {
-  Model
+  Model, 
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Group extends Model {
@@ -102,15 +104,32 @@ module.exports = (sequelize, DataTypes) => {
     scopes:{
      
      
-      groupWithImages(groupId){
-        const {GroupImages} = require("../models")
-              return {
-                  where: { 
-                      groupId
-                  },
-                  include: [ 
-                      { model: GroupImages } 
+      groupWithImages:{
+        // const {GroupImages} = require("../models")
+        //       return {
+                attributes: {
+                  include: [
+                      // [sequelize.literal(
+                      //     `(SELECT AVG(stars) 
+                      //     FROM ${sqlTable("Reviews")}
+                      //     WHERE "spotId" = "Spot".id)`
+                      // ), "star"],
+                      [sequelize.literal(
+                          `(SELECT "url"
+                          FROM ${sqlTable("GroupImages")}
+                          WHERE "groupId" = "Groups".id AND "preview" = true)`
+                      ), "preview"]
                   ]
+              // },
+
+
+
+      //         //     where: { 
+      //         //         groupId
+      //         //     },
+      //         //     include: [ 
+      //         //         { model: GroupImages } 
+      //         //     ]
               }
 
           }
