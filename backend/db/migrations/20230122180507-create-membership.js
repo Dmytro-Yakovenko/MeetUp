@@ -18,7 +18,7 @@ if (process.env.NODE_ENV === 'production') {
      
       groupId: {
         type: Sequelize.INTEGER,
-        allowNull:false,
+       // allowNull:false,
         onDelete:"Cascade",
         references:{
             model:"Groups"
@@ -32,7 +32,8 @@ if (process.env.NODE_ENV === 'production') {
           }
       },
       status: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue:"organizer"
       },
       createdAt: {
         allowNull: false,

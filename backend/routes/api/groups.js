@@ -282,40 +282,66 @@ router.post("/:id/membership", requireAuth, async (req, res, next) => {
     }
 
     const userId = +req.user.id
-    const membership = await Membership.findOne({
-      where: {
-        userId: userId,
-        groupId: group.id
-      }
-    })
+    const user = await User.findByPk(userId)
 
-    if (membership && membership.dataValues.status === "pending") {
-      next({
-        "message": "Membership has already been requested",
-        "statusCode": 400
-      })
-    }
+    // const membership = await Membership.findOne({
+    //   where: {
+    //     userId: userId,
+    //     groupId: group.id
+    //   }
+    // })
 
-    if (membership && membership.dataValues.status === "member") {
-      next({
-        "message": "Membership has already been requested",
-        "statusCode": 400
-      })
-    }
+    // if (membership && membership.dataValues.status === "pending") {
+    //   next({
+    //     "message": "Membership has already been requested",
+    //     "statusCode": 400
+    //   })
+    // }
+
+    // if (membership && membership.dataValues.status === "member") {
+    //   next({
+    //     "message": "Membership has already been requested",
+    //     "statusCode": 400
+    //   })
+    // }
 
 
-    const member = await Membership.create({
-      userId: +req.user.id,
-      groupId: +req.params.id,
-      status: "pending"
-    })
-    const resObj = {
-      memberId: member.userId,
-      status: member.status,
-      groupId: member.groupId
-    }
+    // const member = await Membership.create({
+    //   userId: +req.user.id,
+    //   groupId: +req.params.id,
+    //   status: "pending"
+    // })
+    // const musician = await Musician.findByPk(req.params.musicianId);
+//     const { instrumentIds } = req.body;
+  
+//     await musician.addInstruments(instrumentIds);
+console.log(user)
+
+
+
+   const member = await user.addGroups(+req.params.id)
+   console.log(member)
+   const membership = await Membership.findOne(
+
+
+{
+    where:{
+      userId:userId
+    },
+  }
+
+  
+   )
+   membership.update(
+    {status:req.body.status, userId:userId, groupId:+req.params.id}
+   )
+    // const resObj = {
+    //   memberId: member.userId,
+    //   status: member.status,
+    //   groupId: member.groupId
+    // }
     res.status(201).json(
-      member
+     membership
     )
   } catch (err) {
     next(err)
@@ -837,15 +863,15 @@ router.get("/", async (req, res, next) => {
           model: GroupImages,
           attributes: ['preview', "url"]
         },
-        // {
-        //   model: User,
-        //         attributes:  [ 'id', 'firstName' ],
-        //         through: {
-        //           model:Membership,
-        //             attributes: ["status"]
-        //         },
-        //         required: true,
-        //  }
+        {
+          model: User,
+                attributes:  [ 'id', 'firstName' ],
+                through: {
+                  model:Membership,
+                    attributes: ["status"]
+                },
+                required: true,
+         }
       ]
     })
     console.log(groups)
@@ -863,16 +889,16 @@ list.forEach(item=>{
   if(!item.previewImage){
     item.previewImage = 'no photo added'
   }
-  // let counter=0;
-  // item.Users.forEach(user=>{
-  //   if(user.Membership.status==="organizer"  || user.Membership.status==="co-host" || user.Membership.status==="member"){
-  //     console.log(user.Membership.status)
-  //     counter++
-  //   }
-  // })
-  // item.numMembers=counter
+  let counter=0;
+  item.Users.forEach(user=>{
+    if(user.Membership.status==="organizer"  || user.Membership.status==="co-host" || user.Membership.status==="member"){
+      console.log(user.Membership.status)
+      counter++
+    }
+  })
+  item.numMembers=counter
   delete item.GroupImages
-  // delete item.Users
+  delete item.Users
 })
 
    

@@ -18,15 +18,16 @@ module.exports = (sequelize, DataTypes) => {
   Membership.init({
     groupId:{
       type:DataTypes.INTEGER,
-      allowNull:false
+      // allowNull:false
     } ,
    
     userId:{
       type:DataTypes.INTEGER,
-      allowNull:false
+      // allowNull:false
     } ,
     status:{
       type:DataTypes.STRING,
+      defaultValue:"organizer",
       validate:{
         isIn: [['organizer', 'co-host', 'member','pending',"waitlist"]]
       }
