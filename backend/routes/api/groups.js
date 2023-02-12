@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const { check } = require('express-validator');
-const { json, useInflection, sequelize} = require('sequelize');
+const { json, useInflection} = require('sequelize');
 
 
 const { restoreUser, requireAuth } = require('../../utils/auth');
-const { User, Group, Membership, GroupImages, Event, Attendees, Location, EventImages } = require('../../db/models');
+
+const { sequelize, User, Group, Membership, GroupImages, Event, Attendees, Location, EventImages } = require('../../db/models');
 const { handleValidationErrors,sqlTable } = require('../../utils/validation');
 
 router.use(restoreUser)
@@ -851,63 +852,64 @@ router.post("/", [requireAuth, validateGroups], async (req, res, next) => {
 })
 
 //Get all Groups - task 4
-router.get("/", async (req, res, next) => {
-  try {
-    const groups = await Group.findAll({
-      include: [
-        {
-          model: GroupImages,
-          attributes: ['preview', "url"]
-        },
-       // {
-        //   model: User,
-        //         attributes:  [ 'id', 'firstName' ],
-        //         through: {
-        //           model:Membership,
-        //             attributes: ["status"]
-        //         },
-        //         required: true,
-        //  }
-      ]
-    })
-    console.log(groups)
-    const list = []
-groups.forEach(group=>{
-  list.push(group.toJSON())
-})
-list.forEach(item=>{
-  item.GroupImages.forEach(image=>{
-    if(image.preview===true){
-      item.previewImage=image.url
-    }
-  })
-  if(!item.previewImage){
-    item.previewImage = 'no photo added'
-  }
-  // let counter=0;
-  // item.Users.forEach(user=>{
-  //   if(user.Membership.status==="organizer"  || user.Membership.status==="co-host" || user.Membership.status==="member"){
-  //     console.log(user.Membership.status)
-  //     counter++
-  //   }
-  // })
-  // item.numMembers=counter
-  delete item.GroupImages
-  // delete item.Users
-})
+// router.get("/", async (req, res, next) => {
+//   try {
+//     const groups = await Group.findAll({
+//       include: [
+//         {
+//           model: GroupImages,
+//           attributes: ['preview', "url"]
+//         },
+//        // {
+//         //   model: User,
+//         //         attributes:  [ 'id', 'firstName' ],
+//         //         through: {
+//         //           model:Membership,
+//         //             attributes: ["status"]
+//         //         },
+//         //         required: true,
+//         //  }
+//       ]
+//     })
+//     console.log(groups)
+//     const list = []
+// groups.forEach(group=>{
+//   list.push(group.toJSON())
+// })
+// list.forEach(item=>{
+//   item.GroupImages.forEach(image=>{
+//     if(image.preview===true){
+//       item.previewImage=image.url
+//     }
+//   })
+//   if(!item.previewImage){
+//     item.previewImage = 'no photo added'
+//   }
+//   // let counter=0;
+//   // item.Users.forEach(user=>{
+//   //   if(user.Membership.status==="organizer"  || user.Membership.status==="co-host" || user.Membership.status==="member"){
+//   //     console.log(user.Membership.status)
+//   //     counter++
+//   //   }
+//   // })
+//   // item.numMembers=counter
+//   delete item.GroupImages
+//   // delete item.Users
+//})
+
 
    
 
-    res.json({
-      Groups: list
-    }
-    )
-    return;
-  } catch (err) {
-    next(err)
-  }
-  return
-})
+//     res.json({
+//       Groups: list
+//     }
+//     )
+//     return;
+//   } catch (err) {
+//     next(err)
+//   }
+//   return
+// })
 // router.get("/", async (req, res, next) => {
 //   try {
 //     const groups = await Group.findAll({
@@ -965,6 +967,41 @@ list.forEach(item=>{
 //   }
 //   return
 // })
+
+
+//Get all Groups - task 4
+router.get("/", async (req, res, next) => {
+  try {
+    let sql = `select gr."id", 
+    gr."name", 
+    gr."organizerId", 
+    gr."about", 
+    gr."type", 
+    gr."private", 
+    gr."city", 
+    gr."state", 
+     count(*) as members,
+     max(gi.url) as "previewImage"
+from "Groups" gr
+ left join "Memberships" ms on ms."groupId"=gr."id"
+ left join "GroupImages" gi on gi."groupId"=gr."id" and preview=true 
+group by gr."id", 
+    gr."name", 
+    gr."about", 
+    gr."type", 
+    gr."private", 
+    gr."city", 
+    gr."state"`
+    const [groups, meta]=await sequelize.query( sql );
+  res.json({
+    "Groups":groups
+  })  
+
+  }catch(err) {
+        next(err)
+      }
+     
+    })
 
 
 
