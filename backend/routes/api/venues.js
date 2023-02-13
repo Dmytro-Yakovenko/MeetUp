@@ -53,13 +53,15 @@ router.put("/:id", [requireAuth, validateVenues], async (req, res, next) => {
         longtitude:lng
         
       })
+      console.log(venue)
       const resObj={
         id:venue.id,
         address:venue.address,
         city:venue.city, 
         state:venue.state, 
         lat:venue.latitude, 
-        lng:venue.longtitude
+        lng:venue.longtitude,
+        "groupId": venue.groupId
       }
       res.json(
         resObj

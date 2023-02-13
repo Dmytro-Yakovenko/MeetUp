@@ -22,11 +22,11 @@ module.exports = (sequelize, DataTypes) => {
       })
 
       
-      Group.belongsToMany(models.User,{
-        through:models.Membership
-      })
+      // Group.belongsToMany(models.User,{
+      //   through:models.Membership
+      // })
 
-      Group.hasMany(models.GroupImages, {
+      Group.hasMany(models.GroupImage, {
         foreignKey:'groupId',
 
   
@@ -83,59 +83,6 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Group',
 
-    defaultScope:{
-      attributes:{
-        include:[
-          'id', 
-          'organizerId',
-          'name', 
-          'about',
-          'type', 
-          'private',
-           'city', 
-           'state',
-            'createdAt', 
-            'updatedAt', 
-        
-            
-        ]
-      }
-    },
-    scopes:{
-     
-     
-      groupWithImages:{
-        // const {GroupImages} = require("../models")
-        //       return {
-                attributes: {
-                  include: [
-                      // [sequelize.literal(
-                      //     `(SELECT AVG(stars) 
-                      //     FROM ${sqlTable("Reviews")}
-                      //     WHERE "spotId" = "Spot".id)`
-                      // ), "star"],
-                      [sequelize.literal(
-                          `(SELECT "url"
-                          FROM ${sqlTable("GroupImages")}
-                          WHERE "groupId" = "Groups".id AND "preview" = true)`
-                      ), "preview"]
-                  ]
-              // },
-
-
-
-      //         //     where: { 
-      //         //         groupId
-      //         //     },
-      //         //     include: [ 
-      //         //         { model: GroupImages } 
-      //         //     ]
-              }
-
-          }
-      }
-       
-    
   });
   return Group;
 };
