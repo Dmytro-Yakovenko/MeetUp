@@ -967,32 +967,53 @@ router.post("/", [requireAuth, validateGroups], async (req, res, next) => {
 //   }
 //   return
 // })
-
+// `select gr."id", 
+//     gr."name", 
+//     gr."organizerId", 
+//     gr."about", 
+//     gr."type", 
+//     gr."private", 
+//     gr."city", 
+//     gr."state", 
+//      count(*) as members,
+//      max(gi.url) as "previewImage"
+// from "Groups" gr
+//  left join "Memberships" ms on ms."groupId"=gr."id"
+//  left join "GroupImages" gi on gi."groupId"=gr."id" and preview=true 
+// group by gr."id", 
+//     gr."name", 
+//     gr."about", 
+//     gr."type", 
+//     gr."private", 
+//     gr."city", 
+//     gr."state"`
 
 //Get all Groups - task 4
 router.get("/", async (req, res, next) => {
   try {
-    let sql = `select gr."id", 
-    gr."name", 
-    gr."organizerId", 
-    gr."about", 
-    gr."type", 
-    gr."private", 
-    gr."city", 
-    gr."state", 
-     count(*) as members,
-     max(gi.url) as "previewImage"
-from "Groups" gr
- left join "Memberships" ms on ms."groupId"=gr."id"
- left join "GroupImages" gi on gi."groupId"=gr."id" and preview=true 
-group by gr."id", 
-    gr."name", 
-    gr."about", 
-    gr."type", 
-    gr."private", 
-    gr."city", 
-    gr."state"`
+    let sql = `SELECT gr.id, 
+    gr.name, 
+    gr.organizerId, 
+    gr.about, 
+    gr.type, 
+    gr.private, 
+    gr.city, 
+    gr.state, 
+    COUNT(*) AS members,
+    MAX(gi.url) AS previewImage
+FROM Groups gr
+LEFT JOIN Memberships ms ON ms.groupId = gr.id
+LEFT JOIN GroupImages gi ON gi.groupId = gr.id AND preview = true 
+GROUP BY gr.id, 
+      gr.name, 
+      gr.about, 
+      gr.type, 
+      gr.private, 
+      gr.city, 
+      gr.state`;
+
     const [groups, meta]=await sequelize.query( sql );
+    console.log(groups)
   res.json({
     "Groups":groups
   })  
