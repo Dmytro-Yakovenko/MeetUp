@@ -24,10 +24,10 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      dateOfStart: {
+      startDate: {
         type: Sequelize.DATE
       },
-      dateOfEnd: {
+      endDate: {
         type: Sequelize.DATE
       },
       locationId: {

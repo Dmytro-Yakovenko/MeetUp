@@ -52,11 +52,11 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.STRING,
       allowNull:false
     } ,
-    dateOfStart:{
+    startDate:{
       type:DataTypes.DATE,
       allowNull:false
     } ,
-    dateOfEnd:{
+    endDate:{
       type:DataTypes.DATE,
       allowNull:false
     } ,

@@ -458,146 +458,141 @@ router.post("/:id/images", requireAuth, async (req, res, next) => {
 // })
 
 // //Get all Events of a Group specified by its id - task 15
-// router.get("/:id/events", async (req, res, next) => {
-//   try {
-//     const group = await Group.findByPk(req.params.id)
-//     if (!group) {
-//       next({
-//         message: "Group could not be found",
-//         statusCode: 404
-//       })
-//     }
-//     const event = await Event.findAll({
-//       where: {
-//         groupId: req.params.id
-//       },
-//       include: [
-//         {
-//           model: Group,
-//           attributes: [
-//             "id",
-//             "name",
-//             "private",
-//             "city",
-//             "state"
-//           ]
-//         },
-//         {
-//           model: Location,
-//           attributes: [
-//             "id",
-//             "address",
-//             "city",
-//             "state",
-//             "latitude",
-//             "longtitude"
-//           ]
-//         },
-//         {
-//           model: EventImage,
-//           attributes: [
-//             "id",
-//             "url",
-//             "preview"
-//           ]
-//         }
-//       ]
-//     });
+router.get("/:id/events", async (req, res, next) => {
+  try {
+    const group = await Group.findByPk(req.params.id)
+    if (!group) {
+      next({
+        message: "Group could not be found",
+        statusCode: 404
+      })
+    }
+    const event = await Event.findAll({
+      where: {
+        groupId: req.params.id
+      },
+      include: [
+        {
+          model: Group,
+          attributes: [
+            "id",
+            "name",
+            "private",
+            "city",
+            "state"
+          ]
+        },
+        {
+          model: Location,
+          attributes: [
+            "id",
+            "address",
+            "city",
+            "state",
+            "lat",
+            "lng"
+          ]
+        },
+        {
+          model: EventImage,
+          attributes: [
+          
+            "url",
+            "preview"
+          ]
+        }
+      ]
+    });
 
-//     const list = []
-//     const resObg = {}
-//     for (let i = 0; i < events.length; i++) {
-//       const item = events[i].dataValues
-//       console.log(item.Location.dataValues)
-//       const numAttending = await Attendees.findAll({
-//         where: {
-//           eventId: item.id
-//         }
-//       })
-//       list.push({
-//         "id": item.id,
-//         "groupId": item.groupId,
-//         "venueId": (item.Location) ? item.Location.dataValues.id : null,
-//         "name": item.name,
-//         "type": item.type,
-//         "startDate": item.dateOfStart,
-//         "endDate": item.dateOfEnd,
-//         "numAttending": numAttending.length,
-//         "previewImage": (item.EventImage.length > 0) ? item.EventImage[0].url : "no photo",
-//         "Group": item.Group,
-//         "Venue": (item.Location) ? item.Location.dataValues : null
+   
+    // const resObg = {
 
-//       })
-//     }
-//     resObg.Events = list
+
+  
+     
+    //     "id": event.id,
+    //     "groupId": event.groupId,
+    //     "venueId": (event.Location) ? event.Location.dataValues.id : null,
+    //     "name": event.name,
+    //     "type": event.type,
+    //     "startDate": event.startDate,
+    //     "endDate": event.endDate,
+    //     //"numAttending": numAttending.length,
+    //     "previewImage": (event.EventImages.length > 0) ? event.EventImages[0].url : "no photo",
+    //     "Group": event.Group,
+    //     "Venue": (event.Location) ? event.Location.dataValues : null
+
+    
+    // }
+    
 
 
 
-//     res.json(
-//       resObg
-//     )
-//   } catch (err) {
-//     next(err)
-//   }
-// })
+    res.json(
+      event
+    )
+  } catch (err) {
+    next(err)
+  }
+})
 
 // //Create an Event for a Group specified by its id ??? find events - task 17
 
-// router.post("/:id/events", [requireAuth, validateEvents], async (req, res, next) => {
+router.post("/:id/events", [requireAuth, validateEvents], async (req, res, next) => {
 
-//   try {
-//     const group = await Group.findByPk(req.params.id)
+  try {
+    const group = await Group.findByPk(req.params.id)
 
-//     if (!group) {
-//       next({
-//         message: "Group could not be found",
-//         statusCode: 404
-//       })
-//     }
-//     if (group) {
-//       const {
-//         venueId,
+    if (!group) {
+      next({
+        message: "Group could not be found",
+        statusCode: 404
+      })
+    }
+    if (group) {
+      const {
+        venueId,
 
-//         name,
-//         type,
-//         capacity,
-//         price,
-//         description,
-//         startDate,
-//         endDate
-//       } = req.body
-//       const event = await Event.create({
-//         name,
-//         type,
-//         capacity,
-//         price,
-//         description,
-//         dateOfStart: startDate,
-//         dateOfEnd: endDate,
-//         groupId: +req.params.id,
-//         locationId: venueId
-//       })
-//       const resObg = {
-//         "id": event.id,
-//         "groupId": event.groupId,
-//         "venueId": event.locationId,
-//         "name": event.name,
-//         "type": event.type,
-//         "capacity": event.capacity,
-//         "price": event.price,
-//         "description": event.description,
-//         "startDate": event.dateOfStart,
-//         "endDate": event.dateOfEnd
-//       }
-//       res.status(201).json(
-//         resObg
-//       )
-//     }
+        name,
+        type,
+        capacity,
+        price,
+        description,
+        startDate,
+        endDate
+      } = req.body
+      const event = await Event.create({
+        name,
+        type,
+        capacity,
+        price,
+        description,
+         startDate,
+         endDate,
+        groupId: +req.params.id,
+        locationId: venueId
+      })
+      const resObg = {
+        "id": event.id,
+        "groupId": event.groupId,
+        "venueId": event.locationId,
+        "name": event.name,
+        "type": event.type,
+        "capacity": event.capacity,
+        "price": event.price,
+        "description": event.description,
+        "startDate": event.startDate,
+        "endDate": event.endDate
+      }
+      res.status(201).json(
+        resObg
+      )
+    }
 
-//   } catch (err) {
-//     next(err)
-//   }
-// })
+  } catch (err) {
+    next(err)
+  }
+})
 
 
 // //Get All Venues for a Group specified by its id  find venue - task 11
@@ -623,10 +618,10 @@ router.get("/:id/venues", [requireAuth, restoreUser], async (req, res, next) => 
     list.forEach(item => {
  
   
-      item.lat= item.latitude;
-      item.lng=item.longtitude;
-      delete item.latitude
-      delete item.longtitude
+      item.lat= item.lat;
+      item.lng=item.lng;
+      delete item.lat
+      delete item.lng
       delete item.createdAt
       delete item.updatedAt
 
@@ -664,8 +659,8 @@ router.post("/:id/venues", [requireAuth, restoreUser, validateVenues], async (re
       address,
       city,
       state,
-      latitude: lat,
-      longtitude: lng,
+      lat: lat,
+      lng: lng,
       groupId: req.params.id
     })
     const resObj = {
@@ -674,8 +669,8 @@ router.post("/:id/venues", [requireAuth, restoreUser, validateVenues], async (re
       "address": venue.address,
       "city": venue.city,
       "state": venue.state,
-      "lat": venue.latitude,
-      "lng": venue.longtitude,
+      "lat": venue.lat,
+      "lng": venue.lng,
     }
     res.status(201).json(
       resObj
@@ -729,8 +724,8 @@ router.get("/:id", async (req, res, next) => {
             "address",
             "city",
             "state",
-            "latitude",
-            "longtitude"
+            "lat",
+            "lng"
           ]
         }
       ],

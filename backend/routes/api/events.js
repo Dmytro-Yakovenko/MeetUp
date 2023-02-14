@@ -48,41 +48,41 @@ const validateEvents = [
 ]
 
 // //Add an Image to a Event based on the Event's id ???addImage - task 18
-// router.post("/:id/images", requireAuth, async (req, res, next) => {
-//   try {
-//     const event = await Event.findByPk(req.params.id);
+router.post("/:id/images", requireAuth, async (req, res, next) => {
+  try {
+    const event = await Event.findByPk(req.params.id);
 
-//     if (!event) {
-//       next({
-//         message: "Event couldn't be found",
-//         statusCode: 404
-//       })
-//     }
-//     if (event) {
-//       const {
-//         url,
-//         preview
-//       } = req.body
-//       const image = await EventImages.create({
-//         url,
-//         preview,
-//         eventId: +req.params.id
-//       })
-//       const resObj ={
-//         "id": image.id,
-//         "url": image.url,
-//         "preview":image.preview
-//       }
+    if (!event) {
+      next({
+        message: "Event couldn't be found",
+        statusCode: 404
+      })
+    }
+    if (event) {
+      const {
+        url,
+        preview
+      } = req.body
+      const image = await EventImage.create({
+        url,
+        preview,
+        eventId: +req.params.id
+      })
+      const resObj ={
+        "id": image.id,
+        "url": image.url,
+        "preview":image.preview
+      }
 
-//       res.status(201).json(
-//         resObj
-//       )
-//     }
+      res.status(201).json(
+        resObj
+      )
+    }
 
-//   } catch (err) {
-//     next(err)
-//   }
-// })
+  } catch (err) {
+    next(err)
+  }
+})
 
 
 
@@ -357,8 +357,8 @@ const validateEvents = [
 //   capacity, 
 //   price, 
 //   description, 
-//   dateOfStart:startDate, 
-//   dateOfEnd:endDate
+//  startDate:startDate, 
+//   endDate:endDate
 
 // })
 // const resObj={
@@ -371,7 +371,7 @@ const validateEvents = [
 //   "price": event.price,
 //   "description":event.description,
 //   "startDate": event.dateOfStart,
-//   "endDate": event.dateOfEnd,
+//   "endDate": event.endDate,
 // }
 //     res.json(
 //       resObj
@@ -513,7 +513,7 @@ const validateEvents = [
 //         },
 //         {
 //           model: Location,
-//           attributes: ["address", "city", "state", "latitude", "longtitude"]
+//           attributes: ["address", "city", "state", "lat", "lng"]
 //         },
 //         {
 //           model: EventImages,
@@ -535,64 +535,75 @@ const validateEvents = [
 //   }
 // })
 
-// //Get all Events  Add Query Filters to Get All Events - task 14 + 31
+
+
+
+// (??? num attending)//Get all Events  Add Query Filters to Get All Events - task 14 + 31
 
 
 
 
-// router.get("/", async (req, res, next) => {
-//   try {
-//     const events = await Event.findAll({
-//       include:[
-//       {
-// model:Location,
-// attributes:['city', 'id', 'state']
-//       },
-//         {
-//           model:Group,
-//           attributes:["id", "name", "city", "state"]
-//         },
-//         {
-//           model:EventImages,
-//           attributes:['preview', "url"]
-//         }
-//       ]
-//     });
-// const list=[]
-// const resObg ={}
-// for(let i=0; i<events.length; i++){
-//   const item=events[i].dataValues
-// console.log(item.Location.dataValues)
-//   const numAttending = await Attendees.findAll({
-//     where:{
-//       eventId:item.id
-//     }
-//   })
-// list.push({
-//   "id": item.id,
-//   "groupId": item.groupId,
-//   "venueId": (item.Location)?item.Location.dataValues.id:null,
-//   "name":item.name,
-//   "type": item.type,
-//   "startDate": item.dateOfStart,
-//   "endDate": item.dateOfEnd,
-//   "numAttending": numAttending.length,
-//   "previewImage":(item.EventImages.length>0)?item.EventImages[0].url:"no photo",
-//   "Group":item.Group,
-//   "Venue": (item.Location)?item.Location.dataValues:null
-
-// })
-// }
-// resObg.Events=list
+router.get("/", async (req, res, next) => {
+  try {
+    const events = await Event.findAll({
+      include:[
+ 
+        {
+          model:Group,
+          attributes:["id", "name", "city", "state"]
+        },
+        {
+          model:EventImage,
+          attributes:['preview', "url"]
+        },
+        {
+          model:Location,
+          attributes:["id", "city", "state"]
+        }
+      ]
+    });
+    const list = []
+    events.forEach(event => {
+      list.push(event.toJSON())
+    })
+    list.forEach(item => {
+      item.EventImages.forEach(image => {
+        if (image.preview === true) {
+          item.previewImage = image.url
+        }
+      })
+      if (!item.previewImage) {
+        item.previewImage = 'no photo added'
+      }
+      if(item.locationId){
+        item.venueId=item.locationId
+        item.Venue=item.Location
+      }
+if(!item.locationId){
+  item.venueId=null
+  item.Venue=null
+}
 
 
+      delete item.EventImages
+      delete item.Location
+      delete item.createdAt
+      delete item.updatedAt
+      delete item.locationId
+      delete item.price
+      delete item.capacity
+      delete item.description
+    })
 
-//     res.json(
-//       resObg
-//     )
-//   } catch (err) {
-//     next(err)
-//   }
-// })
+    res.json({
+      Events:list
+      
+    }
+     
+    )
+  } catch (err) {
+    next(err)
+  }
+})
 
 module.exports = router;
