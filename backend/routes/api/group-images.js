@@ -1,15 +1,20 @@
 const express = require('express');
 
-const { restoreUser, requireAuth } = require('../../utils/auth');
+const { requireAuth } = require('../../utils/auth');
 const { GroupImage, Group } = require('../../db/models');
 
 const router = express.Router();
 
-router.delete("/:id", [restoreUser, requireAuth], async (req, res, next) => {
+router.delete("/:id", requireAuth, async (req, res, next) => {
 
     try {
 
-        const image = await GroupImage.findByPk(+req.params.id);
+        const image = await GroupImage.findByPk(+req.params.id, {
+            include:{
+                model:Group,
+                attributes:['organizerId']
+            }
+        });
 
         if (!image) {
             next({
@@ -37,14 +42,20 @@ router.delete("/:id", [restoreUser, requireAuth], async (req, res, next) => {
         // }
         // if (membership.status !== "co-host" && membership.status !== "organaizer") {
 
-        //     next({
-        //         "message": "not enough rights",
-        //         "statusCode": 403
-        //     })
+            // next({
+            //     "message": "not enough rights",
+            //     "statusCode": 403
+            // })
 
 
         // }
-
+        console.log(req.user.id)
+if(+image.Group.organizerId!==+req.user.id){
+    next({
+        "message": "not enough rights",
+        "statusCode": 403
+    })
+}
         await image.destroy()
         res.json({
             "message": "Successfully deleted",

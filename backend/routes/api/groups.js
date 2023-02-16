@@ -457,7 +457,7 @@ router.post("/:id/images", requireAuth, async (req, res, next) => {
 //   }
 // })
 
-// //Get all Events of a Group specified by its id - task 15
+// //(???? num attendees) Get all Events of a Group specified by its id - task 15
 router.get("/:id/events", async (req, res, next) => {
   try {
     const group = await Group.findByPk(req.params.id)
@@ -467,7 +467,7 @@ router.get("/:id/events", async (req, res, next) => {
         statusCode: 404
       })
     }
-    const event = await Event.findAll({
+    const events = await Event.findAll({
       where: {
         groupId: req.params.id
       },
@@ -477,7 +477,7 @@ router.get("/:id/events", async (req, res, next) => {
           attributes: [
             "id",
             "name",
-            "private",
+        
             "city",
             "state"
           ]
@@ -486,17 +486,14 @@ router.get("/:id/events", async (req, res, next) => {
           model: Location,
           attributes: [
             "id",
-            "address",
             "city",
-            "state",
-            "lat",
-            "lng"
+            "state"
           ]
         },
         {
           model: EventImage,
           attributes: [
-          
+          'id',
             "url",
             "preview"
           ]
@@ -505,31 +502,49 @@ router.get("/:id/events", async (req, res, next) => {
     });
 
    
-    // const resObg = {
+    const list = []
+    events.forEach(event => {
+      list.push(event.toJSON())
+    })
+    list.forEach(item => {
+      item.EventImages.forEach(image => {
+        console.log(image)
+        if (image.preview) {
+          
+          item.previewImage = image.url
+        }
+      })
+      if (!item.previewImage) {
+        item.previewImage = 'no photo added'
+      }
+      if(item.locationId){
+        item.venueId=item.locationId
+        item.Venue=item.Location
+      }
+if(!item.locationId){
+  item.venueId=null
+  item.Venue=null
+}
 
 
-  
+      delete item.EventImages
+      delete item.Location
+      delete item.createdAt
+      delete item.updatedAt
+      delete item.locationId
+      delete item.price
+      delete item.capacity
+      delete item.description
+    })
+
+    
+
+
+
+    res.json({
+      Events:list
+    }
      
-    //     "id": event.id,
-    //     "groupId": event.groupId,
-    //     "venueId": (event.Location) ? event.Location.dataValues.id : null,
-    //     "name": event.name,
-    //     "type": event.type,
-    //     "startDate": event.startDate,
-    //     "endDate": event.endDate,
-    //     //"numAttending": numAttending.length,
-    //     "previewImage": (event.EventImages.length > 0) ? event.EventImages[0].url : "no photo",
-    //     "Group": event.Group,
-    //     "Venue": (event.Location) ? event.Location.dataValues : null
-
-    
-    // }
-    
-
-
-
-    res.json(
-      event
     )
   } catch (err) {
     next(err)
@@ -781,37 +796,32 @@ router.get("/:id", async (req, res, next) => {
 })
 
 // //Delete a Group - task 10
-// router.delete("/:id", requireAuth, async (req, res, next) => {
-//   try {
-//     const group = await Group.findByPk(req.params.id)
-//     if (!group) {
-//       next({
-//         message: "Group could not be found",
-//         statusCode: 404
-//       })
-//     }
-//     const userId = req.user.id
-//     // if (group.organizerId === userId) {
-//     //   await group.destroy()
-//     //   res.json({
-//     //     "message": "Successfully deleted",
-//     //     statusCode: 200
-//     //   })
-//     // } else {
-//     //   next({
-//     //     message: "Only owner can delete a group",
-//     //     statusCode: 403
-//     //   })
-//     // }
-//     await group.destroy()
-//     res.json({
-//       "message": "Successfully deleted",
-//       statusCode: 200
-//     })
-//   } catch (err) {
-//     next(err)
-//   }
-// })
+router.delete("/:id", requireAuth, async (req, res, next) => {
+  try {
+    const group = await Group.findByPk(req.params.id)
+    if (!group) {
+      next({
+        message: "Group could not be found",
+        statusCode: 404
+      })
+    }
+    const userId = req.user.id
+    if (group.organizerId !== userId) {
+      next({
+        message: "Only owner can delete a group",
+        statusCode: 403
+      })
+   
+    }
+    await group.destroy()
+    res.json({
+      "message": "Successfully deleted",
+      statusCode: 200
+    })
+  } catch (err) {
+    next(err)
+  }
+})
 
  // Create a Group  - task 7(??? automatic organizer add to membership)
 

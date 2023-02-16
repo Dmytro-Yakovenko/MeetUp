@@ -333,53 +333,53 @@ router.post("/:id/images", requireAuth, async (req, res, next) => {
 // });
 
 // // Edit an Event specified by its id ???edit event - task 19
-// router.put("/:id", [requireAuth, validateEvents], async (req, res, next) => {
-//   try {
-//     const event = await Event.findByPk(req.params.id);
-//     const {
-//       name, 
-//       type, 
-//       capacity, 
-//       price, 
-//       description, 
-//       startDate, 
-//       endDate
-//       } = req.body
-//     if (!event) {
-//       next({
-//         message: "Event couldn't be found",
-//         statusCode: 404
-//       })
-//     }
-// await event.update({
-//   name, 
-//   type, 
-//   capacity, 
-//   price, 
-//   description, 
-//  startDate:startDate, 
-//   endDate:endDate
+router.put("/:id", [requireAuth, validateEvents], async (req, res, next) => {
+  try {
+    const event = await Event.findByPk(req.params.id);
+    const {
+      name, 
+      type, 
+      capacity, 
+      price, 
+      description, 
+      startDate, 
+      endDate
+      } = req.body
+    if (!event) {
+      next({
+        message: "Event couldn't be found",
+        statusCode: 404
+      })
+    }
+await event.update({
+  name, 
+  type, 
+  capacity, 
+  price, 
+  description, 
+ startDate:startDate, 
+  endDate:endDate
 
-// })
-// const resObj={
-//   "id": event.id,
-//   "groupId": event.groupId,
-//   "venueId": event.locationId,
-//   "name": event.name,
-//   "type": event.type,
-//   "capacity": event.capacity,
-//   "price": event.price,
-//   "description":event.description,
-//   "startDate": event.dateOfStart,
-//   "endDate": event.endDate,
-// }
-//     res.json(
-//       resObj
-//     )
-//   } catch (err) {
-//     next(err)
-//   }
-// })
+})
+const resObj={
+
+
+  "venueId": event.locationId,
+  "name": event.name,
+  "type": event.type,
+  "capacity": event.capacity,
+  "price": event.price,
+  "description":event.description,
+  "startDate": event.startDate,
+  "endDate": event.endDate,
+}
+    res.json(
+      resObj
+    )
+  } catch (err) {
+    next(err)
+  }
+})
 
 
 
@@ -454,86 +454,109 @@ router.post("/:id/images", requireAuth, async (req, res, next) => {
 
 
 // //Delete an Event specified by its id delete event - task 20
-// router.delete("/:id", [restoreUser, requireAuth], async (req, res, next) => {
-//   try {
-//     const event = await Event.findByPk(req.params.id);
-//     if (!event) {
-//       next({
-//         message: "Event couldn't be found",
-//         statusCode: 404
-//       })
-//     }
-//   //   const group = await Group.findOne({
-//   //     where:{
-//   //         id:event.groupId
-//   //     }
-//   // });
-//   // const membership = await Membership.findOne({
-//   //     where:{
-//   //         groupId:event.groupId
-//   //     }
+router.delete("/:id", [restoreUser, requireAuth], async (req, res, next) => {
+  try {
+    const event = await Event.findByPk(req.params.id,{
+      include:{
+        model:Group,
+        attributes:['organizerId']
+      }
+    });
+   
+    if (!event) {
+      next({
+        message: "Event couldn't be found",
+        statusCode: 404
+      })
+    }
+ 
+  // const membership = await Membership.findOne({
+  //     where:{
+  //         groupId:event.groupId
+  //     }
     
-//   // })
+  // })
   
 
   
-//   // if(!membership || membership.status!=="co-host" && membership.status!=="organaizer" ){
-//   //   next({
-//   //     "message": "Only the co-host or organizer may delete an event",
-//   //     "statusCode": 403
-//   // })
+  // if(!membership || membership.status!=="co-host" && membership.status!=="organaizer" ){
+  //   next({
+  //     "message": "Only the co-host or organizer may delete an event",
+  //     "statusCode": 403
+  // })
     
-//   // }
-//       await event.destroy()
-//       res.json(  {
-//         "message": "Successfully deleted",
-//         "statusCode": 200
+  // }
+
+if(event.Group.organizerId!==req.user.id){
+  next({
+    "message": "Only the co-host or organizer may delete an event",
+    "statusCode": 403
+})
+}
+
+      await event.destroy()
+      res.json(  {
+        "message": "Successfully deleted",
+        "statusCode": 200
 
         
-//       })
+      })
   
   
-//     // await event.destroy()
-//     // res.json({
-//     //   "message": "Successfully deleted"
-//     // })
-//   } catch (err) {
-//     next(err)
-//   }
-// })
 
-// //Get details of an Event specified by its id eventImage get venue get - task 16
-// router.get("/:id", async (req, res, next) => {
-//   try {
-//     const event = await Event.findByPk(req.params.id, {
-//       include: [
-//         {
-//           model: Group,
-//           attributes: ["id", "name", "private", "city", "state"]
-//         },
-//         {
-//           model: Location,
-//           attributes: ["address", "city", "state", "lat", "lng"]
-//         },
-//         {
-//           model: EventImages,
-//           attributes: ["id", "url", "preview"]
-//         }
-//       ]
-//     });
-//     if (!event) {
-//       next({
-//         message: "Event couldn't be found",
-//         statusCode: 404
-//       })
-//     }
-//     res.json({
-//       event
-//     })
-//   } catch (err) {
-//     next(err)
-//   }
-// })
+  } catch (err) {
+    next(err)
+  }
+})
+
+//Get details of an Event specified by its id eventImage get venue get - task 16
+router.get("/:id", async (req, res, next) => {
+  try {
+    const event = await Event.findByPk(req.params.id, {
+      include: [
+        {
+          model: Group,
+          attributes: ["id", "name", "private", "city", "state"]
+        },
+        {
+          model: Location,
+          attributes: ["address", "city", "state", "lat", "lng", 'id']
+        },
+        {
+          model: EventImage,
+          attributes: ["id", "url", "preview"]
+        }
+      ]
+    });
+    if (!event) {
+      next({
+        message: "Event couldn't be found",
+        statusCode: 404
+      })
+    }
+    let resObj={
+      "id":event.id,
+  "groupId":event. groupId,
+  "venueId":event. venueId,
+  "name": event.name,
+  "description": event.description,
+  "type": event.type,
+  "capacity":event.capacity,
+  "price": event.price,
+  "startDate":event.startDate,
+  "endDate": event.endDate,
+  // "numAttending": 8,
+  "Group": event.Group,
+  "Venue":event.Location,
+  "EventImages":event.EventImages
+    }
+    res.json(
+      resObj
+    )
+  } catch (err) {
+    next(err)
+  }
+})
 
 
 
@@ -568,7 +591,9 @@ router.get("/", async (req, res, next) => {
     })
     list.forEach(item => {
       item.EventImages.forEach(image => {
-        if (image.preview === true) {
+        console.log(image)
+        if (image.preview) {
+          
           item.previewImage = image.url
         }
       })

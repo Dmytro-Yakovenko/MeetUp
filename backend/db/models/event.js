@@ -75,6 +75,9 @@ allowNull:false
     } ,
 
   }, {
+    defaultScope:{
+exclude:['createdAt', 'updatedAt']
+    },
     sequelize,
     modelName: 'Event',
   });
