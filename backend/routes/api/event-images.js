@@ -1,7 +1,7 @@
 const express = require('express');
 
 const { restoreUser, requireAuth } = require('../../utils/auth');
-const { EventImages, Event, Group, Membership} = require('../../db/models');
+const { EventImage, Event, Group} = require('../../db/models');
 
 const router = express.Router();
 
@@ -11,7 +11,9 @@ router.delete("/:id",  requireAuth, async (req, res, next) => {
    
     try {
 
-        const image = await EventImages.findByPk(+req.params.id);
+        const image = await EventImage.findByPk(+req.params.id)
+     
+      
 
         if (!image) {
             next({
@@ -19,23 +21,12 @@ router.delete("/:id",  requireAuth, async (req, res, next) => {
                 "statusCode": 404
             })
         }
-        // const group = await Group.findOne({
-        //     where: {
-        //         id: image.GroupId
-        //     }
-        // });
-        const event = await Event.findByPk(image.eventId)
-
-        if(!event){
-            next({
-                "message": "Event  couldn't be found",
-                "statusCode": 404
-            })
-        }
+       console.log(image)
+   
 
         // const membership = await Membership.findOne({
         //     where: {
-        //         GroupId: event.GroupId,
+        //         groupId: event.groupId,
         //         userId: +req.user.id
         //     }
         // })
@@ -54,7 +45,12 @@ router.delete("/:id",  requireAuth, async (req, res, next) => {
 
 
         // }
-
+        if(+image.Group.organizerId!==+req.user.id){
+            next({
+                "message": "not enough rights",
+                "statusCode": 403
+            })
+        }
         await image.destroy()
         res.json({
             "message": "Successfully deleted",

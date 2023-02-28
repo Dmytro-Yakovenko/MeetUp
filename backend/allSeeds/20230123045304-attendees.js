@@ -19,7 +19,7 @@ const attendees =[
   {
     eventId:1,
     userId:3,
-    status:"organaizer"
+    status:"organizer"
   },
   {
     eventId:2,
@@ -29,7 +29,7 @@ const attendees =[
   {
     eventId:2,
     userId:5,
-    status:"organaizer"
+    status:"organizer"
   },
   {
     eventId:2,

@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
 
       Location.belongsTo(models.Group,{
-        foreignKey:'GroupId'
+        foreignKey:'groupId'
       })
 
 
@@ -37,15 +37,15 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.STRING,
       allowNull:false
     } ,
-    latitude:{
+    lat:{
       type:DataTypes.FLOAT,
       allowNull:false
     } ,
-    longtitude:{
+    lng:{
       type:DataTypes.FLOAT,
       allowNull:false
     } ,
-    GroupId:{
+    groupId:{
       type:DataTypes.INTEGER,
       allowNull:false
     } 

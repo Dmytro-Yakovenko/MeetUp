@@ -11,12 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
 
-      Event.belongsToMany(models.User,{
-        through:models.Attendees
-      })
+      // Event.belongsToMany(models.User,{
+      //   through:models.Attendees
+      // })
 
       // define association here
-      Event.hasMany(models.EventImages, {
+      Event.hasMany(models.EventImage, {
         foreignKey:'eventId',
         onDelete:'Cascade',
         hooks:true
@@ -29,13 +29,13 @@ module.exports = (sequelize, DataTypes) => {
       
         // Your code here
         Event.belongsTo(models.Group,{
-          foreignKey:'GroupId'
+          foreignKey:'groupId'
         })
       }
     
   }
   Event.init({
-    GroupId:{
+    groupId:{
       type:DataTypes.INTEGER,
       allowNull:false
     },
@@ -52,11 +52,11 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.STRING,
       allowNull:false
     } ,
-    dateOfStart:{
+    startDate:{
       type:DataTypes.DATE,
       allowNull:false
     } ,
-    dateOfEnd:{
+    endDate:{
       type:DataTypes.DATE,
       allowNull:false
     } ,
@@ -71,10 +71,13 @@ allowNull:false
     } ,
     type:{
       type:DataTypes.STRING,
-      allowNull:false
+      defaultValue:"Online"
     } ,
 
   }, {
+    defaultScope:{
+exclude:['createdAt', 'updatedAt']
+    },
     sequelize,
     modelName: 'Event',
   });

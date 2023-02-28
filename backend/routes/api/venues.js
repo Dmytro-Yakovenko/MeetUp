@@ -40,8 +40,8 @@ router.put("/:id", [requireAuth, validateVenues], async (req, res, next) => {
         lng} =req.body
       if(!venue){
         next({
-          message: "Group could not be found",
-          status: 404
+          message: "Venue could not be found",
+          statusCode: 404
         })
       }
      
@@ -49,16 +49,19 @@ router.put("/:id", [requireAuth, validateVenues], async (req, res, next) => {
         address,
         city, 
         state, 
-        latitude:lat, 
-        longtitude:lng
+        lat:lat, 
+        lng:lng
         
       })
+      console.log(venue)
       const resObj={
-        address,
-        city, 
-        state, 
-        latitude:lat, 
-        longtitude:lng
+        id:venue.id,
+        address:venue.address,
+        city:venue.city, 
+        state:venue.state, 
+        lat:venue.lat, 
+        lng:venue.lng,
+        "groupId": venue.groupId
       }
       res.json(
         resObj

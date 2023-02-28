@@ -12,7 +12,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      GroupId: {
+      groupId: {
         type: Sequelize.INTEGER
       },
       description: {
@@ -24,10 +24,10 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      dateOfStart: {
+      startDate: {
         type: Sequelize.DATE
       },
-      dateOfEnd: {
+      endDate: {
         type: Sequelize.DATE
       },
       locationId: {
@@ -37,8 +37,9 @@ module.exports = {
       price: {
         type: Sequelize.DOUBLE
       },
-      type:{
-        type: Sequelize.STRING
+      type: {
+        type: Sequelize.STRING,
+        defaultValue:'Online'
       },
       createdAt: {
         allowNull: false,

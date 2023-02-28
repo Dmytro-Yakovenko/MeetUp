@@ -1,6 +1,8 @@
 'use strict';
+const { handleValidationErrors,sqlTable } = require('../../utils/validation');
+
 const {
-  Model
+  Model, 
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Group extends Model {
@@ -11,21 +13,26 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Group.hasMany(models.Membership,{
+        foreignKey:'groupId',
+        onDelete:'Cascade',
+        hooks:true
+      })
 
 
       Group.hasMany(models.Location, {
-        foreignKey:'GroupId',
+        foreignKey:'groupId',
         onDelete:'Cascade',
         hooks:true
       })
 
       
-      Group.belongsToMany(models.User,{
-        through:models.Membership
-      })
+      // Group.belongsToMany(models.User,{
+      //   through:models.Membership
+      // })
 
-      Group.hasMany(models.GroupImages, {
-        foreignKey:'GroupId',
+      Group.hasMany(models.GroupImage, {
+        foreignKey:'groupId',
 
   
         onDelete:'Cascade',
@@ -34,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
 
 
       Group.hasMany(models.Event, {
-        foreignKey:'GroupId',
+        foreignKey:'groupId',
         onDelete:'Cascade',
         hooks:true
       })
@@ -81,42 +88,6 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Group',
 
-    defaultScope:{
-      attributes:{
-        include:[
-          'id', 
-          'organizerId',
-          'name', 
-          'about',
-          'type', 
-          'private',
-           'city', 
-           'state',
-            'createdAt', 
-            'updatedAt', 
-        
-            
-        ]
-      }
-    },
-    scopes:{
-     
-     
-      groupWithImages(GroupId){
-        const {GroupImages} = require("../models")
-              return {
-                  where: { 
-                      GroupId
-                  },
-                  include: [ 
-                      { model: GroupImages } 
-                  ]
-              }
-
-          }
-      }
-       
-    
   });
   return Group;
 };

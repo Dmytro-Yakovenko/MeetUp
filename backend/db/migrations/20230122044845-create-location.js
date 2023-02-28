@@ -21,13 +21,13 @@ module.exports = {
       address: {
         type: Sequelize.STRING
       },
-      latitude: {
+      lat: {
         type: Sequelize.FLOAT
       },
-      longtitude: {
+      lng: {
         type: Sequelize.FLOAT
       },
-      GroupId:{
+      groupId:{
         type: Sequelize.INTEGER,
             references: {
                 model: 'Groups',
