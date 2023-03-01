@@ -30,6 +30,7 @@ User.hasMany(models.Membership,{
 
       User.hasMany(models.Group, {
         foreignKey:'organizerId',
+       
         onDelete:'Cascade',
         hooks:true
       })

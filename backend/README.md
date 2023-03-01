@@ -277,7 +277,7 @@ Returns all the groups.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /api/groups/auth
+  * URL: /api/groups/current
   * Body: none
 
 * Successful Response
