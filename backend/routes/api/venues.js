@@ -2,9 +2,10 @@
 const express = require('express');
 const { check } = require('express-validator');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { Location, Group } = require('../../db/models');
+const { Location, Group, Membership } = require('../../db/models');
 const { restoreUser } = require('../../utils/auth.js');
 const { handleValidationErrors } = require('../../utils/validation');
+const membership = require('../../db/models/membership');
 const router = express.Router();
 router.use(restoreUser)
 
@@ -27,44 +28,39 @@ const validateVenues=[
   handleValidationErrors
 ]
 
-//Edit a Venue specified by its id ??? edit validate venue - task 13
+//Edit a Venue specified by its id 
 router.put("/:id", [requireAuth, validateVenues], async (req, res, next) => {
     try {
      
       const venue = await Location.findByPk(req.params.id)
-      const {
-        address, 
-        city, 
-        state, 
-        lat, 
-        lng} =req.body
+     const group = await Group.findByPk(venue.groupId)
+     const coHost = await Membership.findAll({
+      where:{
+        groupId:venue.groupId,
+        memberId:req.user.id,
+        status:"co-host"
+      }
+     })
       if(!venue){
         next({
           message: "Venue could not be found",
           statusCode: 404
         })
       }
-     
-       await venue.update({
-        address,
-        city, 
-        state, 
-        lat:lat, 
-        lng:lng
-        
-      })
-      console.log(venue)
-      const resObj={
-        id:venue.id,
-        address:venue.address,
-        city:venue.city, 
-        state:venue.state, 
-        lat:venue.lat, 
-        lng:venue.lng,
-        "groupId": venue.groupId
+
+      if(!coHost && req.user.id!==group.organizerId){
+        next({
+          message: "Venue can be changed by organizer",
+          statusCode: 403
+        })
       }
+     
+       await venue.update(req.body)
+    
+    
+      const newVenue =await Location.findByPk(venue.id)
       res.json(
-        resObj
+        newVenue
       )
     } catch (err) {
       next(err)

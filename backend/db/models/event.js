@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
         onDelete:'Cascade',
         hooks:true
       })
-
+      Event.hasMany(models.Attendance, {foreignKey: "eventId", as: "numAttending"})
 
       Event.belongsTo(models.Location,{
         foreignKey:'locationId'
