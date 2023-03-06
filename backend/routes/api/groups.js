@@ -143,10 +143,11 @@ router.get("/current", requireAuth, async (req, res, next) => {
         where: {
           organizerId: req.user.id
         },
+        subQuery:false,
         attributes: {
           include: [[sequelize.fn("COUNT", sequelize.col("Memberships.id")), "numMembers"],
-          [sequelize.col("groupImages.url"), "previewimage"]]
-          // [sequelize.col("GroupImages.url"), "previewImage"]]
+         
+          [sequelize.col("GroupImages.url"), "previewImage"]]
         },
         include: [{
           model: Membership, attributes: []
@@ -431,6 +432,7 @@ router.post("/:id/venues", [requireAuth, validateVenues], async (req, res, next)
 router.get("/:id/members", requireAuth, async (req, res, next) => {
   try {
     const group = await Group.findByPk(req.params.id)
+   
     if (!group) {
       next({
         message: "Group could not be found",
@@ -512,6 +514,7 @@ router.get("/:id/members", requireAuth, async (req, res, next) => {
 router.put('/:id/membership', requireAuth, async (req, res, next) => {
   try {
     const group = await Group.findByPk(req.params.id);
+    console.log(req.params.id)
     if (!group) {
       next({
         message: "Group could not be found",
@@ -590,32 +593,7 @@ res.json(member)
 
 
 
-
-  // // //  Delete an Image for a Group 
-  // // router.delete("/:id/images", requireAuth, async (req, res, next) => {
-  // //   try {
-  // //     const group = await Group.findByPk(req.params.id);
-  // //     if (!group) {
-  // //       next({
-  // //         message: "Group could not be found",
-  // //         status: 404
-  // //       })
-  // //     }
-  // //      await GroupImage.destroy({
-  // //      where:{
-  // //       groupId:+req.params.id
-  // //      }
-  // //     })
-  // //     res.json({
-  // //       message: "Successfully deleted",
-  // //       status: 200
-  // //     })
-  // //   } catch (err) {
-  // //     next(err)
-  // //   }
-  // // })
-
-  /
+  
 
 
 

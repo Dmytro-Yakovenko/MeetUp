@@ -1,7 +1,9 @@
 const express = require('express');
 
 const { restoreUser, requireAuth } = require('../../utils/auth');
-const { EventImage, Event, Group} = require('../../db/models');
+const { EventImage, Event, Group, Membership} = require('../../db/models');
+const event = require('../../db/models/event');
+const membership = require('../../db/models/membership');
 
 const router = express.Router();
 
@@ -11,7 +13,7 @@ router.delete("/:id",  requireAuth, async (req, res, next) => {
    
     try {
 
-        const image = await EventImage.findByPk(+req.params.id)
+        const image = await EventImage.scope('exclusion').findByPk(+req.params.id)
      
       
 
@@ -20,37 +22,46 @@ router.delete("/:id",  requireAuth, async (req, res, next) => {
                 "message": "Event Image couldn't be found",
                 "statusCode": 404
             })
+            return
         }
-       console.log(image)
-   
-
-        // const membership = await Membership.findOne({
-        //     where: {
-        //         groupId: event.groupId,
-        //         userId: +req.user.id
-        //     }
-        // })
-        // if (!membership) {
-        //     next({
-        //         "message": "not enough rights",
-        //         "statusCode": 403
-        //     })
-        // }
-        // if (membership.status !== "co-host" && membership.status !== "organaizer") {
-
-        //     next({
-        //         "message": "not enough rights",
-        //         "statusCode": 403
-        //     })
-
-
-        // }
-        if(+image.Group.organizerId!==+req.user.id){
+     
+        const event = await Event.findOne({
+            where:{
+                id:image.eventId
+            }
+        })
+        const group = await Group.findOne({
+            where:{
+                id:event.groupId
+            }
+        })
+        if(!group){
             next({
-                "message": "not enough rights",
+                "message": "Group couldn't be found",
+                "statusCode": 404
+            })
+            return
+        }
+
+
+        const coHost = await Membership.findOne({
+            where:{
+                groupId:group.id,
+                memberId:req.user.id, 
+                status:"co-host"
+            }
+        })
+        if(!coHost && req.user.id!==group.organizerId){
+            next({
+                "message": "Only co-host or organizer can delete event image ",
                 "statusCode": 403
             })
+            return
         }
+   
+
+      
+       
         await image.destroy()
         res.json({
             "message": "Successfully deleted",

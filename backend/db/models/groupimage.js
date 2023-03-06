@@ -46,5 +46,10 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   });
+  GroupImage.addScope("exclusion", {
+    attributes: {
+      exclude: [ "createdAt", "updatedAt"]
+    }
+  })
   return GroupImage;
 };

@@ -1721,7 +1721,7 @@ Request attendance for an event specified by id.
 * Require Authentication: true
 * Require Authorization: Current User must be a member of the group
 * Request
-  * Method: GET
+  * Method: POST
   * URL: /api/events/:eventId/atendens
   * Headers:
     * Content-Type: application/json

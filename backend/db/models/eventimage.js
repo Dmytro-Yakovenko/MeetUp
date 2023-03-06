@@ -40,5 +40,11 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   });
+  EventImage.addScope("exclusion", {
+    attributes: {
+      exclude: [ "createdAt", "updatedAt"]
+    }
+  })
+
   return EventImage;
 };
