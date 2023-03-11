@@ -139,25 +139,23 @@ router.get("/", async (req, res, next) => {
 router.get("/current", requireAuth, async (req, res, next) => {
   try {
     const groups = await Group.findAll(
-      {
-        where: {
+      {where: {
+          
           organizerId: req.user.id
-        },
-        subQuery:false,
-        attributes: {
+      },
+      attributes: { 
           include: [[sequelize.fn("COUNT", sequelize.col("Memberships.id")), "numMembers"],
-         
-          [sequelize.col("GroupImages.url"), "previewImage"]]
-        },
-        include: [{
-          model: Membership, attributes: []
-        },
-        {
+          [sequelize.col("GroupImages.url"), "previewImage"]] 
+      },
+      include: [{
+          model: Membership, attributes: [], duplicating: false
+      },
+      {
           model: GroupImage, attributes: [], duplicating: false
-        }],
-        group: ["Group.id"]
-      }
-    )
+      }],
+      group: ["Group.id", "Memberships.id", ]}
+  )
+    console.log(groups)
     res.json(
       {
         Groups: groups
@@ -173,11 +171,9 @@ router.get("/current", requireAuth, async (req, res, next) => {
 router.get("/:id", async (req, res, next) => {
   try {
     const groupById = await Group.findByPk(req.params.id, {
-      attributes: {
-        include: [[sequelize.fn("COUNT", sequelize.col("Memberships.id")), "numMembers"]]
-      },
+    
       include: [{
-        model: Membership, attributes: [],
+        model: Membership, attributes: ['id'],
       },
       {
         model: User, attributes: ["id", "firstName", "lastName"]
@@ -192,7 +188,14 @@ router.get("/:id", async (req, res, next) => {
       group: ["Group.id"]
     }
     )
+    console.log(groupById)
+    
+   
+ 
+ 
+  
     if (!groupById) {
+      
       next({
         statusCode: 404,
         message: `Could not find group ${req.params.id}`
@@ -211,11 +214,12 @@ router.get("/:id", async (req, res, next) => {
       "state": group.state,
       "createdAt": group.createdAt,
       "updatedAt": group.updatedAt,
-      "numMembers": group.numMembers,
+      "numMembers": group.Memberships.length,
       "GroupImage": group.GroupImages,
       "Organizer": group.User,
       "Venues": group.Locations
     }
+    delete resObj.Memberships
     res.json(
       resObj
     )

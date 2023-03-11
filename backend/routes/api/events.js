@@ -55,8 +55,67 @@ const validateEvents = [
 
 router.get("/", async (req, res, next) => {
   try {
+    const filter = {};
+    let limit = null;
+    let offSet = null;
+    let { page, size, type, startDate, name } = req.params;
+    if (size && size < 1) {
+      next({
+        message: "Size must be greater than or equal to 0",
+        "statusCode": 400
+      })
+    }
+    if (size && (size >= 1 || size <= 20)) {
+      limit = size
+    } else {
+      limit = 20
+    }
+    if (page && page < 1) {
+      next({
+        message: "Page must be greater than or equal to 0",
+        "statusCode": 400
+      })
+    }
+    if (page && (page >= 1 || page <= 20)) {
+      offSet = limit * (page - 1)
+    } else {
+      offSet = 0
+    }
+    if (name) {
+      if (!isNaN(name)) {
+        return next({
+          message: "name should be a string",
+          statusCode: 400
+        })
+    
+      }
+      filter.name = name;
+    }
+    if (type) {
+      if (type !== "OnLine" || type !== 'In person') {
+       return next({
+          message: "Type must be 'Online' or 'In Person'",
+          statusCode: 400
+        })
+      }
+      filter.type = type;
+    }
+   
+    if (startDate) {
+      const date = Date.parse(startDate)
+      if (isNaN(date)) {
+       return next({
+          message: "Start date must be a valid datetime",
+          statusCode: 400
+        }
+        )
 
+      }
+      filter.startDate = startDate;
+    }
+console.log(filter)
     const events = await Event.findAll({
+      where:filter,
       subQuery: false,
       attributes: {
         include: [
@@ -79,7 +138,7 @@ router.get("/", async (req, res, next) => {
         }
       ],
       group: ["Event.id", "Group.id", "numAttending.id", "Location.id", "EventImages.id"],
-
+      limit, offSet
 
     })
     const list = []
@@ -346,62 +405,62 @@ router.get("/:id/attendees", requireAuth, async (req, res, next) => {
     const user = req.user.id
 
     const group = await Group.findOne({
-      where:{
-        id:event.groupId
+      where: {
+        id: event.groupId
       }
     })
-    const coHost= await Membership.findAll({
-      where:{
-        groupId:group.id,
-        memberId:user, 
-        status:'co-host'
+    const coHost = await Membership.findAll({
+      where: {
+        groupId: group.id,
+        memberId: user,
+        status: 'co-host'
       }
     })
 
     // Not co=host or organizer
-    if(!req.user || user!==group.organizerId && !coHost){
+    if (!req.user || user !== group.organizerId && !coHost) {
       const attend = await User.findAll({
-        attributes:[
-          'id',"firstName", "lastName"
+        attributes: [
+          'id', "firstName", "lastName"
         ],
-        include:{
-          model:Attendance,
-          where:{
-            eventId:event.id,
-            [Op.or]:[
+        include: {
+          model: Attendance,
+          where: {
+            eventId: event.id,
+            [Op.or]: [
               {
-                status:'member',
-          
+                status: 'member',
+
               },
               {
-                status:"waitlist"
+                status: "waitlist"
               }
             ]
           },
-          attributes:['status']
+          attributes: ['status']
         }
       })
       return res.json({
-        "Attendees":attend
-       })
+        "Attendees": attend
+      })
     }
-// co-host or organizer 
-const attend = await User.findAll({
-  attributes:[
-    "id", "firstName", "lastName"
-  ],
-  include:{
-    model:Attendance,
-    where:{
-      eventId:event.id,
-    },
-    attributes:['status']
-  }
-}) 
-res.json({
-"Attendees":attend
-}
-  )
+    // co-host or organizer 
+    const attend = await User.findAll({
+      attributes: [
+        "id", "firstName", "lastName"
+      ],
+      include: {
+        model: Attendance,
+        where: {
+          eventId: event.id,
+        },
+        attributes: ['status']
+      }
+    })
+    res.json({
+      "Attendees": attend
+    }
+    )
   } catch (err) {
     next(err)
   }
@@ -470,7 +529,7 @@ router.post("/:id/attendance", requireAuth, async (req, res, next) => {
 //Change the status of an attendance for an event specified by id - task 26
 router.put("/:id/attendance", requireAuth, async (req, res, next) => {
   try {
-    if(req.body.status==='pending'){
+    if (req.body.status === 'pending') {
       next({
         "message": "Cannot change an attendance status to pending",
         "statusCode": 400
@@ -484,49 +543,49 @@ router.put("/:id/attendance", requireAuth, async (req, res, next) => {
       })
     }
     const user = req.user.id
-    const group =await Group.findOne({
-      where:{
-        id:event.groupId
+    const group = await Group.findOne({
+      where: {
+        id: event.groupId
       }
     })
     const coHost = await Membership.findAll({
-      where:{
-        groupId:group.id,
-        memberId:user,
-        status:'co-host'
+      where: {
+        groupId: group.id,
+        memberId: user,
+        status: 'co-host'
       }
     })
-    if(!coHost && user!==group.organizerId){
+    if (!coHost && user !== group.organizerId) {
       next({
-        message:'Organizer or co-host can change status of an attendance',
-        status:403
+        message: 'Organizer or co-host can change status of an attendance',
+        status: 403
       })
     }
- 
+
     const attend = await Attendance.findOne({
-      where:{
-        eventId:req.params.id,
-        userId:user,
-        status:"pending"
+      where: {
+        eventId: req.params.id,
+        userId: user,
+        status: "pending"
       }
     })
 
-    if(!attend){
+    if (!attend) {
       next({
         "message": "Attendance between the user and the event does not exist",
         "statusCode": 404
       })
     }
-       await attend.update({
-        userId: req.body.userId,
-        eventId: +req.params.id,
-        status: req.body.status
-      })
-      const updated = await Attendance.findByPk(attend.id)
-      res.json(
-        updated
-      )
- 
+    await attend.update({
+      userId: req.body.userId,
+      eventId: +req.params.id,
+      status: req.body.status
+    })
+    const updated = await Attendance.findByPk(attend.id)
+    res.json(
+      updated
+    )
+
 
 
   } catch (err) {
@@ -537,7 +596,7 @@ router.put("/:id/attendance", requireAuth, async (req, res, next) => {
 //Delete attendance to an event specified by id - task 27
 // 
 
-router.delete("/:id/attendance",requireAuth, async (req, res, next) => {
+router.delete("/:id/attendance", requireAuth, async (req, res, next) => {
   try {
     const event = await Event.findByPk(req.params.id)
     if (!event) {
@@ -547,53 +606,53 @@ router.delete("/:id/attendance",requireAuth, async (req, res, next) => {
       })
     }
     const group = await Group.findOne({
-      where:{
-        id:event.groupId
+      where: {
+        id: event.groupId
       }
     })
-    if(!group){
+    if (!group) {
       next({
         message: "Group could not be found",
         statusCode: 404
       })
     }
     const attend = await Attendance.findOne({
-      where:{
-        eventId:+event.id,
-        userId:+req.body.memberId
+      where: {
+        eventId: +event.id,
+        userId: +req.body.memberId
       }
     })
     // const attend = await Attendance.findAll()
     console.log(attend)
     console.log(event.id)
     console.log(req.body.memberId)
-    if(!attend){
+    if (!attend) {
       next({
         message: "Attendance does not exist for this User",
         statusCode: 404
       })
-      return 
+      return
     }
     const userId = req.user.id
 
-    if (userId!==group.organizerId && userId!==req.params.id) {
+    if (userId !== group.organizerId && userId !== req.params.id) {
       next({
         message: "Only the User or organizer may delete an Attendance",
         status: 403
       })
-      return 
+      return
     }
-  
-   
+
+
 
     await attend.destroy();
     res.json({
       "message": "Successfully deleted attendance from event"
     })
 
-} catch (err) {
-  next(err)
-}
+  } catch (err) {
+    next(err)
+  }
 });
 
 
