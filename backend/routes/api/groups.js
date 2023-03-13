@@ -143,22 +143,38 @@ router.get("/current", requireAuth, async (req, res, next) => {
           
           organizerId: req.user.id
       },
-      attributes: { 
-          include: [[sequelize.fn("COUNT", sequelize.col("Memberships.id")), "numMembers"],
-          [sequelize.col("GroupImages.url"), "previewImage"]] 
-      },
+     
       include: [{
-          model: Membership, attributes: [], duplicating: false
+          model: Membership, attributes: ["id"]
       },
       {
-          model: GroupImage, attributes: [], duplicating: false
+          model: GroupImage, attributes: ["id","url", "preview"]
       }],
-      group: ["Group.id", "Memberships.id", ]}
+    }
   )
-    console.log(groups)
+    const list=[];
+    groups.forEach(item=>{
+      list.push(item.toJSON())
+    })
+   
+    list.forEach(item => {
+      item.GroupImages.forEach(image => {
+        if (image.preview === true) {
+          item.previewImage = image.url
+        }
+      })
+      if (!item.previewImage) {
+        item.previewImage = 'no photo added'
+      }
+      item.numMembers=item.Memberships.length
+      delete item.Memberships
+      delete item.GroupImages
+
+    })
+    console.log(list)
     res.json(
       {
-        Groups: groups
+        Groups: list
       }
     )
   } catch (err) {
