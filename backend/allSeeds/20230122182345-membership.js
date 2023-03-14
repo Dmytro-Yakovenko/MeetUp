@@ -10,7 +10,7 @@ const membership = [
   {
     
       user: { firstName: "Dmytro", lastName: "Yakovenko" },
-      group: { name: "San Francisco Mother"s Group" },
+      group: { name: "San Francisco Mother's Group" },
     
     status: "co-host"
   },
@@ -18,7 +18,7 @@ const membership = [
   {
     
     user: { firstName: "Sergey", lastName: "Shiryaev" },
-    group: { name: "SF Gay Men"s Poker Group"},
+    group: { name: "SF Gay Men's Poker Group"},
   
   status: "co-host"
 },
