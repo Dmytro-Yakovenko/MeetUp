@@ -188,7 +188,7 @@ router.get("/:id", async (req, res, next) => {
   try {
     const groupById = await Group.findByPk(req.params.id, {
       include: [{
-        model: Membership, attributes: ["id"],
+        model: Membership, attributes: ["status"],
       },
       {
         model: User, attributes: ["id", "firstName", "lastName"]
