@@ -113,7 +113,7 @@ router.get("/", async (req, res, next) => {
       }
       filter.startDate = startDate;
     }
-console.log(filter)
+
     const events = await Event.findAll({
       where:filter,
       subQuery: false,
@@ -623,9 +623,7 @@ router.delete("/:id/attendance", requireAuth, async (req, res, next) => {
       }
     })
     // const attend = await Attendance.findAll()
-    console.log(attend)
-    console.log(event.id)
-    console.log(req.body.memberId)
+   
     if (!attend) {
       next({
         message: "Attendance does not exist for this User",

@@ -171,7 +171,7 @@ router.get("/current", requireAuth, async (req, res, next) => {
       delete item.GroupImages
 
     })
-    console.log(list)
+   
     res.json(
       {
         Groups: list
@@ -187,7 +187,6 @@ router.get("/current", requireAuth, async (req, res, next) => {
 router.get("/:id", async (req, res, next) => {
   try {
     const groupById = await Group.findByPk(req.params.id, {
-    
       include: [{
         model: Membership, attributes: ['id'],
       },
@@ -204,12 +203,7 @@ router.get("/:id", async (req, res, next) => {
       group: ["Group.id"]
     }
     )
-    console.log(groupById)
-    
-   
- 
- 
-  
+
     if (!groupById) {
       
       next({
@@ -511,30 +505,11 @@ router.get("/:id/members", requireAuth, async (req, res, next) => {
   }
 })
 
-//Request a Membership for a Group based on the Group's id - task 22
-// router.get("/:id/membership", [restoreUser, requireAuth], async (req, res, next) => {
-//   try {
-//     const group = await Group.findByPk(req.params.id)
-//     if(!group){
-//       next({
-//         message: "Group could not be found",
-//         status: 404
-//       })
-//     }
-
-//     const members = await Membership.findAll()
-//     res.json({
-//       "Members": members
-//     })
-//   } catch (err) {
-//     next(err)
-//   }
-// })
 
 router.put('/:id/membership', requireAuth, async (req, res, next) => {
   try {
     const group = await Group.findByPk(req.params.id);
-    console.log(req.params.id)
+   
     if (!group) {
       next({
         message: "Group could not be found",
@@ -558,8 +533,7 @@ router.put('/:id/membership', requireAuth, async (req, res, next) => {
         memberId: req.body.memberId
       }
     });
-    console.log(group.organizerId!==req.user.id)
-    console.log(coHostStatus!=='co-host')
+
     if (req.body.status === "pending") {
       next({
         message: 'can not change status on pending',
@@ -666,55 +640,7 @@ res.json(member)
 
       const request = await Membership.findByPk(newRequest.id)
 
-      // if (membership && membership.dataValues.status === "pending") {
-      //   next({
-      //     "message": "Membership has already been requested",
-      //     "statusCode": 400
-      //   })
-      // }
-
-      // if (membership && membership.dataValues.status === "member") {
-      //   next({
-      //     "message": "Membership has already been requested",
-      //     "statusCode": 400
-      //   })
-      // }
-
-
-      // const member = await Membership.create({
-      //   userId: +req.user.id,
-      //   groupId: +req.params.id,
-      //   status: "pending"
-      // })
-      // const musician = await Musician.findByPk(req.params.musicianId);
-      //     const { instrumentIds } = req.body;
-
-      //     await musician.addInstruments(instrumentIds);
-      // console.log(user)
-
-
-
-      // const member = await user.addGroups(+req.params.id)
-      // console.log(member)
-      // const membership = await Membership.findOne(
-
-
-      //   {
-      //     where: {
-      //       userId: userId
-      //     },
-      //   }
-
-
-      // )
-      // membership.update(
-      //   { status: req.body.status, userId: userId, groupId: +req.params.id }
-      //)
-      // const resObj = {
-      //   memberId: member.userId,
-      //   status: member.status,
-      //   groupId: member.groupId
-      // }
+ 
       res.status(201).json(
         request
       )
@@ -723,63 +649,6 @@ res.json(member)
     }
   })
 
-
-//       status: req.body.status
-//     }
-//     res.json(
-//       resObg
-//     )
-//     // }else {
-//     //   next({
-//     //     statusCode: 403,
-//     //     message: "you can not change it"
-
-//     //   })
-//     //}
-//   } catch (err) {
-//     next(err)
-//   }
-// })
-
-// //Delete membership to a group specified by id ??? find membership - task 24
-// router.delete("/:id/membership", requireAuth, async (req, res, next) => {
-//   try {
-//     const group = await Group.findByPk(req.params.id)
-//     if (!group) {
-//       next({
-//         message: "Group could not be found",
-//         statusCode: 404
-//       })
-//     }
-//     const userId = req.user.id
-//     const membership = await Membership.findOne({
-//       where: {
-//         userId: userId,
-//         groupId: group.dataValues.id
-//       }
-//     })
-//     if (!membership) {
-//       next({
-//         message: "Group could not be found",
-//         status: 404
-//       })
-//     }
-//     if (membership.dataValues.status === "co-host" || membership.dataValues.status === "organaizer" || membership.dataValues.userId === userId) {
-//       await Membership.destroy({
-//         where: {
-//           groupId: +req.params.id
-//         }
-//       })
-//       res.json({
-//         "message": "Successfully deleted membership from group"
-//       })
-//     }
-
-
-//   } catch (err) {
-//     next(err)
-//   }
-// })
 
 // Get all Events of a Group specified by its id 
 router.get("/:id/events", async (req, res, next) => {
@@ -824,7 +693,7 @@ router.get("/:id/events", async (req, res, next) => {
       list.push(event.toJSON())
     })
     list.forEach(item => {
-      console.log(item.Location)
+     
 
       if (item.locationId && item.Location) {
         item.venueId = item.locationId

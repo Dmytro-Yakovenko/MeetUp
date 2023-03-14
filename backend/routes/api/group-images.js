@@ -20,7 +20,7 @@ router.delete("/:id", requireAuth, async (req, res, next) => {
             })
             return
         }
-        console.log(image)
+        
         const group = await Group.findOne({
             where: {
                 id: image.groupId
