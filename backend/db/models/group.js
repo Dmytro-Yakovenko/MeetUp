@@ -1,9 +1,9 @@
-'use strict';
-const { handleValidationErrors,sqlTable } = require('../../utils/validation');
+"use strict";
+const { handleValidationErrors,sqlTable } = require("../../utils/validation");
 
 const {
   Model, 
-} = require('sequelize');
+} = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Group extends Model {
     /**
@@ -14,15 +14,15 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Group.hasMany(models.Membership,{
-        foreignKey:'groupId',
-        onDelete:'Cascade',
+        foreignKey:"groupId",
+        onDelete:"Cascade",
         hooks:true
       })
 
 
       Group.hasMany(models.Location, {
-        foreignKey:'groupId',
-        onDelete:'Cascade',
+        foreignKey:"groupId",
+        onDelete:"Cascade",
         hooks:true
       })
 
@@ -32,23 +32,23 @@ module.exports = (sequelize, DataTypes) => {
       // })
 
       Group.hasMany(models.GroupImage, {
-        foreignKey:'groupId',
+        foreignKey:"groupId",
 
   
-        onDelete:'Cascade',
+        onDelete:"Cascade",
         hooks:true
       })
 
 
       Group.hasMany(models.Event, {
-        foreignKey:'groupId',
-        onDelete:'Cascade',
+        foreignKey:"groupId",
+        onDelete:"Cascade",
         hooks:true
       })
 
 
       Group.belongsTo(models.User,{
-        foreignKey:'organizerId',
+        foreignKey:"organizerId",
       
       })
     }
@@ -87,7 +87,7 @@ module.exports = (sequelize, DataTypes) => {
     
   }, {
     sequelize,
-    modelName: 'Group',
+    modelName: "Group",
 
   });
   return Group;

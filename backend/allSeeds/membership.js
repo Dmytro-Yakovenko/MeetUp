@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 const {
   Model
-} = require('sequelize');
+} = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Membership extends Model {
     /**
@@ -29,12 +29,12 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.STRING,
       defaultValue:"organizer",
       validate:{
-        isIn: [['organizer', 'co-host', 'member','pending',"waitlist"]]
+        isIn: [["organizer", "co-host", "member","pending","waitlist"]]
       }
     } 
   }, {
     sequelize,
-    modelName: 'Membership',
+    modelName: "Membership",
   });
   return Membership;
 };

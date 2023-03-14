@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 const {
   Model
-} = require('sequelize');
+} = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Attendees extends Model {
     /**
@@ -25,12 +25,12 @@ module.exports = (sequelize, DataTypes) => {
     status:{
       type:DataTypes.STRING,
       validate:{
-        isIn: [['organizer', 'co-host', 'member','pending',"waitlist","attending"]]
+        isIn: [["organizer", "co-host", "member","pending","waitlist","attending"]]
       }
     }
   }, {
     sequelize,
-    modelName: 'Attendees',
+    modelName: "Attendees",
   });
   return Attendees;
 };

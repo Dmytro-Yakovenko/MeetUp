@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 const {
   Model
-} = require('sequelize');
+} = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Event extends Model {
     /**
@@ -17,19 +17,19 @@ module.exports = (sequelize, DataTypes) => {
 
       // define association here
       Event.hasMany(models.EventImage, {
-        foreignKey:'eventId',
-        onDelete:'Cascade',
+        foreignKey:"eventId",
+        onDelete:"Cascade",
         hooks:true
       })
       Event.hasMany(models.Attendance, {foreignKey: "eventId", as: "numAttending"})
 
       Event.belongsTo(models.Location,{
-        foreignKey:'locationId'
+        foreignKey:"locationId"
       })
       
         // Your code here
         Event.belongsTo(models.Group,{
-          foreignKey:'groupId'
+          foreignKey:"groupId"
         })
       }
     
@@ -76,10 +76,10 @@ allowNull:false
 
   }, {
     defaultScope:{
-exclude:['createdAt', 'updatedAt']
+exclude:["createdAt", "updatedAt"]
     },
     sequelize,
-    modelName: 'Event',
+    modelName: "Event",
   });
   return Event;
 };

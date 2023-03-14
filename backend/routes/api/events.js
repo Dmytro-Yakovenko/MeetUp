@@ -1,52 +1,52 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { check } = require('express-validator');
-const sequelize = require('sequelize');
+const { check } = require("express-validator");
+const sequelize = require("sequelize");
 
-const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { Event, EventImage, Group, Location, User, Attendance, Membership } = require('../../db/models');
-const { handleValidationErrors } = require('../../utils/validation');
-const { restoreUser } = require('../../utils/auth.js');
-const membership = require('../../db/models/membership');
-const user = require('../../db/models/user');
-const e = require('express');
+const { setTokenCookie, requireAuth } = require("../../utils/auth");
+const { Event, EventImage, Group, Location, User, Attendance, Membership } = require("../../db/models");
+const { handleValidationErrors } = require("../../utils/validation");
+const { restoreUser } = require("../../utils/auth.js");
+const membership = require("../../db/models/membership");
+const user = require("../../db/models/user");
+const e = require("express");
 router.use(restoreUser)
 
 const validateEvents = [
-  check('venueId')
+  check("venueId")
     .exists({ checkFalsy: true })
-    .withMessage('Venue does not exist'),
-  check('name')
+    .withMessage("Venue does not exist"),
+  check("name")
     .exists({ checkFalsy: true })
     .isLength({ min: 5 })
-    .withMessage('Name must be at least 5 characters'),
-  check('type')
+    .withMessage("Name must be at least 5 characters"),
+  check("type")
     .exists({ checkFalsy: true })
-    .isIn(['Online', 'In person'])
+    .isIn(["Online", "In person"])
     .withMessage("Type must be Online or In person"),
-  check('capacity')
+  check("capacity")
     .exists({ checkFalsy: true })
     .isInt()
-    .withMessage('Capacity must be an integer'),
-  check('price')
+    .withMessage("Capacity must be an integer"),
+  check("price")
     .exists({ checkFalsy: true })
     // .isCurrency()
-    .withMessage('Price is invalid'),
+    .withMessage("Price is invalid"),
 
-  check('description')
+  check("description")
     .exists({ checkFalsy: true })
     .isLength({ min: 15 })
-    .withMessage('Description is required'),
-  check('startDate')
+    .withMessage("Description is required"),
+  check("startDate")
     .exists({ checkFalsy: true })
     // .isDate()
     // .isAfter(new Date())
-    .withMessage('Start date must be in the future'),
-  check('endDate')
+    .withMessage("Start date must be in the future"),
+  check("endDate")
     .exists({ checkFalsy: true })
     // .isDate()
     // .isAfter("dateOfStart")
-    .withMessage('End date is less than start date'),
+    .withMessage("End date is less than start date"),
   handleValidationErrors
 ]
 
@@ -92,7 +92,7 @@ router.get("/", async (req, res, next) => {
       filter.name = name;
     }
     if (type) {
-      if (type !== "OnLine" || type !== 'In person') {
+      if (type !== "OnLine" || type !== "In person") {
        return next({
           message: "Type must be 'Online' or 'In Person'",
           statusCode: 400
@@ -239,14 +239,14 @@ router.get("/:id", async (req, res, next) => {
 
 
 
-// //Add an Image to a Event based on the Event's id ???addImage - task 18
+// //Add an Image to a Event based on the Event"s id ???addImage - task 18
 router.post("/:id/images", requireAuth, async (req, res, next) => {
   try {
     const event = await Event.findByPk(req.params.id);
 
     if (!event) {
       next({
-        message: "Event couldn't be found",
+        message: "Event could't be found",
         statusCode: 404
       })
     }
@@ -310,7 +310,7 @@ router.put("/:id", [requireAuth, validateEvents], async (req, res, next) => {
       where: {
         groupId: event.groupId,
         memberId: req.user.id,
-        status: 'co-host'
+        status: "co-host"
       }
     })
     if (req.user.id !== group.organizerId && !coHost) {
@@ -413,7 +413,7 @@ router.get("/:id/attendees", requireAuth, async (req, res, next) => {
       where: {
         groupId: group.id,
         memberId: user,
-        status: 'co-host'
+        status: "co-host"
       }
     })
 
@@ -421,7 +421,7 @@ router.get("/:id/attendees", requireAuth, async (req, res, next) => {
     if (!req.user || user !== group.organizerId && !coHost) {
       const attend = await User.findAll({
         attributes: [
-          'id', "firstName", "lastName"
+          "id", "firstName", "lastName"
         ],
         include: {
           model: Attendance,
@@ -429,7 +429,7 @@ router.get("/:id/attendees", requireAuth, async (req, res, next) => {
             eventId: event.id,
             [Op.or]: [
               {
-                status: 'member',
+                status: "member",
 
               },
               {
@@ -437,7 +437,7 @@ router.get("/:id/attendees", requireAuth, async (req, res, next) => {
               }
             ]
           },
-          attributes: ['status']
+          attributes: ["status"]
         }
       })
       return res.json({
@@ -454,7 +454,7 @@ router.get("/:id/attendees", requireAuth, async (req, res, next) => {
         where: {
           eventId: event.id,
         },
-        attributes: ['status']
+        attributes: ["status"]
       }
     })
     res.json({
@@ -484,7 +484,7 @@ router.post("/:id/attendance", requireAuth, async (req, res, next) => {
       where: {
         eventId: req.params.id,
         userId: req.user.id,
-        status: 'pending'
+        status: "pending"
       }
     })
     if (isPend) {
@@ -512,7 +512,7 @@ router.post("/:id/attendance", requireAuth, async (req, res, next) => {
       status: "pending"
     })
 
-    const attend = await Attendance.scope('submission').findByPk(attendees.id)
+    const attend = await Attendance.scope("submission").findByPk(attendees.id)
     res.status(201).json(
       attend
     )
@@ -529,7 +529,7 @@ router.post("/:id/attendance", requireAuth, async (req, res, next) => {
 //Change the status of an attendance for an event specified by id - task 26
 router.put("/:id/attendance", requireAuth, async (req, res, next) => {
   try {
-    if (req.body.status === 'pending') {
+    if (req.body.status === "pending") {
       next({
         "message": "Cannot change an attendance status to pending",
         "statusCode": 400
@@ -552,12 +552,12 @@ router.put("/:id/attendance", requireAuth, async (req, res, next) => {
       where: {
         groupId: group.id,
         memberId: user,
-        status: 'co-host'
+        status: "co-host"
       }
     })
     if (!coHost && user !== group.organizerId) {
       next({
-        message: 'Organizer or co-host can change status of an attendance',
+        message: "Organizer or co-host can change status of an attendance",
         status: 403
       })
     }

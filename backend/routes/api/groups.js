@@ -1,99 +1,99 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { check } = require('express-validator');
+const { check } = require("express-validator");
 
 
 
-const { restoreUser, requireAuth } = require('../../utils/auth');
+const { restoreUser, requireAuth } = require("../../utils/auth");
 
-const { User, Group, GroupImage, Event, Location, EventImage, Membership, Attendance, sequelize } = require('../../db/models');
-const { handleValidationErrors } = require('../../utils/validation');
-const { json } = require('sequelize');
+const { User, Group, GroupImage, Event, Location, EventImage, Membership, Attendance, sequelize } = require("../../db/models");
+const { handleValidationErrors } = require("../../utils/validation");
+const { json } = require("sequelize");
 
 router.use(restoreUser)
 
 const validateGroups = [
-  check('name')
+  check("name")
     .exists({ checkFalsy: true })
-    .withMessage('Name must be 60 characters or less'),
-  check('about')
+    .withMessage("Name must be 60 characters or less"),
+  check("about")
     .exists({ checkFalsy: true })
     .isLength({ min: 4 })
-    .withMessage('About must be 50 characters or more'),
-  check('type')
+    .withMessage("About must be 50 characters or more"),
+  check("type")
     .exists({ checkFalsy: true })
-    .isIn(['On line', 'In person'])
+    .isIn(["On line", "In person"])
     .withMessage("Type must be 'Online' or 'InPerson'"),
-  check('private')
+  check("private")
     .exists({ checkFalsy: true })
     .isBoolean()
-    .withMessage('Private must be a boolean'),
-  check('city')
+    .withMessage("Private must be a boolean"),
+  check("city")
     .exists({ checkFalsy: true })
     .isLength({ min: 1 })
-    .withMessage('City is required'),
-  check('state')
+    .withMessage("City is required"),
+  check("state")
     .exists({ checkFalsy: true })
     .isLength({ min: 1 })
-    .withMessage('State is required'),
+    .withMessage("State is required"),
   handleValidationErrors
 ];
 
 const validateVenues = [
-  check('address')
+  check("address")
     .exists({ checkFalsy: true })
-    .withMessage('Street address is required'),
-  check('city')
+    .withMessage("Street address is required"),
+  check("city")
     .exists({ checkFalsy: true })
-    .withMessage('City is required'),
-  check('state')
+    .withMessage("City is required"),
+  check("state")
     .exists({ checkFalsy: true })
     .withMessage("State is required"),
-  check('lat')
+  check("lat")
     .exists({ checkFalsy: true })
 
-    .withMessage('Latitude is not valid'),
-  check('lng')
+    .withMessage("Latitude is not valid"),
+  check("lng")
     .exists({ checkFalsy: true })
-    .withMessage('Longitude is not valid'),
+    .withMessage("Longitude is not valid"),
   handleValidationErrors
 ]
 
 const validateEvents = [
-  check('venueId')
+  check("venueId")
     .exists({ checkFalsy: true })
-    .withMessage('Venue does not exist'),
-  check('name')
+    .withMessage("Venue does not exist"),
+  check("name")
     .exists({ checkFalsy: true })
     .isLength({ min: 5 })
-    .withMessage('Name must be at least 5 characters'),
-  check('type')
+    .withMessage("Name must be at least 5 characters"),
+  check("type")
     .exists({ checkFalsy: true })
-    .isIn(['Online', 'In person'])
+    .isIn(["Online", "In person"])
     .withMessage("Type must be Online or In person"),
-  check('capacity')
+  check("capacity")
     .exists({ checkFalsy: true })
     .isInt()
-    .withMessage('Capacity must be an integer'),
-  check('price')
+    .withMessage("Capacity must be an integer"),
+  check("price")
     .exists({ checkFalsy: true })
     // .isCurrency()
-    .withMessage('Price is invalid'),
+    .withMessage("Price is invalid"),
 
-  check('description')
+  check("description")
     .exists({ checkFalsy: true })
     .isLength({ min: 15 })
-    .withMessage('Description is required'),
-  check('startDate')
+    .withMessage("Description is required"),
+  check("startDate")
     .exists({ checkFalsy: true })
     // .isDate()
     // .isAfter(new Date())
-    .withMessage('Start date must be in the future'),
-  check('endDate')
+    .withMessage("Start date must be in the future"),
+  check("endDate")
     .exists({ checkFalsy: true })
     // .isDate()
     // .isAfter("dateOfStart")
-    .withMessage('End date is less than start date'),
+    .withMessage("End date is less than start date"),
   handleValidationErrors
 
 ]
@@ -108,7 +108,7 @@ router.get("/", async (req, res, next) => {
           [
             sequelize.fn("COUNT", sequelize.col("Memberships.id")), "numMembers"
           ],
-          [sequelize.col("GroupImages.url"), 'previewImage']
+          [sequelize.col("GroupImages.url"), "previewImage"]
         ]
       },
       include: [{
@@ -120,7 +120,7 @@ router.get("/", async (req, res, next) => {
         attributes: [],
         dublicating: false
       }],
-      group: ['Group.id', 'Memberships.id', 'GroupImages.id']
+      group: ["Group.id", "Memberships.id", "GroupImages.id"]
     })
     res.json(
       {
@@ -164,7 +164,7 @@ router.get("/current", requireAuth, async (req, res, next) => {
         }
       })
       if (!item.previewImage) {
-        item.previewImage = 'no photo added'
+        item.previewImage = "no photo added"
       }
       item.numMembers=item.Memberships.length
       delete item.Memberships
@@ -188,7 +188,7 @@ router.get("/:id", async (req, res, next) => {
   try {
     const groupById = await Group.findByPk(req.params.id, {
       include: [{
-        model: Membership, attributes: ['id'],
+        model: Membership, attributes: ["id"],
       },
       {
         model: User, attributes: ["id", "firstName", "lastName"]
@@ -262,7 +262,7 @@ router.post("/", [requireAuth, validateGroups], async (req, res, next) => {
   }
 })
 
-//Add an Image to a Group based on the Group's id  
+//Add an Image to a Group based on the Group"s id  
 router.post("/:id/images", requireAuth, async (req, res, next) => {
 
   try {
@@ -485,14 +485,14 @@ router.get("/:id/members", requireAuth, async (req, res, next) => {
     // if co-host
     const members = await User.findAll({
       attributes:
-        ['id', 'firstName', 'lastName'],
+        ["id", "firstName", "lastName"],
       include: [
         {
           model: Membership,
           where: {
             groupId: group.id
           },
-          attributes: ['status']
+          attributes: ["status"]
         }
       ]
     })
@@ -506,7 +506,7 @@ router.get("/:id/members", requireAuth, async (req, res, next) => {
 })
 
 
-router.put('/:id/membership', requireAuth, async (req, res, next) => {
+router.put("/:id/membership", requireAuth, async (req, res, next) => {
   try {
     const group = await Group.findByPk(req.params.id);
    
@@ -520,7 +520,7 @@ router.put('/:id/membership', requireAuth, async (req, res, next) => {
       where: {
         groupId: group.id,
         memberId: req.user.id,
-        status: 'co-host'
+        status: "co-host"
       }
     })
     let coHostStatus= null;
@@ -536,7 +536,7 @@ router.put('/:id/membership', requireAuth, async (req, res, next) => {
 
     if (req.body.status === "pending") {
       next({
-        message: 'can not change status on pending',
+        message: "can not change status on pending",
         statusCode: 400
       })
     }
@@ -564,7 +564,7 @@ router.put('/:id/membership', requireAuth, async (req, res, next) => {
     }
 
     //change status on co-host
-    if (req.user.id === group.organizerId && req.body.status === 'co-host') {
+    if (req.user.id === group.organizerId && req.body.status === "co-host") {
 
 
       member.update({
@@ -609,7 +609,7 @@ res.json(member)
         where: {
           groupId: group.id,
           memberId: userId,
-          status: 'pending'
+          status: "pending"
         }
       })
 
@@ -635,7 +635,7 @@ res.json(member)
       const newRequest = await Membership.create({
         groupId: group.id,
         memberId: userId,
-        status: 'pending'
+        status: "pending"
       })
 
       const request = await Membership.findByPk(newRequest.id)

@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 const {Op}=require("sequelize")
 let options = {};
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === "production") {
   options.schema = process.env.SCHEMA;  // define your schema in options object
 }
 const eventImages = [
@@ -55,21 +55,21 @@ const eventImages = [
   }
 ]
 
-/** @type {import('sequelize-cli').Migration} */
+/** @type {import("sequelize-cli").Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
     /**
      * Add seed commands here.
      *
      * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
+     * await queryInterface.bulkInsert("People", [{
+     *   name: "John Doe",
      *   isBetaMember: false
      * }], {});
     */
 
 
-    options.tableName = 'EventImages';
+    options.tableName = "EventImages";
     return  queryInterface.bulkInsert(options, eventImages,
     {});
 
@@ -80,9 +80,9 @@ module.exports = {
      * Add commands to revert seed here.
      *
      * Example:
-     * await queryInterface.bulkDelete('People', null, {});
+     * await queryInterface.bulkDelete("People", null, {});
      */
-    options.tableName = 'EventImages';
+    options.tableName = "EventImages";
     return queryInterface.bulkDelete(options, {[Op.or]:eventImages},{});
   }
 };

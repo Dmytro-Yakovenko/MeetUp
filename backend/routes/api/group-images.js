@@ -1,7 +1,7 @@
-const express = require('express');
+const express = require("express");
 
-const { requireAuth } = require('../../utils/auth');
-const { GroupImage, Group, Membership } = require('../../db/models');
+const { requireAuth } = require("../../utils/auth");
+const { GroupImage, Group, Membership } = require("../../db/models");
 
 const router = express.Router();
 
@@ -38,7 +38,7 @@ router.delete("/:id", requireAuth, async (req, res, next) => {
             where: {
                 groupId:group.id,
                 memberId:req.user.id,
-                status:'co-host'
+                status:"co-host"
             }
         })
         if (!member && req.user.id!==group.organizerId) {

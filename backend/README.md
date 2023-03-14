@@ -89,7 +89,7 @@ Returns the information about the current user that is logged in.
 
 ### Log In a User
 
-Logs in a current user with valid credentials and returns the current user's
+Logs in a current user with valid credentials and returns the current user"s
 information.
 
 * Require Authentication: false
@@ -159,7 +159,7 @@ information.
 ### Sign Up a User
 
 Creates a new user, logs them in as the current user, and returns the current
-user's information.
+user"s information.
 
 * Require Authentication: false
 * Request
@@ -367,7 +367,7 @@ Returns the details of a group specified by its id.
     }
     ```
 
-* Error response: Couldn't find a Group with the specified id
+* Error response: Couldn"t find a Group with the specified id
   * Status Code: 404
   * Headers:
     * Content-Type: application/json
@@ -375,7 +375,7 @@ Returns the details of a group specified by its id.
 
     ```json
     {
-      "message": "Group couldn't be found",
+      "message": "Group couldn"t be found",
       "statusCode": 404
     }
     ```
@@ -437,7 +437,7 @@ Creates and returns a new group.
       "errors": [
         "Name must be 60 characters or less",
         "About must be 50 characters or more",
-        "Type must be 'Online' or 'In person'",
+        "Type must be "Online" or "In person"",
         "Private must be a boolean",
         "City is required",
         "State is required",
@@ -445,7 +445,7 @@ Creates and returns a new group.
     }
     ```
 
-### Add an Image to a Group based on the Group's id
+### Add an Image to a Group based on the Group"s id
 
 Create and return a new image for a group specified by id.
 
@@ -479,7 +479,7 @@ Create and return a new image for a group specified by id.
     }
     ```
 
-* Error response: Couldn't find a Group with the specified id
+* Error response: Couldn"t find a Group with the specified id
   * Status Code: 404
   * Headers:
     * Content-Type: application/json
@@ -487,7 +487,7 @@ Create and return a new image for a group specified by id.
 
     ```json
     {
-      "message": "Group couldn't be found",
+      "message": "Group couldn"t be found",
       "statusCode": 404
     }
     ```
@@ -550,7 +550,7 @@ Updates and returns an existing group.
       "errors": [
         "Name must be 60 characters or less",
         "About must be 50 characters or more",
-        "Type must be 'Online' or 'In person'",
+        "Type must be "Online" or "In person"",
         "Private must be a boolean",
         "City is required",
         "State is required",
@@ -558,7 +558,7 @@ Updates and returns an existing group.
     }
     ```
 
-* Error response: Couldn't find a Group with the specified id
+* Error response: Couldn"t find a Group with the specified id
   * Status Code: 404
   * Headers:
     * Content-Type: application/json
@@ -566,7 +566,7 @@ Updates and returns an existing group.
 
     ```json
     {
-      "message": "Group couldn't be found",
+      "message": "Group couldn"t be found",
       "statusCode": 404
     }
     ```
@@ -595,7 +595,7 @@ Deletes an existing group.
     }
     ```
 
-* Error response: Couldn't find a Group with the specified id
+* Error response: Couldn"t find a Group with the specified id
   * Status Code: 404
   * Headers:
     * Content-Type: application/json
@@ -603,7 +603,7 @@ Deletes an existing group.
 
     ```json
     {
-      "message": "Group couldn't be found",
+      "message": "Group couldn"t be found",
       "statusCode": 404
     }
     ```
@@ -647,7 +647,7 @@ Returns all venues for a group specified by its id
   
   ```
 
-* Error response: Couldn't find a Group with the specified id
+* Error response: Couldn"t find a Group with the specified id
   * Status Code: 404
   * Headers:
     * Content-Type: application/json
@@ -655,7 +655,7 @@ Returns all venues for a group specified by its id
 
     ```json
     {
-      "message": "Group couldn't be found",
+      "message": "Group couldn"t be found",
       "statusCode": 404
     }
     ```
@@ -702,7 +702,7 @@ Creates and returns a new venue for a group specified by its id
   }
   ```
 
-* Error response: Couldn't find a Group with the specified id
+* Error response: Couldn"t find a Group with the specified id
   * Status Code: 404
   * Headers:
     * Content-Type: application/json
@@ -710,7 +710,7 @@ Creates and returns a new venue for a group specified by its id
 
     ```json
     {
-      "message": "Group couldn't be found",
+      "message": "Group couldn"t be found",
       "statusCode": 404
     }
     ```
@@ -777,7 +777,7 @@ Edit a new venue specified by its id
   }
   ```
 
-* Error response: Couldn't find a Venue with the specified id
+* Error response: Couldn"t find a Venue with the specified id
   * Status Code: 404
   * Headers:
     * Content-Type: application/json
@@ -785,7 +785,7 @@ Edit a new venue specified by its id
 
     ```json
     {
-      "message": "Venue couldn't be found",
+      "message": "Venue couldn"t be found",
       "statusCode": 404
     }
     ```
@@ -938,7 +938,7 @@ Returns all the events of a group specified by its id
     }
     ```
 
-* Error response: Couldn't find a Group with the specified id
+* Error response: Couldn"t find a Group with the specified id
   * Status Code: 404
   * Headers:
     * Content-Type: application/json
@@ -946,7 +946,7 @@ Returns all the events of a group specified by its id
 
     ```json
     {
-      "message": "Group couldn't be found",
+      "message": "Group couldn"t be found",
       "statusCode": 404
     }
     ```
@@ -1010,7 +1010,7 @@ Returns the details of an event specified by its id.
     }
     ```
 
-* Error response: Couldn't find a Event with the specified id
+* Error response: Couldn"t find a Event with the specified id
   * Status Code: 404
   * Headers:
     * Content-Type: application/json
@@ -1018,7 +1018,7 @@ Returns the details of an event specified by its id.
 
     ```json
     {
-      "message": "Event couldn't be found",
+      "message": "Event couldn"t be found",
       "statusCode": 404
     }
     ```
@@ -1094,7 +1094,7 @@ Creates and returns a new event for a group specified by its id
     }
     ```
 
-* Error response: Couldn't find a Group with the specified id
+* Error response: Couldn"t find a Group with the specified id
   * Status Code: 404
   * Headers:
     * Content-Type: application/json
@@ -1102,12 +1102,12 @@ Creates and returns a new event for a group specified by its id
 
     ```json
     {
-      "message": "Group couldn't be found",
+      "message": "Group couldn"t be found",
       "statusCode": 404
     }
     ```
 
-### Add an Image to a Event based on the Event's id
+### Add an Image to a Event based on the Event"s id
 
 Create and return a new image for an event specified by id.
 
@@ -1141,7 +1141,7 @@ Create and return a new image for an event specified by id.
     }
     ```
 
-* Error response: Couldn't find an Event with the specified id
+* Error response: Couldn"t find an Event with the specified id
   * Status Code: 404
   * Headers:
     * Content-Type: application/json
@@ -1149,7 +1149,7 @@ Create and return a new image for an event specified by id.
 
     ```json
     {
-      "message": "Event couldn't be found",
+      "message": "Event couldn"t be found",
       "statusCode": 404
     }
     ```
@@ -1225,7 +1225,7 @@ Edit and returns an event specified by its id
     }
     ```
 
-* Error response: Couldn't find a Venue with the specified id
+* Error response: Couldn"t find a Venue with the specified id
   * Status Code: 404
   * Headers:
     * Content-Type: application/json
@@ -1233,12 +1233,12 @@ Edit and returns an event specified by its id
 
     ```json
     {
-      "message": "Venue couldn't be found",
+      "message": "Venue couldn"t be found",
       "statusCode": 404
     }
     ```
 
-* Error response: Couldn't find an Event with the specified id
+* Error response: Couldn"t find an Event with the specified id
   * Status Code: 404
   * Headers:
     * Content-Type: application/json
@@ -1246,7 +1246,7 @@ Edit and returns an event specified by its id
 
     ```json
     {
-      "message": "Event couldn't be found",
+      "message": "Event couldn"t be found",
       "statusCode": 404
     }
     ```
@@ -1275,7 +1275,7 @@ Delete an event specified by its id
     }
     ```
 
-* Error response: Couldn't find an Event with the specified id
+* Error response: Couldn"t find an Event with the specified id
   * Status Code: 404
   * Headers:
     * Content-Type: application/json
@@ -1283,7 +1283,7 @@ Delete an event specified by its id
 
     ```json
     {
-      "message": "Event couldn't be found",
+      "message": "Event couldn"t be found",
       "statusCode": 404
     }
     ```
@@ -1339,7 +1339,7 @@ Returns the members of a group specified by its id.
     ```
 
 * Successful Response: If you ARE NOT the organizer of the group. Shows only
-  members that don't have a status of "pending".
+  members that don"t have a status of "pending".
   * Status Code: 200
   * Headers:
     * Content-Type: application/json
@@ -1368,7 +1368,7 @@ Returns the members of a group specified by its id.
     }
     ```
 
-* Error response: Couldn't find a Group with the specified id
+* Error response: Couldn"t find a Group with the specified id
   * Status Code: 404
   * Headers:
     * Content-Type: application/json
@@ -1376,12 +1376,12 @@ Returns the members of a group specified by its id.
 
     ```json
     {
-      "message": "Group couldn't be found",
+      "message": "Group couldn"t be found",
       "statusCode": 404
     }
     ```
 
-### Request a Membership for a Group based on the Group's id
+### Request a Membership for a Group based on the Group"s id
 
 Request a new membership for a group specified by id.
 
@@ -1407,7 +1407,7 @@ Request a new membership for a group specified by id.
     }
     ```
 
-* Error response: Couldn't find a Group with the specified id
+* Error response: Couldn"t find a Group with the specified id
   * Status Code: 404
   * Headers:
     * Content-Type: application/json
@@ -1415,7 +1415,7 @@ Request a new membership for a group specified by id.
 
     ```json
     {
-      "message": "Group couldn't be found",
+      "message": "Group couldn"t be found",
       "statusCode": 404
     }
     ```
@@ -1503,7 +1503,7 @@ Change the status of a membership for a group specified by id.
     }
     ```
 
-* Error response: Couldn't find a User with the specified memberId
+* Error response: Couldn"t find a User with the specified memberId
   * Status Code: 400
   * Headers:
     * Content-Type: application/json
@@ -1514,12 +1514,12 @@ Change the status of a membership for a group specified by id.
       "message": "Validation Error",
       "statusCode": 400,
       "errors": {
-        "memberId": "User couldn't be found"
+        "memberId": "User couldn"t be found"
       }
     }
     ```
 
-* Error response: Couldn't find a Group with the specified id
+* Error response: Couldn"t find a Group with the specified id
   * Status Code: 404
   * Headers:
     * Content-Type: application/json
@@ -1527,7 +1527,7 @@ Change the status of a membership for a group specified by id.
 
     ```json
     {
-      "message": "Group couldn't be found",
+      "message": "Group couldn"t be found",
       "statusCode": 404
     }
     ```
@@ -1577,7 +1577,7 @@ Delete a membership to a group specified by id.
     }
     ```
 
-* Error response: Couldn't find a User with the specified memberId
+* Error response: Couldn"t find a User with the specified memberId
   * Status Code: 400
   * Headers:
     * Content-Type: application/json
@@ -1588,12 +1588,12 @@ Delete a membership to a group specified by id.
       "message": "Validation Error",
       "statusCode": 400,
       "errors": {
-        "memberId": "User couldn't be found"
+        "memberId": "User couldn"t be found"
       }
     }
     ```
 
-* Error response: Couldn't find a Group with the specified id
+* Error response: Couldn"t find a Group with the specified id
   * Status Code: 404
   * Headers:
     * Content-Type: application/json
@@ -1601,7 +1601,7 @@ Delete a membership to a group specified by id.
 
     ```json
     {
-      "message": "Group couldn't be found",
+      "message": "Group couldn"t be found",
       "statusCode": 404
     }
     ```
@@ -1671,7 +1671,7 @@ Returns the attendees of an event specified by its id.
     ```
 
 * Successful Response: If you ARE NOT the organizer of the group or a member of
-  the group with a status of "co-host". Shows all members that don't have a
+  the group with a status of "co-host". Shows all members that don"t have a
   status of "pending".
   * Status Code: 200
   * Headers:
@@ -1701,7 +1701,7 @@ Returns the attendees of an event specified by its id.
     }
     ```
 
-* Error response: Couldn't find an Event with the specified id
+* Error response: Couldn"t find an Event with the specified id
   * Status Code: 404
   * Headers:
     * Content-Type: application/json
@@ -1709,12 +1709,12 @@ Returns the attendees of an event specified by its id.
 
     ```json
     {
-      "message": "Event couldn't be found",
+      "message": "Event couldn"t be found",
       "statusCode": 404
     }
     ```
 
-### Request to Attend an Event based on the Event's id
+### Request to Attend an Event based on the Event"s id
 
 Request attendance for an event specified by id.
 
@@ -1741,7 +1741,7 @@ Request attendance for an event specified by id.
     }
     ```
 
-* Error response: Couldn't find an Event with the specified id
+* Error response: Couldn"t find an Event with the specified id
   * Status Code: 404
   * Headers:
     * Content-Type: application/json
@@ -1749,7 +1749,7 @@ Request attendance for an event specified by id.
 
     ```json
     {
-      "message": "Event couldn't be found",
+      "message": "Event couldn"t be found",
       "statusCode": 404
     }
     ```
@@ -1817,7 +1817,7 @@ Change the status of an attendance for an event specified by id.
     }
     ```
 
-* Error response: Couldn't find an Event with the specified id
+* Error response: Couldn"t find an Event with the specified id
   * Status Code: 404
   * Headers:
     * Content-Type: application/json
@@ -1825,7 +1825,7 @@ Change the status of an attendance for an event specified by id.
 
     ```json
     {
-      "message": "Event couldn't be found",
+      "message": "Event couldn"t be found",
       "statusCode": 404
     }
     ```
@@ -1888,7 +1888,7 @@ Delete an attendance to an event specified by id.
     }
     ```
 
-* Error response: Couldn't find an Event with the specified id
+* Error response: Couldn"t find an Event with the specified id
   * Status Code: 404
   * Headers:
     * Content-Type: application/json
@@ -1896,7 +1896,7 @@ Delete an attendance to an event specified by id.
 
     ```json
     {
-      "message": "Event couldn't be found",
+      "message": "Event couldn"t be found",
       "statusCode": 404
     }
     ```
@@ -1954,7 +1954,7 @@ Delete an existing image for a Group.
     }
     ```
 
-* Error response: Couldn't find an Image with the specified id
+* Error response: Couldn"t find an Image with the specified id
   * Status Code: 404
   * Headers:
     * Content-Type: application/json
@@ -1962,7 +1962,7 @@ Delete an existing image for a Group.
 
     ```json
     {
-      "message": "Group Image couldn't be found",
+      "message": "Group Image couldn"t be found",
       "statusCode": 404
     }
     ```
@@ -1993,7 +1993,7 @@ Delete an existing image for an Event.
     }
     ```
 
-* Error response: Couldn't find an Image with the specified id
+* Error response: Couldn"t find an Image with the specified id
   * Status Code: 404
   * Headers:
     * Content-Type: application/json
@@ -2001,7 +2001,7 @@ Delete an existing image for an Event.
 
     ```json
     {
-      "message": "Event Image couldn't be found",
+      "message": "Event Image couldn"t be found",
       "statusCode": 404
     }
     ```
@@ -2090,7 +2090,7 @@ Return events filtered by query parameters.
         "Page must be greater than or equal to 0",
         "Size must be greater than or equal to 0",
         "Name must be a string",
-        "Type must be 'Online' or 'In Person'",
+        "Type must be "Online" or "In Person"",
         "Start date must be a valid datetime",
       ]
     }

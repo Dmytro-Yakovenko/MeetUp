@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 const {
   Model
-} = require('sequelize');
+} = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class GroupImage extends Model {
     /**
@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
           // Your code here
           GroupImage.belongsTo(models.Group,{
 
-            foreignKey:'groupId'
+            foreignKey:"groupId"
 
           })
     }
@@ -39,10 +39,10 @@ module.exports = (sequelize, DataTypes) => {
 
   }, {
     sequelize,
-    modelName: 'GroupImage',
+    modelName: "GroupImage",
     defaultScope: {
       attributes: {
-        exclude: ["createdAt", "updatedAt", 'groupId']
+        exclude: ["createdAt", "updatedAt", "groupId"]
       }
     }
   });

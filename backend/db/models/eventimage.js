@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 const {
   Model
-} = require('sequelize');
+} = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class EventImage extends Model {
     /**
@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       EventImage.belongsTo(models.Event,{
-        foreignKey:'eventId'
+        foreignKey:"eventId"
       })
     }
   }
@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     } 
   }, {
     sequelize,
-    modelName: 'EventImage',
+    modelName: "EventImage",
 
     defaultScope: {
       attributes: {

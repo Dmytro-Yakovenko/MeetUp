@@ -1,11 +1,11 @@
-'use strict';
+"use strict";
 let options = {};
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === "production") {
   options.schema = process.env.SCHEMA;  // define your schema in options object
 }
 module.exports = {
   up:async (queryInterface, Sequelize) =>{
-    return queryInterface.createTable('Groups', {
+    return queryInterface.createTable("Groups", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -19,10 +19,10 @@ module.exports = {
         type: Sequelize.INTEGER,
      
           references: {
-              model: 'Users',
-              key: 'id',
+              model: "Users",
+              key: "id",
           },
-          onDelete: 'cascade'
+          onDelete: "cascade"
       
       },
       about: {
@@ -44,16 +44,16 @@ module.exports = {
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue:Sequelize.literal('CURRENT_TIMESTAMP')
+        defaultValue:Sequelize.literal("CURRENT_TIMESTAMP")
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue:Sequelize.literal('CURRENT_TIMESTAMP')
+        defaultValue:Sequelize.literal("CURRENT_TIMESTAMP")
       }
     }, options);
   },
   down:async (queryInterface, Sequelize) =>{
-    await queryInterface.dropTable('Groups', options);
+    await queryInterface.dropTable("Groups", options);
   }
 };

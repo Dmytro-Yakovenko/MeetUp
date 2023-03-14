@@ -1,19 +1,19 @@
-const express = require('express');
+const express = require("express");
 
-const { restoreUser, requireAuth } = require('../../utils/auth');
-const { EventImage, Event, Group, Membership} = require('../../db/models');
-const event = require('../../db/models/event');
-const membership = require('../../db/models/membership');
+const { restoreUser, requireAuth } = require("../../utils/auth");
+const { EventImage, Event, Group, Membership} = require("../../db/models");
+const event = require("../../db/models/event");
+const membership = require("../../db/models/membership");
 
 const router = express.Router();
 
 
-//Delete an Image to a Event based on the Event's id ???addImage - task 30
+//Delete an Image to a Event based on the Event"s id ???addImage - task 30
 router.delete("/:id",  requireAuth, async (req, res, next) => {
    
     try {
 
-        const image = await EventImage.scope('exclusion').findByPk(+req.params.id)
+        const image = await EventImage.scope("exclusion").findByPk(+req.params.id)
      
       
 

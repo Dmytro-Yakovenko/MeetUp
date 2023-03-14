@@ -1,24 +1,24 @@
-'use strict';
+"use strict";
 const { Op } = require("sequelize")
 const {User, Group}= require("../models")
 let options = {};
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === "production") {
   options.schema = process.env.SCHEMA;  // define your schema in options object
 }
 
 const membership = [
   {
     
-      user: { firstName: 'Dmytro', lastName: 'Yakovenko' },
-      group: { name: "San Francisco Mother's Group" },
+      user: { firstName: "Dmytro", lastName: "Yakovenko" },
+      group: { name: "San Francisco Mother"s Group" },
     
     status: "co-host"
   },
 
   {
     
-    user: { firstName: 'Sergey', lastName: 'Shiryaev' },
-    group: { name: "SF Gay Men's Poker Group"},
+    user: { firstName: "Sergey", lastName: "Shiryaev" },
+    group: { name: "SF Gay Men"s Poker Group"},
   
   status: "co-host"
 },
@@ -54,15 +54,15 @@ const membership = [
   // },
 ]
 
-/** @type {import('sequelize-cli').Migration} */
+/** @type {import("sequelize-cli").Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
     /**
      * Add seed commands here.
      *
      * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
+     * await queryInterface.bulkInsert("People", [{
+     *   name: "John Doe",
      *   isBetaMember: false
      * }], {});
     */
@@ -73,7 +73,7 @@ module.exports = {
       await user.addGroup(group);
     }
 
-    options.tableName = 'Memberships';
+    options.tableName = "Memberships";
 
     return queryInterface.bulkInsert(options, membership,
     {});
@@ -84,7 +84,7 @@ module.exports = {
      * Add commands to revert seed here.
      *
      * Example:
-     * await queryInterface.bulkDelete('People', null, {});
+     * await queryInterface.bulkDelete("People", null, {});
      */
     for(let i = 0; i < membership.length; i++) {
       const data = membership[i];
@@ -95,7 +95,7 @@ module.exports = {
 
 
 
-    options.tableName = 'Memberships';
+    options.tableName = "Memberships";
   return queryInterface.bulkDelete(options, {[Op.or]:membership},{});
 }
 }
