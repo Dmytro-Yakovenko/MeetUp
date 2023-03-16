@@ -182,14 +182,60 @@ router.get("/current", requireAuth, async (req, res, next) => {
   }
 })
 
+// here is 2 requests. on local host they works after rendering its giving me an error
+
+
+// {
+//   "message": "column \"Memberships.status\" must appear in the GROUP BY clause or be used in an aggregate function",
+//   "stack": null
+// }
+
+//when we do first round in Postman, everything works but second time 4 more routes stops working, which related to membership and attendees, because variables value is null
+
+//how to validate date and where
 
 // // Get details of a Group from an id ???? not working
 router.get("/:id", async (req, res, next) => {
   try {
-    const groupById = await Group.findByPk(req.params.id, {
-      include: [{
-        model: Membership, attributes: ["status", "id"],
-      },
+    // const groupById = await Group.findByPk(req.params.id, {
+    //   include: [{
+    //     model: Membership, attributes: ["status", "id"],
+    //   },
+    //   {
+    //     model: User, attributes: ["id", "firstName", "lastName"]
+    //   },
+    //   {
+    //     model: GroupImage, attributes: ["id", "url", "preview"]
+    //   },
+    //   {
+    //     model: Location, attributes: ["id", "groupId", "address", "city", "state", "lat", "lng"]
+    //   }
+    //   ],
+    //   group: ["Group.id"]
+    // }
+    // )
+  //   const group = await Group.scope([{ method: ["organizer", organizerId] }, {method: ["grpImg", imgId]}]).findByPk(id, {
+  //     attributes: { 
+  //         include: [[sequelize.fn("COUNT", sequelize.col("Memberships.id")), "numMembers"]] 
+  //     },
+  //     include: [{
+  //         model: Membership, attributes: [],
+  //     },
+  //     {
+  //         model: User, as: "Organizer", attributes: ["id", "firstName", "lastName"]
+  //     },
+  //     {
+  //         model: GroupImage, attributes: ["id", "url", "preview"]
+  //     },
+  //     {
+  //         model: Venue, attributes: ["id", "groupId", "address", "city", "state", "lat", "lng"]
+  //     }
+  // ],
+  //     group: ["Group.id"]
+  // })
+
+      const groupById = await Group.findByPk(req.params.id, {
+      include: [
       {
         model: User, attributes: ["id", "firstName", "lastName"]
       },
@@ -203,6 +249,12 @@ router.get("/:id", async (req, res, next) => {
       group: ["Group.id"]
     }
     )
+    const membership = await Membership.findAll({
+      where:{
+        groupId:req.params.id
+      }
+    })
+  
 
     if (!groupById) {
       
@@ -224,14 +276,14 @@ router.get("/:id", async (req, res, next) => {
       "state": group.state,
       "createdAt": group.createdAt,
       "updatedAt": group.updatedAt,
-      "numMembers": group.Memberships.length,
+      "numMembers":membership.length,
       "GroupImage": group.GroupImages,
       "Organizer": group.User,
       "Venues": group.Locations
     }
-    delete resObj.Memberships
+    // delete resObj.Memberships
     res.json(
-      resObj
+     resObj
     )
   } catch (err) {
     next(err)
