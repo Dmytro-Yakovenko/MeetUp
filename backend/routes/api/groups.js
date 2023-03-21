@@ -246,7 +246,7 @@ router.get("/:id", async (req, res, next) => {
         model: Location, attributes: ["id", "groupId", "address", "city", "state", "lat", "lng"]
       }
       ],
-      group: ["Group.id"]
+      
     }
     )
     const membership = await Membership.findAll({
