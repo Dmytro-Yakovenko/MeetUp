@@ -234,21 +234,21 @@ router.get("/:id", async (req, res, next) => {
   //     group: ["Group.id"]
   // })
 
-      const groupById = await Group.findByPk(req.params.id, {
-      include: [
-      {
-        model: User, attributes: ["id", "firstName", "lastName"]
-      },
-      {
-        model: GroupImage, attributes: ["id", "url", "preview"]
-      },
-      {
-        model: Location, attributes: ["id", "groupId", "address", "city", "state", "lat", "lng"]
-      }
-      ],
+      const groupById = await Group.findByPk(req.params.id)
+    //   include: [
+    //   {
+    //     model: User, attributes: ["id", "firstName", "lastName"]
+    //   },
+    //   {
+    //     model: GroupImage, attributes: ["id", "url", "preview"]
+    //   },
+    //   {
+    //     model: Location, attributes: ["id", "groupId", "address", "city", "state", "lat", "lng"]
+    //   }
+    //   ],
       
-    }
-    )
+    // }
+    
     const membership = await Membership.findAll({
       where:{
         groupId:req.params.id
@@ -277,9 +277,9 @@ router.get("/:id", async (req, res, next) => {
       "createdAt": group.createdAt,
       "updatedAt": group.updatedAt,
       "numMembers":membership.length,
-      "GroupImage": group.GroupImages,
-      "Organizer": group.User,
-      "Venues": group.Locations
+      // "GroupImage": group.GroupImages,
+      // "Organizer": group.User,
+      // "Venues": group.Locations
     }
     // delete resObj.Memberships
     res.json(
