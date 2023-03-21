@@ -248,6 +248,25 @@ router.get("/:id", async (req, res, next) => {
     //   ],
       
     // }
+    const location = await Location.findAll({
+      where:{
+        groupId:req.params.id
+      },
+         attributes: ["id", "groupId", "address", "city", "state", "lat", "lng"]
+    })
+    const user = await User.findOne({
+      where:{
+        id:groupById.organizerId
+      },
+      attributes: ["id", "firstName", "lastName"]
+    })
+    const images = await GroupImage.findAll({
+      where:{
+        groupId:req.params.id
+       
+      },
+      attributes: ["id", "url", "preview"]
+    })
     
     const membership = await Membership.findAll({
       where:{
@@ -277,9 +296,9 @@ router.get("/:id", async (req, res, next) => {
       "createdAt": group.createdAt,
       "updatedAt": group.updatedAt,
       "numMembers":membership.length,
-      // "GroupImage": group.GroupImages,
-      // "Organizer": group.User,
-      // "Venues": group.Locations
+      "GroupImage": images,
+      "Organizer": user,
+      "Venues": location
     }
     // delete resObj.Memberships
     res.json(
