@@ -529,6 +529,7 @@ router.post("/:id/attendance", requireAuth, async (req, res, next) => {
 //Change the status of an attendance for an event specified by id - task 26
 router.put("/:id/attendance", requireAuth, async (req, res, next) => {
   try {
+    
     if (req.body.status === "pending") {
       next({
         "message": "Cannot change an attendance status to pending",
@@ -564,12 +565,12 @@ router.put("/:id/attendance", requireAuth, async (req, res, next) => {
 
     const attend = await Attendance.findOne({
       where: {
-        eventId: req.params.id,
-        userId: user,
+        eventId: +req.params.id,
+        userId: req.body.userId,
         status: "pending"
       }
     })
-
+    console.log(req.params.id, user)
     if (!attend) {
       next({
         "message": "Attendance between the user and the event does not exist",
@@ -577,7 +578,7 @@ router.put("/:id/attendance", requireAuth, async (req, res, next) => {
       })
     }
     await attend.update({
-      userId: req.body.userId,
+      userId: +req.body.userId,
       eventId: +req.params.id,
       status: req.body.status
     })
@@ -645,7 +646,8 @@ router.delete("/:id/attendance", requireAuth, async (req, res, next) => {
 
     await attend.destroy();
     res.json({
-      "message": "Successfully deleted attendance from event"
+      "message": "Successfully deleted attendance from event",
+      "statusCode": 200
     })
 
   } catch (err) {

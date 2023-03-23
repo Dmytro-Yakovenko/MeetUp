@@ -112,27 +112,42 @@ const validateLogin = [
 // Log in
 
 
-router.post(
-  "/",
-  validateLogin,
-  async (req, res, next) => {
-    const { credential, password } = req.body;
+// router.post(
+//   "/",
+//   validateLogin,
+//   async (req, res, next) => {
+//     const { credential, password } = req.body;
 
-    const user = await User.login({ credential, password });
+//     const user = await User.login({ credential, password });
 
-    if (!user) {
-      const err = new Error("Login failed");
-      err.status = 401;
-      err.title = "Login failed";
-      err.errors = ["The provided credentials were invalid."];
-      return next(err);
-    }
+//     if (!user) {
+//       const err = new Error("Login failed");
+//       err.status = 401;
+//       err.title = "Login failed";
+//       err.errors = ["The provided credentials were invalid."];
+//       return next(err);
+//     }
 
-    await setTokenCookie(res, user);
+//     await setTokenCookie(res, user);
 
-    return res.json(
-      user
-    );
+//     return res.json(
+//       user
+//     );
+//   }
+// );
+router.get(
+  '/',
+  restoreUser,
+  (req, res, next) => {
+    const { user } = req;
+    if (user) {
+      return res.json({
+        user: user.toSafeObject()
+      });
+    } 
+    const err = new Error("Authentication required")
+    err.status = 401
+    return next(err);
   }
 );
 
