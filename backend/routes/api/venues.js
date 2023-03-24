@@ -33,6 +33,13 @@ router.put("/:id", [requireAuth, validateVenues], async (req, res, next) => {
     try {
      
       const venue = await Location.findByPk(req.params.id)
+    
+      if(!venue){
+        next({
+          message: "Venue could not be found",
+          statusCode: 404
+        })
+      }
      const group = await Group.findByPk(venue.groupId)
      const coHost = await Membership.findAll({
       where:{
@@ -41,12 +48,7 @@ router.put("/:id", [requireAuth, validateVenues], async (req, res, next) => {
         status:"co-host"
       }
      })
-      if(!venue){
-        next({
-          message: "Venue could not be found",
-          statusCode: 404
-        })
-      }
+     
 
       if(!coHost && req.user.id!==group.organizerId){
         next({

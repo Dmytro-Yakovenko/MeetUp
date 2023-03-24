@@ -273,7 +273,7 @@ router.post("/:id/images", requireAuth, async (req, res, next) => {
     })
 
     const img = await EventImage.findByPk(image.id)
-    res.status(201).json(
+    res.json(
       img
     )
 
@@ -570,7 +570,6 @@ router.put("/:id/attendance", requireAuth, async (req, res, next) => {
         status: "pending"
       }
     })
-    console.log(req.params.id, user)
     if (!attend) {
       next({
         "message": "Attendance between the user and the event does not exist",

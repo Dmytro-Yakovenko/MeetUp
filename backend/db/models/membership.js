@@ -45,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Membership.addScope("submission", {
     attributes: {
-      exclude: ["id", "groupId", "createdAt", "updatedAt"]
+      exclude: ["id", "createdAt", "updatedAt"]
     }
   })
   return Membership;

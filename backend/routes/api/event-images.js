@@ -8,7 +8,7 @@ const membership = require("../../db/models/membership");
 const router = express.Router();
 
 
-//Delete an Image to a Event based on the Event"s id ???addImage - task 30
+//Delete an Image to a Event based on the Event"s id 
 router.delete("/:id",  requireAuth, async (req, res, next) => {
    
     try {

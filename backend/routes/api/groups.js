@@ -183,72 +183,13 @@ router.get("/current", requireAuth, async (req, res, next) => {
   }
 })
 
-// here is 2 requests. on local host they works after rendering its giving me an error
 
-
-// {
-//   "message": "column \"Memberships.status\" must appear in the GROUP BY clause or be used in an aggregate function",
-//   "stack": null
-// }
-
-//when we do first round in Postman, everything works but second time 4 more routes stops working, which related to membership and attendees, because variables value is null
-
-//how to validate date and where
-
-// // Get details of a Group from an id ???? not working
+// // Get details of a Group from an id 
 router.get("/:id", async (req, res, next) => {
   try {
-    // const groupById = await Group.findByPk(req.params.id, {
-    //   include: [{
-    //     model: Membership, attributes: ["status", "id"],
-    //   },
-    //   {
-    //     model: User, attributes: ["id", "firstName", "lastName"]
-    //   },
-    //   {
-    //     model: GroupImage, attributes: ["id", "url", "preview"]
-    //   },
-    //   {
-    //     model: Location, attributes: ["id", "groupId", "address", "city", "state", "lat", "lng"]
-    //   }
-    //   ],
-    //   group: ["Group.id"]
-    // }
-    // )
-    //   const group = await Group.scope([{ method: ["organizer", organizerId] }, {method: ["grpImg", imgId]}]).findByPk(id, {
-    //     attributes: { 
-    //         include: [[sequelize.fn("COUNT", sequelize.col("Memberships.id")), "numMembers"]] 
-    //     },
-    //     include: [{
-    //         model: Membership, attributes: [],
-    //     },
-    //     {
-    //         model: User, as: "Organizer", attributes: ["id", "firstName", "lastName"]
-    //     },
-    //     {
-    //         model: GroupImage, attributes: ["id", "url", "preview"]
-    //     },
-    //     {
-    //         model: Venue, attributes: ["id", "groupId", "address", "city", "state", "lat", "lng"]
-    //     }
-    // ],
-    //     group: ["Group.id"]
-    // })
-
+ 
     const groupById = await Group.findByPk(req.params.id)
-    //   include: [
-    //   {
-    //     model: User, attributes: ["id", "firstName", "lastName"]
-    //   },
-    //   {
-    //     model: GroupImage, attributes: ["id", "url", "preview"]
-    //   },
-    //   {
-    //     model: Location, attributes: ["id", "groupId", "address", "city", "state", "lat", "lng"]
-    //   }
-    //   ],
 
-    // }
     const location = await Location.findAll({
       where: {
         groupId: req.params.id
@@ -438,18 +379,7 @@ router.get("/:id/venues", requireAuth, async (req, res, next) => {
         statusCode: 404
       })
     }
-    // const member = await Membership.findOne({
-    //   where:{
-    //     memberId:req.user.id,
-    //     groupId:group.id
-    //   }
-    // })
-    // if(!member || req.user.id!==group.organizerId || member.status!=="co-host"){
-    //   next({
-    //     message: "Only organizer or co-host can get venues",
-    //     statusCode: 403
-    //   })
-    // }
+  
     const venues = await Location.findAll({
       where: {
         groupId: req.params.id
@@ -569,8 +499,10 @@ router.get("/:id/members", requireAuth, async (req, res, next) => {
       ]
     })
 
-    res.json(
-      members
+    res.json({
+      "Members":members
+    }
+     
     )
   } catch (err) {
     next(err)
@@ -644,7 +576,13 @@ router.put("/:id/membership", requireAuth, async (req, res, next) => {
         memberId: req.body.memberId,
         status: req.body.status
       })
-      res.json(member)
+     const resObg={
+      groupById: member.groupById,
+      memberId: member.memberId,
+      status:member.status,
+      id:member.id
+     }
+      res.json(resObg)
     }
   } catch (err) {
 
@@ -710,7 +648,7 @@ router.post("/:id/membership", requireAuth, async (req, res, next) => {
       status: "pending"
     })
 
-    const request = await Membership.findByPk(newRequest.id)
+    const request = await Membership.scope("submission").findByPk(newRequest.id)
 
 
     res.status(201).json(
@@ -738,7 +676,7 @@ router.delete('/:id/membership',requireAuth, async (req, res, next) => {
         memberId: req.body.memberId
       }
     });
-    console.log(member)
+ 
     if (!member) {
       next({
         message: "Member could not be found",

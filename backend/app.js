@@ -89,7 +89,7 @@ app.use((err, _req, res, _next) => {
       message: err.message,
       errors: err.errors,
       statusCode:err.statusCode,
-      stack: isProduction ? null : err.stack
+  
     });
   });
 
