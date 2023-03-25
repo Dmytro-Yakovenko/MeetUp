@@ -98,6 +98,21 @@ const validateEvents = [
 
 ]
 
+
+const validateGroupImage = [
+  check("preview")
+    .exists({ checkFalsy: true })
+    // .isIn([true, false])
+    .isBoolean()
+    .withMessage("preview should be true or false"),
+  check("url")
+    .exists({ checkFalsy: true })
+    .withMessage("url is required"),
+  
+  handleValidationErrors
+]
+
+
 //Get all Groups 
 router.get("/", async (req, res, next) => {
   try {
@@ -277,7 +292,7 @@ router.post("/", [requireAuth, validateGroups], async (req, res, next) => {
 })
 
 //Add an Image to a Group based on the Group"s id  
-router.post("/:id/images", requireAuth, async (req, res, next) => {
+router.post("/:id/images",[requireAuth, validateGroupImage] , async (req, res, next) => {
 
   try {
     const group = await Group.findByPk(req.params.id);
@@ -286,7 +301,7 @@ router.post("/:id/images", requireAuth, async (req, res, next) => {
       next({
         message: "Group could not be found",
         statusCode: 404,
-        status:404
+        // status:404
       })
     }
  
@@ -311,7 +326,7 @@ router.post("/:id/images", requireAuth, async (req, res, next) => {
       groupId: +req.params.id
     })
     const img = await GroupImage.findByPk(image.id)
-    console.log(img)
+   console.log(img)
     res.status(201).json(
       img
     )
