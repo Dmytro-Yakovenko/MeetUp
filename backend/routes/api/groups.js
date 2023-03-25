@@ -289,6 +289,8 @@ router.post("/:id/images", requireAuth, async (req, res, next) => {
         status:404
       })
     }
+ 
+
     if (!url && preview) {
       next({
         statusCode: 400,
@@ -309,6 +311,7 @@ router.post("/:id/images", requireAuth, async (req, res, next) => {
       groupId: +req.params.id
     })
     const img = await GroupImage.findByPk(image.id)
+    console.log(img)
     res.status(201).json(
       img
     )
