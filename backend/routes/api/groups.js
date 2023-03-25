@@ -304,8 +304,6 @@ router.post("/:id/images",[requireAuth, validateGroupImage] , async (req, res, n
         // status:404
       })
     }
- 
-
     if (!url && preview) {
       next({
         statusCode: 400,
