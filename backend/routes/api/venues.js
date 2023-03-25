@@ -37,7 +37,8 @@ router.put("/:id", [requireAuth, validateVenues], async (req, res, next) => {
       if(!venue){
         next({
           message: "Venue could not be found",
-          statusCode: 404
+          statusCode: 404,
+          status:404
         })
       }
      const group = await Group.findByPk(venue.groupId)
@@ -53,7 +54,8 @@ router.put("/:id", [requireAuth, validateVenues], async (req, res, next) => {
       if(!coHost && req.user.id!==group.organizerId){
         next({
           message: "Venue can be changed by organizer",
-          statusCode: 403
+          statusCode: 403,
+          status:403
         })
       }
      

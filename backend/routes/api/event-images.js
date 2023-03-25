@@ -20,7 +20,8 @@ router.delete("/:id",  requireAuth, async (req, res, next) => {
         if (!image) {
             next({
                 "message": "Event Image couldn't be found",
-                "statusCode": 404
+                "statusCode": 404,
+                status:404
             })
             return
         }
@@ -38,7 +39,8 @@ router.delete("/:id",  requireAuth, async (req, res, next) => {
         if(!group){
             next({
                 "message": "Group couldn't be found",
-                "statusCode": 404
+                "statusCode": 404,
+                status:404
             })
             return
         }
@@ -54,7 +56,8 @@ router.delete("/:id",  requireAuth, async (req, res, next) => {
         if(!coHost && req.user.id!==group.organizerId){
             next({
                 "message": "Only co-host or organizer can delete event image ",
-                "statusCode": 403
+                "statusCode": 403,
+                status:403
             })
             return
         }

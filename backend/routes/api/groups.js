@@ -221,7 +221,8 @@ router.get("/:id", async (req, res, next) => {
 
       next({
         statusCode: 404,
-        message: `Could not find group ${req.params.id}`
+        message: `Could not find group ${req.params.id}`,
+        status:404
       })
     }
     const group = groupById.toJSON()
@@ -284,18 +285,21 @@ router.post("/:id/images", requireAuth, async (req, res, next) => {
     if (!group) {
       next({
         message: "Group could not be found",
-        statusCode: 404
+        statusCode: 404,
+        status:404
       })
     }
     if (!url && preview) {
       next({
         statusCode: 400,
+        status:400,
         message: "Validation Error"
       })
     }
     if (req.user.id !== group.organizerId) {
       next({
         statusCode: 403,
+        status:403,
         message: "You are not organizer of the group"
       })
     }
@@ -322,13 +326,15 @@ router.put("/:id", [requireAuth, validateGroups], async (req, res, next) => {
     if (!group) {
       next({
         message: "Group could not be found",
-        statusCode: 404
+        statusCode: 404,
+        status:404,
       })
     }
     if (req.user.id !== group.organizerId) {
       next({
         message: "You are not organizer",
-        statusCode: 403
+        statusCode: 403,
+        status:403,
       })
     }
     await group.update(req.body)
@@ -347,14 +353,16 @@ router.delete("/:id", requireAuth, async (req, res, next) => {
     if (!group) {
       next({
         message: "Group could not be found",
-        statusCode: 404
+        statusCode: 404,
+        status:404
       })
     }
     const userId = req.user.id
     if (group.organizerId !== userId) {
       next({
         message: "Only owner can delete a group",
-        statusCode: 403
+        statusCode: 403,
+        status:403
       })
 
     }
@@ -376,7 +384,8 @@ router.get("/:id/venues", requireAuth, async (req, res, next) => {
     if (!group) {
       next({
         message: "Group could not be found",
-        statusCode: 404
+        statusCode: 404,
+        status:404
       })
     }
   
@@ -416,13 +425,15 @@ router.post("/:id/venues", [requireAuth, validateVenues], async (req, res, next)
     if (!group) {
       next({
         message: "Group could not be found",
-        statusCode: 404
+        statusCode: 404,
+        status:404
       })
     }
     if (!coHost && req.user.id !== group.organizerId) {
       next({
         message: "Organizer or co-host can create venue",
-        statusCode: 403
+        statusCode: 403,
+        status:403
       })
     }
     const venue = await Location.create({
@@ -452,7 +463,8 @@ router.get("/:id/members", requireAuth, async (req, res, next) => {
     if (!group) {
       next({
         message: "Group could not be found",
-        statusCode: 404
+        statusCode: 404,
+        status:404
       })
     }
     const coHost = await Membership.findAll({
@@ -517,7 +529,8 @@ router.put("/:id/membership", requireAuth, async (req, res, next) => {
     if (!group) {
       next({
         message: "Group could not be found",
-        statusCode: 404
+        statusCode: 404,
+        status:404
       })
     }
     const coHost = await Membership.findOne({
@@ -541,20 +554,23 @@ router.put("/:id/membership", requireAuth, async (req, res, next) => {
     if (req.body.status === "pending") {
       next({
         message: "can not change status on pending",
-        statusCode: 400
+        statusCode: 400,
+        status:400
       })
     }
 
     if (!member) {
       next({
         message: "Member could not be found",
-        statusCode: 404
+        statusCode: 404,
+        status:404
       })
     }
     if (req.user.id !== group.organizerId && coHostStatus !== "co-host") {
       next({
         message: "only co-host or organizer can edit a group",
-        statusCode: 403
+        statusCode: 403,
+        status:403
       })
     }
     //change status on member
@@ -610,7 +626,8 @@ router.post("/:id/membership", requireAuth, async (req, res, next) => {
     if (!group) {
       next({
         message: "Group could not be found",
-        statusCode: 404
+        statusCode: 404,
+        status:404
       })
     }
 
@@ -626,7 +643,8 @@ router.post("/:id/membership", requireAuth, async (req, res, next) => {
     if (pending) {
       next({
         message: "Membership has already been requested",
-        statusCode: 400
+        statusCode: 400,
+        status:400
       })
     }
 
@@ -639,7 +657,8 @@ router.post("/:id/membership", requireAuth, async (req, res, next) => {
     if (member) {
       next({
         message: "User is already a member of the group",
-        statusCode: 400
+        statusCode: 400,
+        status:400
       })
     }
     const newRequest = await Membership.create({
@@ -667,7 +686,8 @@ router.delete('/:id/membership',requireAuth, async (req, res, next) => {
     if (!group) {
       next({
         message: "Group could not be found",
-        statusCode: 404
+        statusCode: 404,
+        status:404
       })
     }
     const member = await Membership.findOne({
@@ -680,7 +700,8 @@ router.delete('/:id/membership',requireAuth, async (req, res, next) => {
     if (!member) {
       next({
         message: "Member could not be found",
-        statusCode: 404
+        statusCode: 404,
+        status:400
       })
     }
 
@@ -694,7 +715,8 @@ router.delete('/:id/membership',requireAuth, async (req, res, next) => {
     if (req.user.id !== group.organizerId && coHost.status !== "co-host") {
       next({
         message: "only co-host or organizer can delete a group",
-        statusCode: 403
+        statusCode: 403,
+        status:403
     })
   }
       await member.destroy()
@@ -719,7 +741,8 @@ router.get("/:id/events", async (req, res, next) => {
     if (!group) {
       next({
         message: "Group could not be found",
-        statusCode: 404
+        statusCode: 404,
+        status:404
       })
     }
     const events = await Event.findAll({
@@ -802,7 +825,8 @@ router.post("/:id/events", [requireAuth, validateEvents], async (req, res, next)
     if (!group) {
       next({
         message: "Group could not be found",
-        statusCode: 404
+        statusCode: 404,
+        status:404
       })
     }
     const coHost = await Membership.findAll({
@@ -815,7 +839,8 @@ router.post("/:id/events", [requireAuth, validateEvents], async (req, res, next)
     if (!coHost && req.user.id !== group.organizerId) {
       next({
         message: "Organizer or co-host can create an Event",
-        statusCode: 403
+        statusCode: 403,
+        status:403
       })
     }
     const {

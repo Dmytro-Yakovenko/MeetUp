@@ -62,7 +62,8 @@ router.get("/", async (req, res, next) => {
     if (size && size < 1) {
       next({
         message: "Size must be greater than or equal to 0",
-        "statusCode": 400
+        "statusCode": 400,
+        status:400
       })
     }
     if (size && (size >= 1 || size <= 20)) {
@@ -73,7 +74,8 @@ router.get("/", async (req, res, next) => {
     if (page && page < 1) {
       next({
         message: "Page must be greater than or equal to 0",
-        "statusCode": 400
+        "statusCode": 400,
+        status:400
       })
     }
     if (page && (page >= 1 || page <= 20)) {
@@ -85,7 +87,8 @@ router.get("/", async (req, res, next) => {
       if (!isNaN(name)) {
         return next({
           message: "name should be a string",
-          statusCode: 400
+          statusCode: 400,
+          status:400
         })
     
       }
@@ -95,7 +98,8 @@ router.get("/", async (req, res, next) => {
       if (type !== "OnLine" || type !== "In person") {
        return next({
           message: "Type must be 'Online' or 'In Person'",
-          statusCode: 400
+          statusCode: 400,
+          status:400
         })
       }
       filter.type = type;
@@ -106,7 +110,8 @@ router.get("/", async (req, res, next) => {
       if (isNaN(date)) {
        return next({
           message: "Start date must be a valid datetime",
-          statusCode: 400
+          statusCode: 400,
+          status:400
         }
         )
 
@@ -203,7 +208,8 @@ router.get("/:id", async (req, res, next) => {
     if (!event) {
       next({
         message: "Event couldn't be found",
-        statusCode: 404
+        statusCode: 404,
+        status:404
       })
     }
     let resObj = {
@@ -247,7 +253,8 @@ router.post("/:id/images", requireAuth, async (req, res, next) => {
     if (!event) {
       next({
         message: "Event could't be found",
-        statusCode: 404
+        statusCode: 404, 
+        status:404
       })
     }
     const attend = await Attendance.findAll({
@@ -259,7 +266,8 @@ router.post("/:id/images", requireAuth, async (req, res, next) => {
     if (!attend) {
       next({
         message: "Must be an attend create an Event",
-        statusCode: 403
+        statusCode: 403, 
+        status:403
       })
     }
     const {
@@ -302,7 +310,8 @@ router.put("/:id", [requireAuth, validateEvents], async (req, res, next) => {
     if (!event) {
       next({
         message: "Event couldn't be found",
-        statusCode: 404
+        statusCode: 404,
+        status:404
       })
     }
     const group = await Group.findByPk(event.groupId)
@@ -316,7 +325,8 @@ router.put("/:id", [requireAuth, validateEvents], async (req, res, next) => {
     if (req.user.id !== group.organizerId && !coHost) {
       next({
         message: "only organizer or co-host can edit an event",
-        statusCode: 404
+        statusCode: 404,
+        status:404
       })
     }
 
@@ -363,7 +373,8 @@ router.delete("/:id", requireAuth, async (req, res, next) => {
     if (!event) {
       next({
         message: "Event couldn't be found",
-        statusCode: 404
+        statusCode: 404,
+        status:404
       })
     }
     const group = await Group.findByPk(event.groupId)
@@ -378,7 +389,8 @@ router.delete("/:id", requireAuth, async (req, res, next) => {
     if (!coHost && req.user.id !== group.organizerId) {
       next({
         message: "only organizer or co-host can delete an event",
-        statusCode: 404
+        statusCode: 404,
+        status:404
       })
     }
     await event.destroy()
@@ -399,7 +411,8 @@ router.get("/:id/attendees", requireAuth, async (req, res, next) => {
     if (!event) {
       next({
         message: "Event could not be found",
-        statusCode: 404
+        statusCode: 404,
+        status:404
       })
     }
     const user = req.user.id
@@ -477,7 +490,8 @@ router.post("/:id/attendance", requireAuth, async (req, res, next) => {
     if (!event) {
       next({
         message: "Event could not be found",
-        statusCode: 404
+        statusCode: 404,
+        status:404
       })
     }
     const isPend = await Attendance.findOne({
@@ -490,7 +504,8 @@ router.post("/:id/attendance", requireAuth, async (req, res, next) => {
     if (isPend) {
       next({
         message: "Attendance has already been requested",
-        statusCode: 400
+        statusCode: 400,
+        status:400
       })
     }
 
@@ -503,7 +518,8 @@ router.post("/:id/attendance", requireAuth, async (req, res, next) => {
     if (isAccepted) {
       next({
         message: "User is already an attendee of the event",
-        statusCode: 400
+        statusCode: 400,
+         status:400
       })
     }
     const attendees = await Attendance.create({
@@ -533,14 +549,16 @@ router.put("/:id/attendance", requireAuth, async (req, res, next) => {
     if (req.body.status === "pending") {
       next({
         "message": "Cannot change an attendance status to pending",
-        "statusCode": 400
+        "statusCode": 400,
+        status:400
       })
     }
     const event = await Event.findByPk(req.params.id)
     if (!event) {
       next({
         message: "Event could not be found",
-        statusCode: 404
+        statusCode: 404,
+        status:404
       })
     }
     const user = req.user.id
@@ -573,7 +591,8 @@ router.put("/:id/attendance", requireAuth, async (req, res, next) => {
     if (!attend) {
       next({
         "message": "Attendance between the user and the event does not exist",
-        "statusCode": 404
+        "statusCode": 404,
+        status:404
       })
     }
     await attend.update({
@@ -602,7 +621,8 @@ router.delete("/:id/attendance", requireAuth, async (req, res, next) => {
     if (!event) {
       next({
         message: "Event could not be found",
-        statusCode: 404
+        statusCode: 404,
+        status:404
       })
     }
     const group = await Group.findOne({
@@ -613,7 +633,8 @@ router.delete("/:id/attendance", requireAuth, async (req, res, next) => {
     if (!group) {
       next({
         message: "Group could not be found",
-        statusCode: 404
+        statusCode: 404,
+        status:404
       })
     }
     const attend = await Attendance.findOne({
@@ -627,7 +648,8 @@ router.delete("/:id/attendance", requireAuth, async (req, res, next) => {
     if (!attend) {
       next({
         message: "Attendance does not exist for this User",
-        statusCode: 404
+        statusCode: 404,
+        status:404
       })
       return
     }

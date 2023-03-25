@@ -24,6 +24,7 @@ router.post(
       
           "message": "Validation error",
           "statusCode": 400,
+          status:400,
           "errors": [
             "Email is required",
             "Password is required"
@@ -38,7 +39,8 @@ if (!user) {
 
   return next({
     "message": "Invalid credentials",
-    "statusCode": 401
+    "statusCode": 401,
+    status:401
   });
 }
 

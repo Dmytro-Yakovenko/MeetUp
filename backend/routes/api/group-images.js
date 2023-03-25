@@ -15,7 +15,8 @@ router.delete("/:id", requireAuth, async (req, res, next) => {
         if (!image) {
             next({
                 "message": "Group Image couldn't be found",
-                "statusCode": 404
+                "statusCode": 404,
+                status:404
                 
             })
             return
@@ -29,7 +30,8 @@ router.delete("/:id", requireAuth, async (req, res, next) => {
         if (!group) {
             next({
                 "message": "Group  couldn't be found",
-                "statusCode": 404
+                "statusCode": 404,
+                status:404
                 
             })
             return
@@ -44,7 +46,8 @@ router.delete("/:id", requireAuth, async (req, res, next) => {
         if (!member && req.user.id!==group.organizerId) {
             next({
                 "message": "not enough rights",
-                "statusCode": 403
+                "statusCode": 403,
+                status:403
             })
             return
         }

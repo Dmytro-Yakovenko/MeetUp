@@ -51,6 +51,7 @@ if(userByEmail){
   next(  {
     "message": "User already exists",
     "statusCode": 403,
+    status:403,
     "errors": [
       "User with that email already exists",
     
@@ -66,6 +67,7 @@ if(userByUsername){
   next(  {
     "message": "User already exists",
     "statusCode": 403,
+    status:403,
     "errors": [
       "User with that username already exists"
     ]
