@@ -301,7 +301,7 @@ router.post("/:id/images",[requireAuth, validateGroupImage] , async (req, res, n
       next({
         message: "Group could not be found",
         statusCode: 404,
-        // status:404
+        status:404
       })
     }
     if (!url && preview) {
