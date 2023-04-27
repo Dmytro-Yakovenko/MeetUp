@@ -8,7 +8,7 @@ const { restoreUser, requireAuth } = require("../../utils/auth");
 
 const { User, Group, GroupImage, Event, Location, EventImage, Membership, Attendance, sequelize } = require("../../db/models");
 const { handleValidationErrors } = require("../../utils/validation");
-
+ const { json } = require("sequelize");
 
 router.use(restoreUser)
 
