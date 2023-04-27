@@ -22,7 +22,7 @@ const validateEvents = [
     .withMessage("Name must be at least 5 characters"),
   check("type")
     .exists({ checkFalsy: true })
-    .isIn(["Online", "In person"])
+    .isIn(["Online", "InPerson"])
     .withMessage("Type must be Online or In person"),
   check("capacity")
     .exists({ checkFalsy: true })
@@ -95,7 +95,7 @@ router.get("/", async (req, res, next) => {
       filter.name = name;
     }
     if (type) {
-      if (type !== "OnLine" || type !== "In person") {
+      if (type !== "Online" || type !== "InPerson") {
        return next({
           message: "Type must be 'Online' or 'In Person'",
           statusCode: 400,

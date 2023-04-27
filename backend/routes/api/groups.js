@@ -8,7 +8,7 @@ const { restoreUser, requireAuth } = require("../../utils/auth");
 
 const { User, Group, GroupImage, Event, Location, EventImage, Membership, Attendance, sequelize } = require("../../db/models");
 const { handleValidationErrors } = require("../../utils/validation");
-const { json } = require("sequelize");
+
 
 router.use(restoreUser)
 
@@ -22,7 +22,7 @@ const validateGroups = [
     .withMessage("About must be 50 characters or more"),
   check("type")
     .exists({ checkFalsy: true })
-    .isIn(["On line", "In person"])
+    .isIn(["On line", "InPerson"])
     .withMessage("Type must be 'Online' or 'InPerson'"),
   check("private")
     .exists({ checkFalsy: true })
@@ -69,8 +69,8 @@ const validateEvents = [
     .withMessage("Name must be at least 5 characters"),
   check("type")
     .exists({ checkFalsy: true })
-    .isIn(["Online", "In person"])
-    .withMessage("Type must be Online or In person"),
+    .isIn(["Online", "InPerson"])
+    .withMessage("Type must be Online or InPerson"),
   check("capacity")
     .exists({ checkFalsy: true })
     .isInt()
