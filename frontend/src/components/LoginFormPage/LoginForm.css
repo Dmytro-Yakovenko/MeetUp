@@ -32,7 +32,7 @@
 .error{
     color: rgba(255, 0, 0);
     position: absolute;
-    bottom: 13px;
+    bottom: 0;
     left: 0;
     font-size: 12px;
 }
