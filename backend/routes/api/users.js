@@ -40,7 +40,6 @@ router.post(
   "/",
   validateSignup,
   async (req, res, next) => {
-
     const { email, password, username, firstName, lastName } = req.body;
 const userByEmail = await User.findOne({
   where:{
@@ -75,7 +74,7 @@ if(userByUsername){
 }
 
     const user = await User.signup({ email, username, password, firstName, lastName });
- 
+ console.log(user)
    const token = await setTokenCookie(res, user);
    const csrfToken = req.csrfToken();
    res.cookie("XSRF-TOKEN", csrfToken);
