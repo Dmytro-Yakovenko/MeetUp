@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 const {
   Model
-} = require('sequelize');
+} = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class Attendees extends Model {
+  class Membership extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,26 +11,30 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+
+      
     }
   }
-  Attendees.init({
-    eventId:{
+  Membership.init({
+    groupId:{
       type:DataTypes.INTEGER,
-      allowNull:false
+      // allowNull:false
     } ,
+   
     userId:{
       type:DataTypes.INTEGER,
-      allowNull:false
+      // allowNull:false
     } ,
     status:{
       type:DataTypes.STRING,
+      defaultValue:"organizer",
       validate:{
-        isIn: [['organaizer', 'co-host', 'member','pending',"waitlist","attending"]]
+        isIn: [["organizer", "co-host", "member","pending","waitlist"]]
       }
-    }
+    } 
   }, {
     sequelize,
-    modelName: 'Attendees',
+    modelName: "Membership",
   });
-  return Attendees;
+  return Membership;
 };

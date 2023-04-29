@@ -1,6 +1,6 @@
-'use strict';
-const { Model, Validator } = require('sequelize');
-const bcrypt = require('bcryptjs');
+"use strict";
+const { Model, Validator } = require("sequelize");
+const bcrypt = require("bcryptjs");
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     toSafeObject() {
@@ -13,18 +13,23 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
       // define association here
-      User.belongsToMany(models.Event,{
-        through:models.Attendees
+      User.hasMany(models.Attendance,{
+       foreignKey:"userId"
       })
 
 
-      User.belongsToMany(models.Group,{
-        through:models.Membership
-      })
+    
+User.hasMany(models.Membership,{
+  foreignKey:"memberId",
+  onDelete:"Cascade",
+  hooks:true
+})
+
 
       User.hasMany(models.Group, {
-        foreignKey:'organizerId',
-        onDelete:'Cascade',
+        foreignKey:"organizerId",
+       
+        onDelete:"Cascade",
         hooks:true
       })
     }
@@ -34,8 +39,9 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static async login({ credential, password }) {
-      const { Op } = require('sequelize');
-      const user = await User.scope('loginUser').findOne({
+     
+      const { Op } = require("sequelize");
+      const user = await User.scope("loginUser").findOne({
         where: {
           [Op.or]: {
             username: credential,
@@ -44,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       });
       if (user && user.validatePassword(password)) {
-        return await User.scope('currentUser').findByPk(user.id);
+        return await User.scope("currentUser").findByPk(user.id);
       }
     }
 
@@ -57,7 +63,7 @@ module.exports = (sequelize, DataTypes) => {
         firstName,
         lastName
       });
-      return await User.scope('currentUser').findByPk(user.id);
+      return await User.scope("currentUser").findByPk(user.id);
     }
 
   };

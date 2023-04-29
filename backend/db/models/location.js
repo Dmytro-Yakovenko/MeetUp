@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
 
 const {
   Model
-} = require('sequelize');
+} = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Location extends Model {
     /**
@@ -15,12 +15,12 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
 
       Location.belongsTo(models.Group,{
-        foreignKey:'GroupId'
+        foreignKey:"groupId"
       })
 
 
       Location.hasOne(models.Event,{
-        foreignKey:'locationId'
+        foreignKey:"locationId"
       })
     }
   }
@@ -37,21 +37,26 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.STRING,
       allowNull:false
     } ,
-    latitude:{
+    lat:{
       type:DataTypes.FLOAT,
       allowNull:false
     } ,
-    longtitude:{
+    lng:{
       type:DataTypes.FLOAT,
       allowNull:false
     } ,
-    GroupId:{
+    groupId:{
       type:DataTypes.INTEGER,
       allowNull:false
     } 
   }, {
     sequelize,
-    modelName: 'Location',
+    modelName: "Location",
+    defaultScope: {
+      attributes: {
+        exclude: ["createdAt", "updatedAt"]
+      }
+    }
   });
   return Location;
 };

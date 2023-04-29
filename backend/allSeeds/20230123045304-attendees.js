@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 const { Op } = require("sequelize")
 let options = {};
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === "production") {
   options.schema = process.env.SCHEMA;  // define your schema in options object
 }
 
@@ -9,17 +9,17 @@ const attendees =[
   {
     eventId:1,
     userId:1,
-    status:'member'
+    status:"member"
   },
   {
     eventId:1,
     userId:2,
-    status:'pending'
+    status:"pending"
   },
   {
     eventId:1,
     userId:3,
-    status:"organaizer"
+    status:"organizer"
   },
   {
     eventId:2,
@@ -29,7 +29,7 @@ const attendees =[
   {
     eventId:2,
     userId:5,
-    status:"organaizer"
+    status:"organizer"
   },
   {
     eventId:2,
@@ -39,19 +39,19 @@ const attendees =[
 
 ]
 
-/** @type {import('sequelize-cli').Migration} */
+/** @type {import("sequelize-cli").Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
     /**
      * Add seed commands here.
      *
      * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
+     * await queryInterface.bulkInsert("People", [{
+     *   name: "John Doe",
      *   isBetaMember: false
      * }], {});
     */
-    options.tableName = 'Attendees';
+    options.tableName = "Attendees";
     return queryInterface.bulkInsert(options, attendees,
     {});
   },
@@ -61,9 +61,9 @@ module.exports = {
      * Add commands to revert seed here.
      *
      * Example:
-     * await queryInterface.bulkDelete('People', null, {});
+     * await queryInterface.bulkDelete("People", null, {});
      */
-    options.tableName = 'Attendees';
+    options.tableName = "Attendees";
     return queryInterface.bulkDelete(options, {[Op.or]:attendees},{});
   }
 };

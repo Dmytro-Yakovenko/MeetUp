@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 const {
   Model
-} = require('sequelize');
+} = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Event extends Model {
     /**
@@ -11,31 +11,31 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
 
-      Event.belongsToMany(models.User,{
-        through:models.Attendees
-      })
+      // Event.belongsToMany(models.User,{
+      //   through:models.Attendees
+      // })
 
       // define association here
-      Event.hasMany(models.EventImages, {
-        foreignKey:'eventId',
-        onDelete:'Cascade',
+      Event.hasMany(models.EventImage, {
+        foreignKey:"eventId",
+        onDelete:"Cascade",
         hooks:true
       })
-
+      Event.hasMany(models.Attendance, {foreignKey: "eventId", as: "numAttending"})
 
       Event.belongsTo(models.Location,{
-        foreignKey:'locationId'
+        foreignKey:"locationId"
       })
       
         // Your code here
         Event.belongsTo(models.Group,{
-          foreignKey:'GroupId'
+          foreignKey:"groupId"
         })
       }
     
   }
   Event.init({
-    GroupId:{
+    groupId:{
       type:DataTypes.INTEGER,
       allowNull:false
     },
@@ -52,11 +52,11 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.STRING,
       allowNull:false
     } ,
-    dateOfStart:{
+    startDate:{
       type:DataTypes.DATE,
       allowNull:false
     } ,
-    dateOfEnd:{
+    endDate:{
       type:DataTypes.DATE,
       allowNull:false
     } ,
@@ -71,12 +71,15 @@ allowNull:false
     } ,
     type:{
       type:DataTypes.STRING,
-      allowNull:false
+      defaultValue:"Online"
     } ,
 
   }, {
+    defaultScope:{
+exclude:["createdAt", "updatedAt"]
+    },
     sequelize,
-    modelName: 'Event',
+    modelName: "Event",
   });
   return Event;
 };

@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 const {
   Model
-} = require('sequelize');
+} = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class GroupImages extends Model {
+  class GroupImage extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -12,21 +12,21 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
           // Your code here
-          GroupImages.belongsTo(models.Group,{
+          GroupImage.belongsTo(models.Group,{
 
-            foreignKey:'GroupId'
+            foreignKey:"groupId"
 
           })
     }
   }
-  GroupImages.init({
+  GroupImage.init({
   
     url: {
       type:DataTypes.STRING,
       allowNull:false
 
     },
-    GroupId:{
+    groupId:{
       type: DataTypes.INTEGER,
       allowNull:false,
       
@@ -39,7 +39,17 @@ module.exports = (sequelize, DataTypes) => {
 
   }, {
     sequelize,
-    modelName: 'GroupImages',
+    modelName: "GroupImage",
+    defaultScope: {
+      attributes: {
+        exclude: ["createdAt", "updatedAt", "groupId"]
+      }
+    }
   });
-  return GroupImages;
+  GroupImage.addScope("exclusion", {
+    attributes: {
+      exclude: [ "createdAt", "updatedAt"]
+    }
+  })
+  return GroupImage;
 };

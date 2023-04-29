@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 const {
   Model
-} = require('sequelize');
+} = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Membership extends Model {
     /**
@@ -10,29 +10,43 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
-
-      
+      Membership.belongsTo(models.User, {foreignKey: "memberId"})
+      Membership.belongsTo(models.Group, {foreignKey: "groupId"})
     }
   }
   Membership.init({
-    GroupId:{
-      type:DataTypes.INTEGER,
-      allowNull:false
-    } ,
-    userId:{
-      type:DataTypes.INTEGER,
-      allowNull:false
-    } ,
-    status:{
-      type:DataTypes.STRING,
-      validate:{
-        isIn: [['organaizer', 'co-host', 'member','pending',"waitlist"]]
-      }
-    } 
+    groupId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {model: "Groups"},
+      onDelete: "CASCADE"
+    },
+    memberId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {model: "Users"},
+      onDelete: "CASCADE"
+    },
+    status: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: "non-member"
+    },
   }, {
     sequelize,
-    modelName: 'Membership',
+    modelName: "Membership",
   });
+
+  Membership.addScope("defaultScope", {
+    attributes: {
+      exclude: ["createdAt", "updatedAt"]
+    }
+  })
+
+  Membership.addScope("submission", {
+    attributes: {
+      exclude: ["id", "createdAt", "updatedAt"]
+    }
+  })
   return Membership;
 };
