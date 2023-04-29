@@ -34,7 +34,6 @@ router.post(
     )
   }
 const user = await User.login({ credential, password });
-
 if (!user) {
 
   return next({

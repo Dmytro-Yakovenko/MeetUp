@@ -5,7 +5,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import './index.css';
 import App from './App';
 import configureStore from './store';
-
+import * as sessionActions from './store/session';
 
 // frontend/src/index.js
 // ... other imports
@@ -19,6 +19,7 @@ if (process.env.NODE_ENV !== 'production') {
 
   window.csrfFetch = csrfFetch;
   window.store = store;
+  window.sessionActions = sessionActions;
 }
 
 // if (process.env.NODE_ENV !== "production") {
