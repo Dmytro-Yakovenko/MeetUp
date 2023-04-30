@@ -1,6 +1,6 @@
 {
     "name": "meetup",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "description": "<<<<<<< HEAD # `MeetUp` ======= MeetUp Database Schema Design >>>>>>> f25cb596d688e1a0b16d10b4195a51e3f53b5128",
     "main": "index.js",
     "scripts": {
