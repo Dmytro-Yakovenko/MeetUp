@@ -324,7 +324,7 @@ router.post("/:id/images",[requireAuth, validateGroupImage] , async (req, res, n
       groupId: +req.params.id
     })
     const img = await GroupImage.findByPk(image.id)
-   console.log(img)
+  
     res.status(201).json(
       img
     )
