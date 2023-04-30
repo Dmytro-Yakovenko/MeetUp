@@ -11,7 +11,7 @@
 }
 
 .btn{
-    background-color: rgb(27, 212, 27);
+    max-width: 450px;
     font-size: 14px;
     font-weight: bold;
     width: 100%;
@@ -19,6 +19,12 @@
     border: none;
     border-radius: 5px;
     padding: 10px;
+    font-family: 'Open Sans', sans-serif;
+    cursor: pointer;
+    font-weight: 600;
+}
+.primaryBtn{
+    background-color: rgb(24, 212, 24);
 }
 
 .label{

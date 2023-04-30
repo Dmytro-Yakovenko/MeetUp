@@ -22,7 +22,7 @@ function SignupFormPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
 
-  if (sessionUser) return <Redirect to="/" />;
+  // if (sessionUser) return <Redirect to="/" />;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -50,8 +50,9 @@ function SignupFormPage() {
 
   return (
     <>
-      <h1>Sign Up</h1>
+    
       <form className="form" onSubmit={handleSubmit}>
+      <h1>Sign Up</h1>
         <label className="label">
           Email
           <input
@@ -124,7 +125,7 @@ function SignupFormPage() {
 {errors.confirmPassword && <span className="error">{errors.confirmPassword}</span>}
         </label>
       
-        <button  className="btn" type="submit">Sign Up</button>
+        <button  className="btn primaryBtn" type="submit">Sign Up</button>
       </form>
     </>
   );

@@ -19,6 +19,7 @@ router.post(
   "/",
   async (req, res, next) => {
     const { credential, password } = req.body;
+    console.log(credential, password)
     if (!credential || !password) {
       next({
       
@@ -34,6 +35,7 @@ router.post(
     )
   }
 const user = await User.login({ credential, password });
+console.log(user)
 if (!user) {
 
   return next({
