@@ -7,14 +7,22 @@
     justify-content: space-between;
 
 }
+.start-new-group-nav{
+    color: teal;
+    text-decoration: none;
+    font-size: 20px;
+}
 
 .rightNav {
     display: flex;
-    gap: 20px;
-    position: relative;
+    gap: 20px
 }
 
+.navlink-drop-down {
+    color: black;
+    text-decoration: none;
 
+}
 
 .profile-button {
     width: 30px;
@@ -26,21 +34,27 @@
 
 }
 
-.profile-dropdown{
-    position: absolute;
-    right: 0;
-    top: 22px;
- 
-   
-    border: 1px solid black;
+
+.drop-down-container {
+    border: 2px solid black;
     padding: 10px;
-    
+
+
 }
 
-
-
 .logout-button {
-  
-    background-color: #acd621;
-    border:none;
+    width: 95px;
+    background-color: white;
+    border-top: 1px solid black
+}
+
+.logout-drop-down {
+    border: 2px solid black;
+    padding: 1px;
+    margin-right: 50px
+}
+
+.login-button-dropdown {
+    background-color: white;
+    width: 80px
 }

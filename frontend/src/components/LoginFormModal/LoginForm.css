@@ -1,0 +1,57 @@
+.login-container {
+    border: 1px solid black;
+    height: 240px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+   align-items: center;
+
+ }
+ .login-title {
+    margin-bottom: -10px
+ }
+
+ .login-credentials {
+    display: flex;
+    flex-direction: column;
+ }
+
+ .credentials {
+    width: 350px;
+    border: 2px solid black;
+    background-color: #ebf2f4;
+ }
+
+
+
+ /* .submit-login-fail {
+    height: 30px;
+ } */
+
+ .submit-login {
+    height: 40px;
+    background-color: #d0312d;
+    width: 356px;
+    color: white;
+    font-weight: bold;
+    box-shadow: 3px 3px 5px #000000;
+    border: 1px solid black;
+    margin-top: -10px;
+    font-size: 15px;
+ }
+
+ .username-email {
+    margin-top: 0px
+ }
+
+ .password {
+    margin-top: 8px;
+    margin-bottom: 16px
+ }
+
+ .demo {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    color: teal
+ }
