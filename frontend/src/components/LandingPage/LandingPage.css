@@ -55,3 +55,7 @@ line-height: 18px;
     text-align: center;
 }
 
+.home-link-wrapper .disabled{
+    color: gray;
+}
+

@@ -20,13 +20,13 @@ function Navigation({ isLoaded }) {
         </NavLink>
       </li>
       <div className="rightNav">
-        {sessionUser && (
+        {/* {sessionUser && (
           <li style={{ listStyleType: "none" }}>
             <NavLink exact to="/api/groups/new" className="start-new-group-nav">
               Start a new group
             </NavLink>
           </li>
-        )}
+        )} */}
         {isLoaded && (
           <li style={{ listStyleType: "none" }}>
             <ProfileButton user={sessionUser} />

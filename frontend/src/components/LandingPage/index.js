@@ -1,8 +1,13 @@
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 import SignupFormModal from "../SignupFormModal";
 import OpenModalButton from "../OpenModalButton";
-import "./Home.css";
-function HomePage() {
+import "./LandingPage.css";
+function LandingPage() {
+  const sessionUser = useSelector((state) => state.session.user);
+  
+
+
   return (
     <main>
       <div className="container">
@@ -56,27 +61,30 @@ function HomePage() {
               from online gaming and photography to yoga and hiking.
             </p>
           </NavLink>
-
-          <NavLink to="/groups/new">
-            <img
-              src="https://secure.meetupstatic.com/next/images/shared/joinGroup.svg?w=384"
-              alt="start new group"
-            />
-            <h4>Start a new group</h4>
-            <p>
-              You don’t have to be an expert to gather people together and
-              explore shared interests.
-            </p>
-          </NavLink>
+          {sessionUser ? (
+            <NavLink to="/groups/new"> <img
+            src="https://secure.meetupstatic.com/next/images/shared/joinGroup.svg?w=384"
+            alt="start new group"
+          />
+          <h4>Start a new group</h4>
+          <p >
+            You don’t have to be an expert to gather people together and explore
+            shared interests.
+          </p></NavLink>
+          ) : (
+            <div> <img
+            src="https://secure.meetupstatic.com/next/images/shared/joinGroup.svg?w=384"
+            alt="start new group"
+          />
+          <h4 className="disabled">Start a new group</h4>
+          <p className="disabled">
+            You don’t have to be an expert to gather people together and explore
+            shared interests.
+          </p></div>
+          )}
         </div>
 
         <div className="home-btn-wrapper">
-          {/* <button 
-      className="join-btn"
-      modalComponent={<SignupFormModal />}
-      >
-        Join Meetup
-      </button> */}
           <OpenModalButton
             buttonText="Join Meetup"
             styleBtn="join-btn"
@@ -88,4 +96,4 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+export default LandingPage;

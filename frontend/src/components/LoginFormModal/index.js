@@ -14,7 +14,7 @@ function LoginFormModal() {
 
   const handleDemoLogin = (e) => {
     e.preventDefault();
-    setCredential("Demo-lition");
+    setCredential("yakovenko@gmail.com");
     setPassword("password");
     dispatch(sessionActions.login("Demo-lition", "password"));
   };
