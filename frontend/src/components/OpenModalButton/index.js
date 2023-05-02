@@ -7,6 +7,7 @@ function OpenModalButton({
   buttonText, // text of the button that opens the modal
   onButtonClick, // optional: callback function that will be called once the button that opens the modal is clicked
   onModalClose, // optional: callback function that will be called once the modal is closed
+  styleBtn
 }) {
   const { setModalContent, setOnModalClose } = useModal();
 
@@ -17,7 +18,7 @@ function OpenModalButton({
   };
 
   return (
-    <button className="login-button-dropdown" onClick={onClick}>
+    <button className={styleBtn} onClick={onClick}>
       {buttonText}
     </button>
   );

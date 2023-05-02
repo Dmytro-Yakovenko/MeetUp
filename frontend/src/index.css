@@ -1,12 +1,25 @@
 /* TODO Add site wide styles */
+
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
 ul{
+    
 list-style: none;    
 
 }
 body{
     box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
 }
 
 a,button{
     cursor: pointer;
+}
+
+a{
+    text-decoration: none;
+}
+.container{
+    margin:0 auto;
+    max-width:1400px;
 }

@@ -58,3 +58,16 @@
     background-color: white;
     width: 80px
 }
+
+.join-btn{
+    padding: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 10px;
+    border-radius: 7px;
+    background-color: rgba(56, 93, 98);
+    border: none;
+    color: #fff;
+
+  
+}
