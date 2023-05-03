@@ -1,5 +1,6 @@
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
+import groupReducer from "./groups";
 
 // frontend/src/store/index.js
 // ...
@@ -7,6 +8,8 @@ import sessionReducer from './session';
 
 const rootReducer = combineReducers({
   session: sessionReducer,
+
+  groups:groupReducer
 });
 // ...
 

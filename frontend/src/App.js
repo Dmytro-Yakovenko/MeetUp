@@ -7,6 +7,7 @@ import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import LandingPage from "./components/LandingPage";
+import Groups from "./components/Groups";
 
 function App() {
   const dispatch = useDispatch();
@@ -18,19 +19,19 @@ function App() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
-      <LandingPage/>
-      <Switch>
+    {isLoaded &&  <Switch>
        
 
-        <Route exact path="/" component={LandingPage}/> 
-        <Route exact path="/groups" component={LandingPage}/> 
-        <Route exact path="/events" component={LandingPage}/> 
-        <Route exact path="/groups/new" component={LandingPage}/> 
-        <Route exact path="/groups/:id" component={LandingPage}/> 
-        <Route exact path="/groups/:id/events" component={LandingPage}/> 
-        <Route exact path="/events/:id" component={LandingPage}/> 
-        <Route exact path="/groups/:id/update" component={LandingPage}/> 
-      </Switch>
+       <Route exact path="/" component={LandingPage}/> 
+       <Route exact path="/groups" component={Groups}/> 
+       <Route exact path="/events" component={LandingPage}/> 
+       <Route exact path="/groups/new" component={LandingPage}/> 
+       <Route exact path="/groups/:id" component={LandingPage}/> 
+       <Route exact path="/groups/:id/events" component={LandingPage}/> 
+       <Route exact path="/events/:id" component={LandingPage}/> 
+       <Route exact path="/groups/:id/update" component={LandingPage}/> 
+     </Switch> }
+    
     </>
   );
 }

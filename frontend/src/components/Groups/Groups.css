@@ -1,0 +1,19 @@
+.image{
+    max-width: 450px;
+}
+
+.group-item{
+    display: flex;
+    gap: 50px;
+    max-height:300px;
+    margin-top: 50px;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.group-wrapper{
+    display: flex;
+     flex-direction: column;
+     gap: 10px;
+     max-width: 550px;
+}
