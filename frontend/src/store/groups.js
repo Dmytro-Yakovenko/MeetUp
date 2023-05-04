@@ -37,29 +37,29 @@ export const getAllGroups = () => async (dispatch) => {
   }
 };
 
-// export const createNewGroup = (data) => async (dispatch) => {
-//   const response = await csrfFetch("/api/groups", {
-//     method: "POST",
-//     headers: { "Content-Type": "applicatin-json" },
-//     body: JSON.stringify(data),
-//   });
+export const createNewGroup = (data) => async (dispatch) => {
+  const response = await csrfFetch("/api/groups", {
+    method: "POST",
+    headers: { "Content-Type": "applicatin-json" },
+    body: JSON.stringify(data),
+  });
 
-//   if (response.ok) {
-//     const group = await response.json();
-//     const image = {
-//       url: data.preview,
-//       groupId: group.id,
-//       preview: true,
-//     };
+  if (response.ok) {
+    const group = await response.json();
+    const image = {
+      url: data.preview,
+      groupId: group.id,
+      preview: true,
+    };
 
-//     const fetchImage = await csrfFetch(`api/groups/${group.id}/images`, {
-//       method: "POST",
-//       headers: { "Content-Type": "applicatin-json" },
-//       body: JSON.stringify(image),
-//     });
-//     dispatch(createGroup(group));
-//   }
-// };
+    const fetchImage = await csrfFetch(`api/groups/${group.id}/images`, {
+      method: "POST",
+      headers: { "Content-Type": "applicatin-json" },
+      body: JSON.stringify(image),
+    });
+    dispatch(createGroup(group));
+  }
+};
 
 // export const getGroupDetails = (groupId) => async (dispatch) => {
 //   const response = await fetch(`/api/groups/${groupId}`);

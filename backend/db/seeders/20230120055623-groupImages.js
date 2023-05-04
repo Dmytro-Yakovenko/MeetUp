@@ -42,6 +42,24 @@ const data = [
     url: "https://res.cloudinary.com/dr1ekjmf4/image/upload/v1674223792/amanda-jones-P787-xixGio-unsplash_iheiqo.jpg",
     groupId: 2,
     preview: true
+  },
+  {
+   
+    url: "https://res.cloudinary.com/dr1ekjmf4/image/upload/v1683121834/pokerEventImages/pexels-ngoc-binh-ha-12187693_l915tw.jpg",
+    groupId: 3,
+    preview: true
+  },
+  {
+   
+    url: "https://res.cloudinary.com/dr1ekjmf4/image/upload/v1683121785/pokerEventImages/pexels-alteredsnaps-12173178_v65piq.jpg",
+    groupId: 3,
+    preview: true
+  },
+  {
+   
+    url: "https://res.cloudinary.com/dr1ekjmf4/image/upload/v1683122041/pokerEventImages/pexels-rodnae-productions-6412829_bceqxy.jpg",
+    groupId: 3,
+    preview: true
   }
 
 ]

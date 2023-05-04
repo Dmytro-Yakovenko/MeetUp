@@ -8,7 +8,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import LandingPage from "./components/LandingPage";
 import Groups from "./components/Groups";
-
+import CreateGroupForm from "./components/CreateGroupForm";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -25,7 +25,7 @@ function App() {
        <Route exact path="/" component={LandingPage}/> 
        <Route exact path="/groups" component={Groups}/> 
        <Route exact path="/events" component={LandingPage}/> 
-       <Route exact path="/groups/new" component={LandingPage}/> 
+       <Route exact path="/groups/new" component={CreateGroupForm}/> 
        <Route exact path="/groups/:id" component={LandingPage}/> 
        <Route exact path="/groups/:id/events" component={LandingPage}/> 
        <Route exact path="/events/:id" component={LandingPage}/> 

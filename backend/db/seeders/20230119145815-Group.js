@@ -25,6 +25,15 @@ city:"San Francisco",
 state:"California",
 
 },
+{ name: "Boba Buddies SF🧋",
+organizerId:1,
+about:"Are you a fan of boba and wholesome fun? Let's meet up and grab boba together! Growing up in SF I would always go to various boba places in the city and play boardgames with my friends. It was always very fun, and helped flourish a lot of my current friendships. I’m hoping to recreate that same feeling with this group! I'd love to get together to possibly meet at boba place every other week while meeting new people!",
+type:"inPerson",
+private:false,
+city:"San Francisco",
+state:"California",
+
+},
 
 ];
 /** @type {import("sequelize-cli").Migration} */
