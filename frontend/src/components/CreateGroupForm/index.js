@@ -14,7 +14,7 @@ const [error, setError]=useState({})
 
 useEffect(()=>{
 const errors={}
-if(!(/[ ,]/g.test(address))|| address.length<1){
+if(!(/\w+, \w+/g.test(address))|| address.length<1){
   errors.address="Location is required"
 }
 if(name.length<1){
@@ -31,8 +31,8 @@ if(type==="select one"){
 if(privateStatus==="select one"){
   errors.privateStatus="Visibility Type is required"
 }
-if(!(url.match(/$jpeg/g)) || !(url.match(/$jpg/g)) || !(url.match(/$png/g))){
-  errors.url="jpeg"
+if(!(url.match(/(\.jpe?g$)|(\.png$)/g) ) ){
+  errors.url="Image URL must end in .png, .jpg, or .jpeg"
 }
 console.log(errors)
 setError(errors)
