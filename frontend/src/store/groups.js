@@ -38,10 +38,15 @@ export const getAllGroups = () => async (dispatch) => {
 };
 
 export const createNewGroup = (data) => async (dispatch) => {
+const formData={...data}
+
+delete formData.preview
+
+console.log(formData)
   const response = await csrfFetch("/api/groups", {
     method: "POST",
-    headers: { "Content-Type": "applicatin-json" },
-    body: JSON.stringify(data),
+    // headers: { "Content-Type": "applicatin-json" },
+    body: JSON.stringify(formData),
   });
 
   if (response.ok) {
@@ -51,10 +56,10 @@ export const createNewGroup = (data) => async (dispatch) => {
       groupId: group.id,
       preview: true,
     };
-
-    const fetchImage = await csrfFetch(`api/groups/${group.id}/images`, {
+console.log(image)
+    const fetchImage = await csrfFetch(`/api/groups/${group.id}/images`, {
       method: "POST",
-      headers: { "Content-Type": "applicatin-json" },
+      // headers: { "Content-Type": "applicatin-json" },
       body: JSON.stringify(image),
     });
     dispatch(createGroup(group));
@@ -95,7 +100,7 @@ export const createNewGroup = (data) => async (dispatch) => {
 // };
 
 const groupReducer = (state = {}, action) => {
-    console.log(action)
+   
   switch (action.type) {
     case GET_GROUPS:
       const newState = action.groups.reduce((acc, current) => {
