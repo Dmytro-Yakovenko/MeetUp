@@ -66,38 +66,38 @@ console.log(image)
   }
 };
 
-// export const getGroupDetails = (groupId) => async (dispatch) => {
-//   const response = await fetch(`/api/groups/${groupId}`);
+export const getGroupDetails = (groupId) => async (dispatch) => {
+  const response = await fetch(`/api/groups/${groupId}`);
 
-//   if (response.ok) {
-//     const group = await response.json();
-//     dispatch(getDatails(group));
-//   }
-// };
+  if (response.ok) {
+    const group = await response.json();
+    dispatch(getDatails(group));
+  }
+};
 
-// export const updateGroup = (groupId, data) => async (dispatch) => {
-//   const response = await csrfFetch(`/api/groups/${groupId}`, {
-//     method: "PUT",
-//     headers: { "Content-Type": "applicatin-json" },
-//     body: JSON.stringify(data),
-//   });
+export const updateGroup = (groupId, data) => async (dispatch) => {
+  const response = await csrfFetch(`/api/groups/${groupId}`, {
+    method: "PUT",
+    headers: { "Content-Type": "applicatin-json" },
+    body: JSON.stringify(data),
+  });
 
-//   if (response.ok) {
-//     const group = await response.json();
-//     dispatch(updateGroup(group));
-//   }
-// };
+  if (response.ok) {
+    const group = await response.json();
+    dispatch(updateGroup(group));
+  }
+};
 
-// export const deleteGroup = (groupId) => async (dispatch) => {
-//   const response = await csrfFetch(`/api/groups/${groupId}`, {
-//     method: "DELETE",
-//     headers: { "Content-Type": "applicatin-json" },
-//   });
-//   if (response.ok) {
-//     const group = await response.json();
-//     dispatch(removeGroup(groupId));
-//   }
-// };
+export const deleteGroup = (groupId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/groups/${groupId}`, {
+    method: "DELETE",
+    headers: { "Content-Type": "applicatin-json" },
+  });
+  if (response.ok) {
+    const group = await response.json();
+    dispatch(removeGroup(groupId));
+  }
+};
 
 const groupReducer = (state = {}, action) => {
    
@@ -111,13 +111,13 @@ const groupReducer = (state = {}, action) => {
     case CREATE_GROUP:
       return { ...state, [action.group.id]: action.group };
 
-//     case GET_DETAILS:
-//       return { ...state, details: action.group };
+    case GET_DETAILS:
+      return { ...state, details: action.group };
 
-//     case REMOVE_GROUP:
-//       const deleteNewState = { ...state };
-//       delete newState.groups[action.groups.groupId];
-//       return deleteNewState;
+    case REMOVE_GROUP:
+      const deleteNewState = { ...state };
+      delete newState.groups[action.groups.groupId];
+      return deleteNewState;
     default:
       return state;
   }
