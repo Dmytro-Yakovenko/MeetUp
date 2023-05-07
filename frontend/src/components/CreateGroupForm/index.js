@@ -4,6 +4,7 @@ import { createNewGroup } from "../../store/groups";
 import { useHistory } from "react-router-dom";
 function CreateGroupForm() {
   const user = useSelector((state) => state.session.user);
+  const createdGroup=useSelector(state=>console.log(state))
  const dispatch= useDispatch()
  const history=useHistory()
   const [address, setAddress] = useState("");
@@ -59,7 +60,8 @@ function CreateGroupForm() {
      reset()
       dispatch(createNewGroup(formData))
       //redirect card group inform
-      history.push("/groups")
+  
+      history.push(`/groups`)
     }
    
   };

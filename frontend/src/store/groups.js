@@ -56,13 +56,19 @@ console.log(formData)
       groupId: group.id,
       preview: true,
     };
-console.log(image)
+
     const fetchImage = await csrfFetch(`/api/groups/${group.id}/images`, {
       method: "POST",
       // headers: { "Content-Type": "applicatin-json" },
       body: JSON.stringify(image),
     });
+  if(fetchImage.ok){
+    const createdImage =await fetchImage.json()
+    group.preview=createdImage.url
+    console.log(createdImage, 111111)
     dispatch(createGroup(group));
+  }
+
   }
 };
 
@@ -91,16 +97,17 @@ export const updateGroup = (groupId, data) => async (dispatch) => {
 export const deleteGroup = (groupId) => async (dispatch) => {
   const response = await csrfFetch(`/api/groups/${groupId}`, {
     method: "DELETE",
-    headers: { "Content-Type": "applicatin-json" },
+    // headers: { "Content-Type": "applicatin-json" },
   });
   if (response.ok) {
     const group = await response.json();
+    console.log(group)
     dispatch(removeGroup(groupId));
   }
 };
 
 const groupReducer = (state = {}, action) => {
-   
+  
   switch (action.type) {
     case GET_GROUPS:
       const newState = action.groups.reduce((acc, current) => {
@@ -116,7 +123,8 @@ const groupReducer = (state = {}, action) => {
 
     case REMOVE_GROUP:
       const deleteNewState = { ...state };
-      delete newState.groups[action.groups.groupId];
+      console.log(deleteNewState.groups[action.groupId])
+      delete deleteNewState.groups[action.groupId];
       return deleteNewState;
     default:
       return state;

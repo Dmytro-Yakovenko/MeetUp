@@ -10,6 +10,7 @@ import LandingPage from "./components/LandingPage";
 import Groups from "./components/Groups";
 import CreateGroupForm from "./components/CreateGroupForm";
 import GroupDetails from "./components/GroupDetails";
+import Events from "./components/Events";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -25,7 +26,7 @@ function App() {
 
        <Route exact path="/" component={LandingPage}/> 
        <Route exact path="/groups" component={Groups}/> 
-       <Route exact path="/events" component={LandingPage}/> 
+       <Route exact path="/events" component={Events}/> 
        <Route exact path="/groups/new" component={CreateGroupForm}/> 
        <Route exact path="/groups/:id" component={GroupDetails}/> 
        <Route exact path="/groups/:id/events" component={LandingPage}/> 
