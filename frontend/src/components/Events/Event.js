@@ -1,19 +1,10 @@
 import "./Events.css";
 import { NavLink } from "react-router-dom";
-
+import {formatDate} from "../../utils/utils"
 function Event({ event }) {
-  console.log(event);
+  
   const { id, Venue, endDate, name, previewImage, startDate, type,price, description, capacity } = event;
-  const eventDate = new Date(startDate);
-  const hours = eventDate.getHours()
-  let minutes = eventDate.getMinutes()
-  if(minutes<10){
-    minutes=`0${minutes}`
-  }
-  let day =eventDate.getDate()
-  let month =eventDate.getMonth()+1
-    let year = eventDate.getFullYear()
-  const dateOfEvent = `${year}-${month}-${day}`;
+  const contentData=formatDate(startDate)
   let content = null;
   if (Venue) {
     content = (
@@ -30,10 +21,7 @@ function Event({ event }) {
     <NavLink to={`/events/${id}`}>
       <li className="event-item">
         <img src={previewImage} alt="{name" className="event-image" />
-        <p>
-          {dateOfEvent}
-          <span> {hours}:{minutes}</span>
-        </p>
+     {contentData}
     <h3> {name}</h3>
 
         <div>{content}</div>

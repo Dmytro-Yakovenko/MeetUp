@@ -30,7 +30,7 @@ const removeGroup = (groupId) => ({
 
 export const getAllGroups = () => async (dispatch) => {
   const response = await fetch("/api/groups");
-  console.log(response)
+ 
   if (response.ok) {
     const groups = await response.json();
     dispatch(getGroups(groups.Groups));
@@ -42,7 +42,7 @@ const formData={...data}
 
 delete formData.preview
 
-console.log(formData)
+
   const response = await csrfFetch("/api/groups", {
     method: "POST",
     // headers: { "Content-Type": "applicatin-json" },
@@ -65,7 +65,7 @@ console.log(formData)
   if(fetchImage.ok){
     const createdImage =await fetchImage.json()
     group.preview=createdImage.url
-    console.log(createdImage, 111111)
+    
     dispatch(createGroup(group));
   }
 
@@ -101,7 +101,7 @@ export const deleteGroup = (groupId) => async (dispatch) => {
   });
   if (response.ok) {
     const group = await response.json();
-    console.log(group)
+    
     dispatch(removeGroup(groupId));
   }
 };
@@ -123,7 +123,7 @@ const groupReducer = (state = {}, action) => {
 
     case REMOVE_GROUP:
       const deleteNewState = { ...state };
-      console.log(deleteNewState.groups[action.groupId])
+      
       delete deleteNewState.groups[action.groupId];
       return deleteNewState;
     default:

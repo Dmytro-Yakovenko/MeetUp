@@ -273,7 +273,7 @@ router.get("/:id", async (req, res, next) => {
 router.post("/", [requireAuth, validateGroups], async (req, res, next) => {
 
   try {
-    console.log(req.body)
+   
     const { name, about, type, private, city, state } = req.body
     const user = req.user
     const group = await Group.create({
@@ -295,7 +295,7 @@ router.post("/", [requireAuth, validateGroups], async (req, res, next) => {
 
 //Add an Image to a Group based on the Group"s id  
 router.post("/:id/images",[requireAuth, validateGroupImage] , async (req, res, next) => {
-console.log(req.body)
+
   try {
     const group = await Group.findByPk(req.params.id);
     const { url, preview } = req.body

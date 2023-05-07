@@ -2,7 +2,7 @@
 import { NavLink } from "react-router-dom"
  function Group({group}){
     const {name, about, previewImage, city, private:status, type, state,id }=group
-    console.log(group)
+    
     return(
         <NavLink to ={`/groups/${id}`}>
  <li className="group-item">

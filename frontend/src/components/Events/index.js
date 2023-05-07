@@ -9,7 +9,7 @@ function Events() {
   useEffect(() => {
     dispatch(getAllEvents());
   }, [dispatch]);
-  console.log(events);
+ 
   return (
     <main>
       <div className="container">

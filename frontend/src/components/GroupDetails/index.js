@@ -1,8 +1,16 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useParams, Redirect } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { deleteGroup, getGroupDetails } from "../../store/groups";
 import { NavLink } from "react-router-dom";
+import ModalDelete from "../Modal/modalDelete";
+
+
+
+
+
+
+const deleteConfig={question:"Are you sure you want to remove this group?", btnSubmit:"Yes (Delete Group)", btnCancel: "No (Keep Group)"}
 
 function GroupDetails() {
   const dispatch = useDispatch();
@@ -18,6 +26,12 @@ function GroupDetails() {
   };
 
   const user = useSelector((state) => state.session.user);
+
+  const [isModalOpen, setIsModalOpen]= useState(false)
+
+  if(!user.id){
+    return Redirect("/login");
+  }
   let actionButtons = null;
   if (user.id === groupDetails.organizerId) {
     actionButtons = (
@@ -26,7 +40,7 @@ function GroupDetails() {
 
         <NavLink to={`/groups/${id}/edit`}>Update</NavLink>
 
-        <button onClick={handleDeleteGroup}>Delete</button>
+        <button onClick={()=>setIsModalOpen(true)}>Delete</button>
       </div>
     );
   }
@@ -76,6 +90,8 @@ function GroupDetails() {
 
         {groupDetails.Events}
       </div>
+
+      {isModalOpen&& <ModalDelete config={deleteConfig} onSubmit={handleDeleteGroup} onCancel={()=>setIsModalOpen(false)}/>}
     </main>
   );
 }
