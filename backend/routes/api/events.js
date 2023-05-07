@@ -160,9 +160,9 @@ router.get("/", async (req, res, next) => {
         item.Venue = null
       }
       delete item.Location
-      delete item.price
-      delete item.capacity
-      delete item.description
+      // delete item.price
+      // delete item.capacity
+      // delete item.description
       delete item.locationId
     })
 
