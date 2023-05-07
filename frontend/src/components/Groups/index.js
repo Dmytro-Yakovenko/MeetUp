@@ -15,7 +15,7 @@ dispatch(getAllGroups())
         return (
             <main>
                 <div className="container">
-                <h1>Hello</h1>
+                
             <ul>
                 {groups.map(item=>{
                     return <Group key={item.id} group={item}/>

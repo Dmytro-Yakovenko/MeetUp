@@ -1,0 +1,10 @@
+.error{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    color: red;
+}
+.label{
+    position: relative;
+    margin-bottom: 30 px;
+}
