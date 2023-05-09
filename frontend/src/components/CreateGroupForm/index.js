@@ -199,7 +199,12 @@ function CreateGroupForm() {
             </label>
           </div>
           <hr />
-          <input type="submit" value="Create Group" />
+          <input 
+          type="submit" 
+          value="Create Group" 
+          disabled={!!error.about  || !!error.url || !!error.type|| !!error.name|| !!error.privateStatus ||!!error.address}
+          
+          />
         </form>
       </div>
     </main>

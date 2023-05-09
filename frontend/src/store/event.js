@@ -66,7 +66,9 @@ export const getEventById=(id)=>async dispatch=>{
 }
 
 
-export const createEventByGroupId=(id, data)=>async dispatch=>{
+export const createEventByGroupId=(id, data)=>async (dispatch)=>{
+    console.log(id)
+    console.log(data)
     const response = csrfFetch (`/api/groups/${id}/events`,{
         method:'POST',
         body:JSON.stringify(data)
