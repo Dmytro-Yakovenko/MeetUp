@@ -6,14 +6,15 @@ function UpdateGroup() {
   const user = useSelector((state) => state.session.user);
   const {id}=useParams()
   const group =useSelector(state=>state.groups[id])
+  console.log(group)
  const dispatch= useDispatch()
  const history=useHistory()
-  const [address, setAddress] = useState("");
-  const [name, setName] = useState("");
-  const [about, setAbout] = useState("");
-  const [type, setType] = useState("select one");
-  const [privateStatus, setPrivateStatus] = useState("select one");
-  const [url, setUrl] = useState("");
+  const [address, setAddress] = useState(`${group.city}, ${group.state}`);
+  const [name, setName] = useState(group.name);
+  const [about, setAbout] = useState(group.about);
+  const [type, setType] = useState(group.type);
+  const [privateStatus, setPrivateStatus] = useState(group.private);
+  const [url, setUrl] = useState(group.previewImage);
 
   const [error, setError] = useState({});
 
@@ -60,13 +61,13 @@ function UpdateGroup() {
         private: privateStatus,
         city,
         state,
-        organaizerId: user.id,
-        preview: url,
+       
       };
+
+     
      reset()
-      // dispatch(createNewGroup(formData))
-      //redirect card group inform
-  let group = await dispatch(updateGroup(formData))
+     
+  let group = await dispatch(updateGroup(id,formData))
   console.log(group)
       history.push(`/groups/${group.id}`)
     }
@@ -85,7 +86,7 @@ function UpdateGroup() {
   return (
     <main>
       <div className="container">
-        <p>BECOME AN ORGANIZER</p>
+        <p>UPDATE YOUR GROUP'S INFORMATION</p>
         <h2>
           We'll walk you through a few steps to build your local community
         </h2>
@@ -111,7 +112,7 @@ function UpdateGroup() {
           <hr />
 
           <div>
-            <h3> What will your group's name be?</h3>
+            <h3> What is the name of your group?</h3>
 
             <p>
               Choose a name that will give people a clear idea of what the group
@@ -121,7 +122,7 @@ function UpdateGroup() {
             <label className="label">
               <input
                 type="text"
-                placeholder="What is your group name?"
+                placeholder="Some Group Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
@@ -144,7 +145,7 @@ function UpdateGroup() {
             </ol>
             <label className="label">
               <textarea
-                placeholder="Please write at least 30 characters"
+                placeholder="Some description about the group"
                 value={about}
                 onChange={(e) => setAbout(e.target.value)}
               />

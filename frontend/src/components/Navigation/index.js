@@ -10,7 +10,7 @@ function Navigation({ isLoaded }) {
   return (
     // <div className="navbar">
     <ul className="navbar">
-      <li style={{ listStyleType: "none" }}>
+      <li className="navbar-item" style={{ listStyleType: "none" }}>
         <NavLink exact to="/">
           {/* Home */}
           <img
