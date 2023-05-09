@@ -7,11 +7,11 @@ import { createEventByGroupId } from "../../store/event";
 function CreateEventForm() {
   const user = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
-  const { id } = useParams();
+
 const history= useHistory()
   const group = useSelector((state) => state.groups.details);
- const event = useSelector(state=>state.events)
- console.log(event)
+
+ 
   //states
   const [name, setName] = useState("");
   const [type, setType] = useState("select one");
@@ -58,7 +58,7 @@ const history= useHistory()
 
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit =async (e) => {
     e.preventDefault();
     if(!Object.values(error).length){
         
@@ -77,8 +77,10 @@ const history= useHistory()
             
         };
        reset()
-        dispatch(createEventByGroupId(group.id,formData))
-        // history.push(`/events`)
+        // dispatch(createEventByGroupId(group.id,formData))
+        let event = await   dispatch(createEventByGroupId(group.id,formData))
+        console.log(event,1111111)
+        history.push(`/events/${event.id}`)
   }
 }
   const reset=()=>{

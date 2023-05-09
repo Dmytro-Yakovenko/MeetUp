@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { createNewGroup } from "../../store/groups";
-import { useHistory } from "react-router-dom";
-function CreateGroupForm() {
+import { updateGroup} from "../../store/groups";
+import { useHistory, useParams, Redirect } from "react-router-dom";
+function UpdateGroup() {
   const user = useSelector((state) => state.session.user);
-  const createdGroup=useSelector(state=>console.log(state))
+  const {id}=useParams()
+  const group =useSelector(state=>state.groups[id])
  const dispatch= useDispatch()
  const history=useHistory()
   const [address, setAddress] = useState("");
@@ -41,6 +42,11 @@ function CreateGroupForm() {
    setError(errors)
   }, [address, name, about, type, privateStatus, url]);
 
+  if(!user.id){
+    return <Redirect to="/login"/>
+  }
+
+
 // Question is button create group should be disabled?
   const handleSubmit =async (e) => {
     e.preventDefault();
@@ -60,7 +66,7 @@ function CreateGroupForm() {
      reset()
       // dispatch(createNewGroup(formData))
       //redirect card group inform
-  let group = await dispatch(createNewGroup(formData))
+  let group = await dispatch(updateGroup(formData))
   console.log(group)
       history.push(`/groups/${group.id}`)
     }
@@ -202,7 +208,7 @@ function CreateGroupForm() {
           <hr />
           <input 
           type="submit" 
-          value="Create Group" 
+          value="Update Group" 
           disabled={!!error.about  || !!error.url || !!error.type|| !!error.name|| !!error.privateStatus ||!!error.address}
           
           />
@@ -211,4 +217,4 @@ function CreateGroupForm() {
     </main>
   );
 }
-export default CreateGroupForm;
+export default UpdateGroup;

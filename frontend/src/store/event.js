@@ -67,14 +67,14 @@ export const getEventById=(id)=>async dispatch=>{
 
 
 export const createEventByGroupId=(id, data)=>async (dispatch)=>{
-    console.log(id)
-    console.log(data)
-    const response = csrfFetch (`/api/groups/${id}/events`,{
+  
+    const response =await csrfFetch (`/api/groups/${id}/events`,{
         method:'POST',
         body:JSON.stringify(data)
     })
-
+console.log(response)
     if(response.ok){
+        console.log(response)
         const event =await response.json()
         const img = {url:data.preview, preview:true, id:event.id}
         await csrfFetch(`/api/events/${event.id}/images`, {
@@ -83,6 +83,7 @@ export const createEventByGroupId=(id, data)=>async (dispatch)=>{
         })
 
         dispatch(createEvent(event))
+        return event 
     }
 }
 
@@ -101,7 +102,9 @@ export const deleteEventById=(id)=>async dispatch=>{
 
 
 const eventReducer=(state={}, action)=>{
+    console.log(action)
     switch(action.type){
+        
         case GET_EVENTS:
 const newState= action.events.reduce((acc,current)=>{
     acc[current.id]=current

@@ -67,6 +67,7 @@ delete formData.preview
     group.preview=createdImage.url
     
     dispatch(createGroup(group));
+    return group
   }
 
   }
