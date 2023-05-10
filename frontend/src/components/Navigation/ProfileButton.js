@@ -4,13 +4,15 @@ import * as sessionActions from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
-import { NavLink } from "react-router-dom";
+import { NavLink,useHistory } from "react-router-dom";
 import "./Navigation.css";
 
 function ProfileButton({ user }) {
+  const history=useHistory()
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
+  
 
   const openMenu = () => {
     if (showMenu) return;
@@ -37,6 +39,7 @@ function ProfileButton({ user }) {
     e.preventDefault();
     dispatch(sessionActions.logout());
     closeMenu();
+    history.push("/")
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
@@ -55,7 +58,7 @@ function ProfileButton({ user }) {
             <div className="logout-drop-down">
               <li style={{ listStyleType: "none" }}>{user.username}</li>
               <li style={{ listStyleType: "none" }}>
-                {user.firstName} {user.lastName}
+               Hello {user.firstName} {user.lastName}
               </li>
               <li style={{ listStyleType: "none" }}>{user.email}</li>
               <li style={{ listStyleType: "none" }}>

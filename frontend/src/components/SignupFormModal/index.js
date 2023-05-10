@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
+
 import * as sessionActions from "../../store/session";
 
 import "./SignupForm.css";
@@ -14,8 +15,38 @@ function SignupFormModal(closeMenu) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState([]);
+  const [frontErrors, setFrontErrors]=useState({})
   const { closeModal } = useModal();
+useEffect(()=>{
+const errors = {}
+if(email.length<1){
+  errors.email="email is empty"
+}
+if(username.length<4){
+  errors.username="Username is less than 4 characters"
+}
+if(firstName.length<1){
+  errors.firstName="First Name is empty"
+}
+if(lastName.length<1){
+  errors.lastName="Last Name is empty"
+}
+if(password.length<6){
+  errors.password="Password is less than 6 characters"
+}
+if(password!==confirmPassword){
+  errors.confirmPassword="Confrm Password does not match Password"
+}
+setFrontErrors(errors)
 
+
+},[email,
+  username,
+  firstName,
+  lastName,
+  password,
+  confirmPassword
+  ])
   const handleSubmit = (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
@@ -45,11 +76,7 @@ function SignupFormModal(closeMenu) {
       <div className="signup-container">
         <h1 className="signup-title">Sign Up</h1>
         <form onSubmit={handleSubmit}>
-          <ul>
-            {errors.map((error, idx) => (
-              <li key={idx}>{error}</li>
-            ))}
-          </ul>
+         
           <div className="signup-info">
             <label>
               {/* Email */}
@@ -61,6 +88,7 @@ function SignupFormModal(closeMenu) {
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
+              {frontErrors && <span>{frontErrors.email}</span>}
             </label>
             <label>
               {/* Username */}
@@ -72,6 +100,7 @@ function SignupFormModal(closeMenu) {
                 onChange={(e) => setUsername(e.target.value)}
                 required
               />
+              {frontErrors && <span>{frontErrors.username}</span>}
             </label>
             <label>
               {/* First Name */}
@@ -83,6 +112,7 @@ function SignupFormModal(closeMenu) {
                 onChange={(e) => setFirstName(e.target.value)}
                 required
               />
+              {frontErrors && <span>{frontErrors.firstName}</span>}
             </label>
             <label>
               {/* Last Name */}
@@ -94,6 +124,7 @@ function SignupFormModal(closeMenu) {
                 onChange={(e) => setLastName(e.target.value)}
                 required
               />
+              {frontErrors && <span>{frontErrors.lastName}</span>}
             </label>
             <label>
               {/* Password */}
@@ -105,6 +136,7 @@ function SignupFormModal(closeMenu) {
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
+              {frontErrors && <span>{frontErrors.password}</span>}
             </label>
             <label>
               {/* Confirm Password */}
@@ -116,15 +148,22 @@ function SignupFormModal(closeMenu) {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
               />
+              {frontErrors && <span>{frontErrors.confirmPassword}</span>}
             </label>
 
             <button
+            disabled={!!frontErrors.email || !!frontErrors.password || !!frontErrors.confirmPassword|| !!frontErrors.firstName|| !!frontErrors.lastName || frontErrors.username }
               className="signup-button"
               type="submit"
               onClick={handleSubmit}
             >
               Sign Up
             </button>
+            <ul>
+            {errors.map((error, idx) => (
+              <li key={idx}>{error}</li>
+            ))}
+          </ul>
           </div>
         </form>
       </div>

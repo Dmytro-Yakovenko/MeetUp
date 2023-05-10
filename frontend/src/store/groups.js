@@ -83,11 +83,12 @@ export const getGroupDetails = (groupId) => async (dispatch) => {
 };
 
 export const updateGroup = (groupId, data) => async (dispatch) => {
-  console.log(groupId)
+  console.log(groupId,111111)
 
- console.log(data)
+ console.log(data,22222222)
   const response = await csrfFetch(`/api/groups/${groupId}`, {
     method: "PUT",
+     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
 console.log(response)

@@ -54,7 +54,7 @@ function CreateGroupForm() {
         private: privateStatus,
         city,
         state,
-        organaizerId: user.id,
+        organizerId: user.id,
         preview: url,
       };
      reset()

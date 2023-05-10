@@ -3,35 +3,38 @@
     flex-direction: column;
     align-items: center;
     width: 420px;
-    height: 450px;
-    margin-right: -4px
+    height: 550px;
+    margin-right: -4px;
+    padding: 10px;
 }
 .signup-title{
     margin-bottom: 10px
 }
 .signup-info {
-     display: flex;
-     flex-direction: column;
-    /* justify-content: center; */
-    gap: 10px
+     /* display: flex; */
+     /* flex-direction: column;
+    justify-content: center; */
+   
+   
 
 }
 .signup-input {
-    width: 350px;
+    width: 400px;
     border: 2px solid black;
-    background-color: #ebf2f4;
+    background-color: #dfea8d;
     height: 20px;
+    margin-top: 10px;
 
 }
 
 .signup-button{
     height: 40px;
-    background-color: #d0312d;
-    width: 353px;
+    background-color: rgb(219, 83, 83);;
+    width: 400px;
     color: white;
     font-weight: bold;
     box-shadow: 3px 3px 5px #000000;
-    border: 1px solid black;
+    border: none;
     margin-top: 10px;
     font-size: 15px;
 }

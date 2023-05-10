@@ -22,7 +22,7 @@ const validateGroups = [
     .withMessage("About must be 50 characters or more"),
   check("type")
     .exists({ checkFalsy: true })
-    .isIn(["On line", "InPerson"])
+    .isIn(["On Line", "InPerson"])
     .withMessage("Type must be 'Online' or 'InPerson'"),
   check("private")
     .exists({ checkFalsy: true })
@@ -338,6 +338,8 @@ router.post("/:id/images",[requireAuth, validateGroupImage] , async (req, res, n
 
 // //Edit a Group 
 router.put("/:id", [requireAuth, validateGroups], async (req, res, next) => {
+
+  console.log(req.body,444444444444444444)
   try {
     const group = await Group.findByPk(req.params.id)
 
@@ -355,7 +357,9 @@ router.put("/:id", [requireAuth, validateGroups], async (req, res, next) => {
         status:403,
       })
     }
+    console.log(req.body,444444444444444444)
     await group.update(req.body)
+   
     res.json(
       group
     )

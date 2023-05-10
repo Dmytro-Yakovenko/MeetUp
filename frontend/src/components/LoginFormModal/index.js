@@ -9,7 +9,7 @@ function LoginFormModal() {
   const dispatch = useDispatch();
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
 
   const handleDemoLogin = (e) => {
@@ -25,7 +25,8 @@ function LoginFormModal() {
       .then(closeModal)
       .catch(async (res) => {
         const data = await res.json();
-        if (data && data.errors) setErrors(data.errors);
+        console.log(data)
+        if (data ) setErrors(data);
       });
   };
 
@@ -33,11 +34,7 @@ function LoginFormModal() {
     <div className="login-container">
       <h1 className="login-title">Log In</h1>
       <form onSubmit={handleSubmit}>
-        <ul>
-          {errors.map((error, idx) => (
-            <li key={idx}>{error}</li>
-          ))}
-        </ul>
+      
         <div className="login-credentials">
           <label className="username-email">
             {/* Username or Email */}
@@ -49,6 +46,7 @@ function LoginFormModal() {
               onChange={(e) => setCredential(e.target.value)}
               required
             />
+            {}
           </label>
           <label className="password">
             {/* Password */}
@@ -65,6 +63,7 @@ function LoginFormModal() {
           <button className="submit-login" type="submit">
             Log In
           </button>
+         
           {/* // ) : (
           //   <button className="submit-login-success" type="submit">
           //     Log In
@@ -74,6 +73,11 @@ function LoginFormModal() {
           <a className="demo" href="#" onClick={handleDemoLogin}>
             Demo User
           </a>
+          <ul>
+          {errors &&
+            <li>{errors.message}</li>
+        }
+        </ul>
         </div>
       </form>
     </div>

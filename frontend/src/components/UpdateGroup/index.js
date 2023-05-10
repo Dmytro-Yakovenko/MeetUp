@@ -23,11 +23,14 @@ function UpdateGroup() {
     if (!/\w+, \w+/g.test(address) || address.length < 1) {
       errors.address = "Location is required";
     }
-    if (name.length < 1) {
+    if (name.length < 5 ) {
       errors.name = "Name is required";
     }
-    if (about.length < 30) {
-      errors.about = "Description must be at least 30 characters";
+    if (name.length >60  ) {
+        errors.name = "Name must be less than 60 characters";
+      }
+    if (about.length < 50) {
+      errors.about = "Description must be at least 50 characters";
     }
 
     if (type === "select one") {
@@ -61,6 +64,8 @@ function UpdateGroup() {
         private: privateStatus,
         city,
         state,
+        id:parseInt(id),
+         organizerId:user.id
        
       };
 
