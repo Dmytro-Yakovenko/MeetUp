@@ -169,6 +169,7 @@ function GroupDetails() {
                     
                     <div>
                 <p>{item.name}</p>
+                <p>{item.description}</p>
                     </div>
                     </div>
                   </NavLink>
