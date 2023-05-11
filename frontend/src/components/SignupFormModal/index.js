@@ -78,7 +78,7 @@ setFrontErrors(errors)
         <form onSubmit={handleSubmit}>
          
           <div className="signup-info">
-            <label>
+            <label className="label">
               {/* Email */}
               <input
                 className="signup-input"
@@ -88,9 +88,9 @@ setFrontErrors(errors)
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
-              {frontErrors && <span>{frontErrors.email}</span>}
+              {frontErrors && <span className="error">{frontErrors.email}</span>}
             </label>
-            <label>
+            <label className="label">
               {/* Username */}
               <input
                 className="signup-input"
@@ -100,9 +100,9 @@ setFrontErrors(errors)
                 onChange={(e) => setUsername(e.target.value)}
                 required
               />
-              {frontErrors && <span>{frontErrors.username}</span>}
+              {frontErrors && <span className="error">{frontErrors.username}</span>}
             </label>
-            <label>
+            <label className="label">
               {/* First Name */}
               <input
                 className="signup-input"
@@ -112,9 +112,9 @@ setFrontErrors(errors)
                 onChange={(e) => setFirstName(e.target.value)}
                 required
               />
-              {frontErrors && <span>{frontErrors.firstName}</span>}
+              {frontErrors && <span className="error">{frontErrors.firstName}</span>}
             </label>
-            <label>
+            <label className="label">
               {/* Last Name */}
               <input
                 className="signup-input"
@@ -124,9 +124,9 @@ setFrontErrors(errors)
                 onChange={(e) => setLastName(e.target.value)}
                 required
               />
-              {frontErrors && <span>{frontErrors.lastName}</span>}
+              {frontErrors && <span className="error">{frontErrors.lastName}</span>}
             </label>
-            <label>
+            <label className="label">
               {/* Password */}
               <input
                 className="signup-input"
@@ -136,9 +136,9 @@ setFrontErrors(errors)
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
-              {frontErrors && <span>{frontErrors.password}</span>}
+              {frontErrors && <span className="error">{frontErrors.password}</span>}
             </label>
-            <label>
+            <label className="label">
               {/* Confirm Password */}
               <input
                 className="signup-input"
@@ -148,7 +148,7 @@ setFrontErrors(errors)
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
               />
-              {frontErrors && <span>{frontErrors.confirmPassword}</span>}
+              {frontErrors && <span className="error">{frontErrors.confirmPassword}</span>}
             </label>
 
             <button

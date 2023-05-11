@@ -38,35 +38,36 @@ function LandingPage() {
         </div>
 
         <div className="home-link-wrapper">
-          <NavLink to="/groups">
+          <NavLink to="/groups" className="link">
             <img
               src="https://secure.meetupstatic.com/next/images/shared/handsUp.svg?w=384"
               alt="see all groups"
             />
-            <h4>See all groups </h4>
+            <h4 className="link-title">See all groups </h4>
             <p>
               Do what you love, meet others who love it, find your community.
               The rest is history!
             </p>
           </NavLink>
 
-          <NavLink to="/events">
+          <NavLink to="/events" className="link">
             <img
               src="https://secure.meetupstatic.com/next/images/shared/ticket.svg?w=384"
               alt="find event"
             />
-            <h4>Find an event</h4>
+            <h4 className="link-title">Find an event</h4>
             <p>
               Events are happening on just about any topic you can think of,
               from online gaming and photography to yoga and hiking.
             </p>
           </NavLink>
           {sessionUser ? (
-            <NavLink to="/groups/new"> <img
+            <NavLink to="/groups/new" className="link"> 
+            <img
             src="https://secure.meetupstatic.com/next/images/shared/joinGroup.svg?w=384"
             alt="start new group"
           />
-          <h4>Start a new group</h4>
+          <h4 className="link-title">Start a new group</h4>
           <p >
             You don’t have to be an expert to gather people together and explore
             shared interests.

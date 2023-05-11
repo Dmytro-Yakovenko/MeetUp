@@ -50,6 +50,10 @@ line-height: 18px;
     color:rgba(56, 93, 98);
    
 }
+.link:hover .link-title{
+  text-decoration: underline;
+    
+ }
 
 .home-btn-wrapper{
     text-align: center;

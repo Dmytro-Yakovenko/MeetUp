@@ -29,7 +29,7 @@ function Events() {
         <NavLink style={{ color: "teal", textDecoration: "underline", cursor:"none" }} to="/events">events</NavLink>
      
 
-        <p>Events in Meetup</p>
+        <p className="section-title">Events in Meetup</p>
 
         <ul>
           {events.map((item) => {

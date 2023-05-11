@@ -30,7 +30,7 @@ function Groups() {
         </NavLink>
         <NavLink style={{ color: "teal", textDecoration: "underline",cursor:"none" }} to="/groups">groups</NavLink>
 
-        <p>Groups in Meetup</p>
+        <p className="section-title">Groups in Meetup</p>
         <ul>
           {groups.map((item) => {
             return <Group key={item.id} group={item} />;

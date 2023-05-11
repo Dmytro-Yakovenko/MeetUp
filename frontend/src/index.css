@@ -23,3 +23,30 @@ a{
     margin:0 auto;
     max-width:1024px;
 }
+
+.error{
+    color: rgba(255, 0, 0);
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    font-size: 12px;
+}
+.label{
+    position: relative;
+    font-size: 14px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    width: 100%;
+    display: inline-block;
+}
+
+
+.demo-btn {
+    color: white;
+    background-color: #ff3b41;
+}
+
+.section-title{
+    font-size: 24px;
+    font-weight: bold;
+}

@@ -1,6 +1,6 @@
 .login-container {
     border: 1px solid black;
-    height: 350px;
+    height: 400px;
     width: 430px;
     display: flex;
     flex-direction: column;

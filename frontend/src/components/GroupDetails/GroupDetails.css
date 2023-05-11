@@ -1,0 +1,44 @@
+.group-btn{
+    border-radius: 4px;
+    background-color: rgba(128, 128, 128, 0.939);
+    min-width: 100px;
+    margin-right: 20px;
+    display: inline-block;
+    padding: 10px;
+    border: none;
+    color: #2e3e48;;
+    font-size: 16px;
+    text-align: center;
+    font-weight: bold;
+
+}
+
+.join-btn{
+    border-radius: 4px;
+    background-color: rgba(218, 58, 58, 0.939);
+    min-width: 100px;
+    margin-right: 20px;
+    display: inline-block;
+    padding: 10px;
+    border: none;
+    color: #2e3e48;;
+    font-size: 16px;
+    text-align: center;
+    font-weight: bold;
+}
+.breadcrumbs{
+    color:  rgba(218, 58, 58, 0.939);
+    text-decoration: underline;
+}
+
+.group-details-wrapper{
+    display: grid;
+    gap: 40px;
+    grid-template-columns: 40% 58%;
+    margin-top: 20px;
+}
+
+.group-details-image{
+    width: 100%;
+    
+}

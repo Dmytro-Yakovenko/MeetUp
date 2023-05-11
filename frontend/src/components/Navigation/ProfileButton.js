@@ -90,12 +90,12 @@ function ProfileButton({ user }) {
                 />
               </li>
               <li style={{ listStyleType: "none" }}>
-                <NavLink className="navlink-drop-down" to="/api/groups">
+                <NavLink className="navlink-drop-down" to="/groups">
                   View groups
                 </NavLink>
               </li>
               <li style={{ listStyleType: "none" }}>
-                <NavLink className="navlink-drop-down" to="/api/events">
+                <NavLink className="navlink-drop-down" to="/events">
                   View events
                 </NavLink>
               </li>

@@ -16,3 +16,8 @@
      gap: 10px;
      max-width: 550px;
 }
+
+.group-link{
+    margin-bottom: 65px;
+    display: inline-block;
+}
