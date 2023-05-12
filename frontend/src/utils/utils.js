@@ -10,7 +10,7 @@ export const formatDate=(string)=>{
     let year = eventDate.getFullYear()
   const dateOfEvent = `${year}-${month}-${day}`;
   return (
-    <p>
+    <p className="event-text">
     {dateOfEvent} &middot; 
     <span> {hours}:{minutes}</span>
   </p>

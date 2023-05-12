@@ -10,11 +10,15 @@ function ModalDelete({onCancel, onSubmit, config}){
 <div class="modal-content" onClick={onCancel}>
   <span class="close" onClick={onCancel}>&times;</span>
   <p>{question}</p>
-  <button onClick={onSubmit}>
+  <button 
+  className="btn-submit"
+  onClick={onSubmit}>
     {btnSubmit}
   </button>
 
-  <button onClick={onCancel}>
+  <button 
+  className="btn-cancel"
+  onClick={onCancel}>
     {btnCancel}
   </button>
 </div>
