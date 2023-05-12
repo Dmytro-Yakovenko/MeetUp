@@ -202,6 +202,7 @@ function CreateGroupForm() {
           </div>
           <hr />
           <input 
+          className="create-btn"
           type="submit" 
           value="Create Group" 
           disabled={!!error.about  || !!error.url || !!error.type|| !!error.name|| !!error.privateStatus ||!!error.address}

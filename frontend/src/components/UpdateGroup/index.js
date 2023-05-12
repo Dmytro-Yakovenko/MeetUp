@@ -1,20 +1,25 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateGroup} from "../../store/groups";
+import { updateGroupById, getGroupDetails} from "../../store/groups";
 import { useHistory, useParams, Redirect } from "react-router-dom";
+
 function UpdateGroup() {
   const user = useSelector((state) => state.session.user);
   const {id}=useParams()
-  const group =useSelector(state=>state.groups[id])
+  const dispatch= useDispatch()
+  useEffect(()=>{
+dispatch(getGroupDetails(id))
+  },[dispatch,id])
+  const group =useSelector(state=>state.groups.details)
  
- const dispatch= useDispatch()
+ 
  const history=useHistory()
-  const [address, setAddress] = useState(`${group.city}, ${group.state}`);
-  const [name, setName] = useState(group.name);
-  const [about, setAbout] = useState(group.about);
-  const [type, setType] = useState(group.type);
-  const [privateStatus, setPrivateStatus] = useState(group.private);
-  const [url, setUrl] = useState(group.previewImage);
+  const [address, setAddress] = useState(group?`${group.city}, ${group.state}`:"");
+  const [name, setName] = useState(group? group.name:"");
+  const [about, setAbout] = useState(group? group.about:"");
+  const [type, setType] = useState(group? group.type:"");
+  const [privateStatus, setPrivateStatus] = useState(group? group.private:"");
+  const [url, setUrl] = useState(group? group.previewImage:"");
 
   const [error, setError] = useState({});
 
@@ -40,7 +45,7 @@ function UpdateGroup() {
     if (privateStatus === "select one") {
       errors.privateStatus = "Visibility Type is required";
     }
-    if (!url.match(/(\.jpe?g$)|(\.png$)/g)) {
+    if (url &&!url.match(/(\.jpe?g$)|(\.png$)/g)) {
       errors.url = "Image URL must end in .png, .jpg, or .jpeg";
     }
    setError(errors)
@@ -51,10 +56,10 @@ function UpdateGroup() {
   }
 
 
-// Question is button create group should be disabled?
+
   const handleSubmit =async (e) => {
     e.preventDefault();
-
+console.log(e)
     if(!Object.values(error).length){
       const [city, state] = address.split(", ");
       const formData = {
@@ -70,10 +75,10 @@ function UpdateGroup() {
       };
 
      
-     reset()
-     
-  let group = await dispatch(updateGroup(id,formData))
- 
+    //  reset()
+     console.log(id)
+  let group = await dispatch(updateGroupById(id,formData))
+ console.log(group)
       history.push(`/groups/${group.id}`)
     }
    
@@ -213,6 +218,7 @@ function UpdateGroup() {
           </div>
           <hr />
           <input 
+          className="create-btn"
           type="submit" 
           value="Update Group" 
           disabled={!!error.about  || !!error.url || !!error.type|| !!error.name|| !!error.privateStatus ||!!error.address}

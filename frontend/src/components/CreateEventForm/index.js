@@ -80,10 +80,10 @@ useEffect(()=>{
             price:parseInt(price),
             
         };
-      //  reset()
-        // dispatch(createEventByGroupId(group.id,formData))
+       reset()
+       
         let event = await   dispatch(createEventByGroupId(group.id,formData))
-        console.log(event,1111111)
+        
         history.push(`/events/${event.id}`)
   }
 }
@@ -264,6 +264,7 @@ useEffect(()=>{
         </div>
 
         <input 
+        className="create-btn"
         type="submit" 
         value="Create Event"
         disabled={!!error.description  || !!error.url || !!error.startDate|| !!error.endDate|| !!error.type|| !!error.name|| !!error.privateStatus|| !!error.price}

@@ -5,6 +5,7 @@ const GET_GROUPS = "groups/GET_GROUPS";
 const CREATE_GROUP = "groups/CREATE_GROUP";
 const GET_DETAILS = "groups/GET_DETAILS";
 const REMOVE_GROUP = "groups/REMOVE_GROUP";
+const UPDATE_GROUP="groups/UPDATE_GROUP"
 
 //actions
 
@@ -26,6 +27,11 @@ const getDatails = (group) => ({
 const removeGroup = (groupId) => ({
   type: REMOVE_GROUP,
   groupId,
+});
+
+const updateGroup = (group) => ({
+  type: UPDATE_GROUP,
+  group,
 });
 
 export const getAllGroups = () => async (dispatch) => {
@@ -82,19 +88,20 @@ export const getGroupDetails = (groupId) => async (dispatch) => {
   }
 };
 
-export const updateGroup = (groupId, data) => async (dispatch) => {
-  
+export const updateGroupById = (groupId, data) => async (dispatch) => {
+  console.log(`/api/groups/${groupId}`)
 
  
   const response = await csrfFetch(`/api/groups/${groupId}`, {
     method: "PUT",
-     headers: { "Content-Type": "application/json" },
+    //  headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
 
   if (response.ok) {
     const group = await response.json();
     dispatch(updateGroup(group));
+    return group
   }
 };
 
@@ -122,12 +129,19 @@ const groupReducer = (state = {}, action) => {
     case CREATE_GROUP:
       return { ...state, [action.group.id]: action.group };
 
+      case UPDATE_GROUP:
+        console.log(state)
+        console.log(action)
+        return { ...state, [action.group.id]: action.group };
+
     case GET_DETAILS:
       return { ...state, details: action.group };
 
     case REMOVE_GROUP:
       const deleteNewState = { ...state };
       
+
+
       delete deleteNewState.groups[action.groupId];
       return deleteNewState;
     default:

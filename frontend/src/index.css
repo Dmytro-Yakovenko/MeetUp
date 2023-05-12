@@ -75,4 +75,11 @@ textarea{
 select{
     margin: 10px 0;
 }
+.create-btn{
+    color: white;
+    background-color: #811fbe;
+    border-radius: 7px;
+    border: none;
+    padding: 15px 0;
+}
 

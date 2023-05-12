@@ -19,18 +19,17 @@ function EventDetail() {
   const dispatch = useDispatch();
   const { id } = useParams();
   const history =useHistory()
-  const eventDetails = useSelector((state) => state.events.details);
+
   const group = useSelector((state) => state.groups.details);
-  console.log(eventDetails, 11111);
-  console.log(group, 222222);
 
   const user = useSelector((state) => state.session.user);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     dispatch(getEventById(+id));
-  }, [id, dispatch]);
 
+  }, [id, dispatch]);
+  const eventDetails = useSelector((state) => state.events.details);
   useEffect(() => {
     dispatch(getGroupDetails(+id));
   }, [dispatch, id]);
@@ -41,7 +40,7 @@ function EventDetail() {
   const handleDeleteEvent = (e) => {
     e.preventDefault();
     dispatch(deleteEventById(id));
-    history.push(`/groups/${id}`)
+    history.push(`/groups/${group.id}`)
   };
 
   // const {
@@ -73,6 +72,18 @@ function EventDetail() {
   if (eventDetails) {
     endDateContent = formatDate(eventDetails.endDate);
   }
+ let btnContent= null
+if(user && group){
+  if(user.id===group.organizerId){
+    btnContent=(<>
+    
+    <button className="event-btn" onClick={() => alert("This feature coming soon ...")}>
+                  Update
+                </button>
+                <button className="event-btn" onClick={() => setIsModalOpen(true)}> Delete </button>
+    </>)
+  }
+}
 
   return (
     <main>
@@ -93,6 +104,7 @@ function EventDetail() {
             <div className="event-details-wrapper">
               {!!eventDetails.EventImages.length && (
                 <img
+                className="event-image"
                   src={eventDetails.EventImages[0].url}
                   alt={eventDetails.name}
                 />
@@ -134,11 +146,9 @@ function EventDetail() {
                   <img className="icon" src="https://res.cloudinary.com/dr1ekjmf4/image/upload/v1683485223/pokerEventImages/icons8-map-pin-50_rgppcz.png" />
                   <p className="event-text">{eventDetails.type}</p>
                 </div>
-
-                <button className="event-btn" onClick={() => alert("This feature coming soon ...")}>
-                  Update
-                </button>
-                <button className="event-btn" onClick={() => setIsModalOpen(true)}> Delete </button>
+{
+  btnContent
+}
               </div>
             </div>
 
