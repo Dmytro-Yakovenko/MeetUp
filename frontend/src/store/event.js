@@ -72,9 +72,9 @@ export const createEventByGroupId=(id, data)=>async (dispatch)=>{
         method:'POST',
         body:JSON.stringify(data)
     })
-console.log(response)
+
     if(response.ok){
-        console.log(response)
+       
         const event =await response.json()
         const img = {url:data.preview, preview:true, id:event.id}
         await csrfFetch(`/api/events/${event.id}/images`, {
@@ -102,7 +102,7 @@ export const deleteEventById=(id)=>async dispatch=>{
 
 
 const eventReducer=(state={}, action)=>{
-    console.log(action)
+  
     switch(action.type){
         
         case GET_EVENTS:

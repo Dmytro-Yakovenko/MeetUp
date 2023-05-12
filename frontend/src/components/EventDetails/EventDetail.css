@@ -1,0 +1,15 @@
+.event-details-wrapper{
+    display: grid;
+    gap: 40px;
+    grid-template-columns: 40% 58%;
+    margin-top: 20px;
+}
+
+.event-description{
+    color: rgb(0, 0, 0);
+
+}
+.event-details-image{
+    width: 100%;
+    
+}

@@ -10,7 +10,9 @@ function Events() {
   useEffect(() => {
     dispatch(getAllEvents());
   }, [dispatch]);
-
+if(events.length){
+    events.sort((a,b)=>new Date(b.startDate)-new Date(a.startDate))
+}
   return (
     <main>
       <div className="container">

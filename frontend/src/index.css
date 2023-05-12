@@ -50,3 +50,29 @@ a{
     font-size: 24px;
     font-weight: bold;
 }
+
+input{
+    width: 100%;
+    display: inline-block;
+    padding: 15px;
+    margin-top: 10px;
+}
+
+form{
+    max-width: 450px;
+}
+
+textarea{
+    width:100%;
+    display: inline-block;
+    min-height: 200px;
+    max-width: 480px;
+    margin-top: 10px;
+    border: rgb(7, 7, 7) 1px solid;
+    padding: 15px;
+}
+
+select{
+    margin: 10px 0;
+}
+

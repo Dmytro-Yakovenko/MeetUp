@@ -42,3 +42,13 @@
     width: 100%;
     
 }
+
+.group-event{
+    max-width: 600px;
+    margin-top: 30px;
+    color: rgb(0, 0, 0);
+}
+.group-event-description{
+    color: rgb(0, 0, 0);
+
+}

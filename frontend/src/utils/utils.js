@@ -11,7 +11,7 @@ export const formatDate=(string)=>{
   const dateOfEvent = `${year}-${month}-${day}`;
   return (
     <p>
-    {dateOfEvent}
+    {dateOfEvent} &middot; 
     <span> {hours}:{minutes}</span>
   </p>
   )

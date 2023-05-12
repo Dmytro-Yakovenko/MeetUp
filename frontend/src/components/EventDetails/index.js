@@ -7,6 +7,7 @@ import { formatDate } from "../../utils/utils";
 import { NavLink } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 import ModalDelete from "../Modal/modalDelete"; 
+import "./EventDetail.css"
  
 const deleteConfig={question:"Are you sure you want to remove this event?", btnSubmit:"Yes (Delete Event)", btnCancel: "No (Keep Event)"}
 
@@ -37,7 +38,7 @@ function EventDetail() {
     e.preventDefault(id);
     dispatch(deleteEventById(id));
   };
-console.log(group)
+
   const {
     id: eventId,
     EventImages,
@@ -61,10 +62,11 @@ console.log(group)
 
   return (
     <main>
-        {
+      <div className="container">
+      {
             name && <>
             
-            <NavLink to="/events">events</NavLink>
+            <NavLink className="breadcrumbs" to="/events">events</NavLink>
             <h2>{name}</h2>
             {Organizer && (
               <p>
@@ -75,9 +77,10 @@ console.log(group)
             )}
       
             <img src={EventImages[0].url} alt={name}/>
-                {GroupImage && 
-                   <div>
-                   <img src={GroupImage[0].url}/>
+               <div>
+               {GroupImage && 
+                   <div className="event-details-wrapper">
+                   <img className="event-details-image" src={GroupImage[0].url}/>
                     {groupName}
                     {privateStatus?<p>private</p>:<p>public</p>}
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M464 256A208 208 0 1 1 48 256a208 208 0 1 1 416 0zM0 256a256 256 0 1 0 512 0A256 256 0 1 0 0 256zM232 120V256c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2V120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"/></svg>
@@ -97,11 +100,16 @@ console.log(group)
 
                </div>
                 }
+              <button onClick={()=>alert("This feature coming soon ...")}>Update</button>  
           <button onClick={()=>setIsModalOpen(true)}> Delete </button>
 
 
+
+
+
+               </div>
 <h3>Details</h3>
-<p>
+<p className="event-description">
     {description}
 </p>
             
@@ -111,6 +119,9 @@ console.log(group)
 
 
 {isModalOpen&& <ModalDelete config={deleteConfig} onSubmit={handleDeleteEvent} onCancel={()=>setIsModalOpen(false)}/>}
+        
+      </div>
+      
     </main>
   );
 }

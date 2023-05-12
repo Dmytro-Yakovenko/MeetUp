@@ -2,15 +2,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useParams, useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { createEventByGroupId } from "../../store/event";
-
+import "./CreateEventForm.css"
+import { getGroupDetails } from "../../store/groups";
 
 function CreateEventForm() {
   const user = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
-
+const {id}=useParams()
 const history= useHistory()
-  const group = useSelector((state) => state.groups.details);
-
+  const group = useSelector((state) => state.groups.details || {});
+console.log(group)
  
   //states
   const [name, setName] = useState("");
@@ -23,11 +24,13 @@ const history= useHistory()
   const [description, setDescription] = useState("");
 
   const [error, setError] = useState({});
-
+useEffect(()=>{
+  dispatch(getGroupDetails(+id))
+},[dispatch, id])
 
   useEffect(()=>{
     const errors={}
-    if (name.length < 1) {
+    if (name.length < 5) {
         errors.name = "Name is required";
       }
       if (description.length < 30) {
@@ -60,6 +63,7 @@ const history= useHistory()
 
   const handleSubmit =async (e) => {
     e.preventDefault();
+    console.log(e)
     if(!Object.values(error).length){
         
         const formData = {
@@ -76,7 +80,7 @@ const history= useHistory()
             price:parseInt(price),
             
         };
-       reset()
+      //  reset()
         // dispatch(createEventByGroupId(group.id,formData))
         let event = await   dispatch(createEventByGroupId(group.id,formData))
         console.log(event,1111111)
@@ -101,10 +105,11 @@ const history= useHistory()
 
   return (
     <main>
-        <div className="container">
-      <h3> Create an event for {group.name}</h3>
+        <div className="container create-event">
+     
 
       <form onSubmit={handleSubmit}>
+      {group.name && <h3> Create an event for {group.name}</h3>} 
         <div>
           <label className="label">
             What is the name of your event?
@@ -123,7 +128,9 @@ const history= useHistory()
         <div>
           <label className="label">
             Is this an in person or online event?
+            <div>
             <select
+            
             name="type"
             value={type}
             onChange={(e)=>setType(e.target.value)}
@@ -135,6 +142,10 @@ const history= useHistory()
               <option value="InPerson">In Person</option>
               <option value="On Line">On Line</option>
             </select>
+
+
+            </div>
+           
             {error.type && <span className="error">{error.type}</span>}
           </label>
         </div>
@@ -142,6 +153,10 @@ const history= useHistory()
         <div>
           <label className="label">
             Is this event private or public?
+
+
+            <div>
+
             <select
             name="private"
             value={privateStatus}
@@ -153,13 +168,17 @@ const history= useHistory()
               <option value={true}>Private</option>
               <option value={false}>Public</option>
             </select>
+
+            </div>
+           
             <span className="error">{error.privateStatus}</span>
           </label>
         </div>
         <div>
-          <label className="label">
+          <label className="label position">
             What is the price for your event?
             <input 
+           
             type="number" 
             placeholder="0"
             name="price"
@@ -168,6 +187,7 @@ const history= useHistory()
 
             />
             <img
+                className="item"
               src="https://res.cloudinary.com/dr1ekjmf4/image/upload/v1683484017/pokerEventImages/icons8-average-price-50_dc1ssp.png"
               alt="$"
             />
@@ -176,9 +196,10 @@ const history= useHistory()
         </div>
         <hr />
         <div>
-          <label className="label">
+          <label className="label position">
             When does your event start?
             <input
+           
              type="date" 
              placeholder="MM/DD/YYYY HH:mm AM" 
              name="startDate"
@@ -186,6 +207,7 @@ const history= useHistory()
              onChange={(e)=>setStartDate(e.target.value)}
              />
             <img
+            className="item"
               src="https://res.cloudinary.com/dr1ekjmf4/image/upload/v1683519133/pokerEventImages/icons8-calendar-50_ezmcsi.png"
               alt="calendar"
             />
@@ -194,9 +216,10 @@ const history= useHistory()
         </div>
 
         <div>
-          <label className="label">
+          <label className="label position">
             When does your event end?
             <input 
+            
             type="date"
              placeholder="MM/DD/YYYY HH:mm AM" 
              name="endDate"
@@ -204,6 +227,7 @@ const history= useHistory()
              onChange={(e)=>setEndDate(e.target.value)}
              />
             <img
+                className="item"
               src="https://res.cloudinary.com/dr1ekjmf4/image/upload/v1683519133/pokerEventImages/icons8-calendar-50_ezmcsi.png"
               alt="calendar"
             />

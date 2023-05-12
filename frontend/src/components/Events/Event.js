@@ -18,17 +18,26 @@ function Event({ event }) {
     content = <p>Location will be later</p>;
   }
   return (
-    <NavLink to={`/events/${id}`}>
+    <>
+       <NavLink to={`/events/${id}`}>
       <li className="event-item">
-        <img src={previewImage} alt="{name" className="event-image" />
-     {contentData}
+        <img  src={previewImage} alt={name} className="event-image" />
+    <div className="event-wraper">
+    {contentData}
     <h3> {name}</h3>
 
         <div>{content}</div>
         <p>{description}</p>
 
+    </div>
+    
+        
+
       </li>
     </NavLink>
+    <hr/>
+    </>
+ 
   );
 }
 

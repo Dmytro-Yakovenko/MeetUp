@@ -61,7 +61,7 @@ function CreateGroupForm() {
       // dispatch(createNewGroup(formData))
       //redirect card group inform
   let group = await dispatch(createNewGroup(formData))
-  console.log(group)
+ 
       history.push(`/groups/${group.id}`)
     }
    
@@ -79,6 +79,7 @@ function CreateGroupForm() {
   return (
     <main>
       <div className="container">
+        <h2> Start a New Group</h2>
         <p>BECOME AN ORGANIZER</p>
         <h2>
           We'll walk you through a few steps to build your local community

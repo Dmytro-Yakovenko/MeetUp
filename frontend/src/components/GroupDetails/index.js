@@ -5,7 +5,8 @@ import { deleteGroup, getGroupDetails } from "../../store/groups";
 import { NavLink } from "react-router-dom";
 import ModalDelete from "../Modal/modalDelete";
 import { getEventsForGroup } from "../../store/event";
-import Events from "../Events";
+import { formatDate } from "../../utils/utils";
+
 
 import "./GroupDetails.css";
 
@@ -29,7 +30,7 @@ function GroupDetails() {
   }, [dispatch]);
 
   let content = groupDetails.status ? "public" : "private";
-  console.log(groupDetails);
+
   const upcomingEvents = events.filter((item) => {
     const startDate = new Date(item.startDate);
     const today = new Date();
@@ -37,6 +38,9 @@ function GroupDetails() {
       return item;
     }
   });
+if(upcomingEvents.length){
+    upcomingEvents.sort((a,b)=>new Date(a.startDate)-new Date(b.startDate))
+}
 
   const pastEvents = events.filter((item) => {
     const startDate = new Date(item.startDate);
@@ -45,6 +49,10 @@ function GroupDetails() {
       return item;
     }
   });
+
+  if(pastEvents.length){
+    pastEvents.sort((a,b)=>new Date(b.startDate)-new Date(a.startDate))
+}
 
   const handleDeleteGroup = (e) => {
     e.preventDefault();
@@ -136,21 +144,24 @@ function GroupDetails() {
         <p>{groupDetails.about}</p>
         {!!upcomingEvents.length && (
           <>
-            <h2>Upcoming Events (#)</h2>
+            <h2>Upcoming Events ({upcomingEvents.length})</h2>
 
             <ul>
               {upcomingEvents.map((item) => (
-                <li key={item.id}>
-                  <NavLink to={`/groups/${groupDetails.id}/events/${item.id}`}>
-                    <div>
-                      <img src={item.previewImage} alt={item.name} />
-                    </div>
-                    <div>
-
-
-                    </div>
-                  </NavLink>
-                </li>
+                 <li className="group-event" key={item.id}>
+                 <NavLink to={`/groups/${groupDetails.id}/events/${item.id}`}>
+                   <div className="group-details-wrapper group-event">
+                     <img className="group-details-image" src={item.previewImage} alt={item.name} />
+                   
+                   <div>
+                       <p>{formatDate(item.startDate)}</p>
+               <p>{item.name}</p>
+               <p>{item.Venue.city}, {item.Venue.state}</p>
+                   </div>
+                   </div>
+                   <p className="group-event-description">{item.description}</p>
+                 </NavLink>
+               </li>
               ))}
             </ul>
           </>
@@ -158,20 +169,22 @@ function GroupDetails() {
 
 {!!pastEvents.length && (
           <>
-            <h2>Past Events (#)</h2>
+            <h2>Past Events ({pastEvents.length})</h2>
 
             <ul>
               {pastEvents.map((item) => (
-                <li key={item.id}>
+                <li className="group-event" key={item.id}>
                   <NavLink to={`/groups/${groupDetails.id}/events/${item.id}`}>
-                    <div className="group-details-wrapper">
+                    <div className="group-details-wrapper group-event">
                       <img className="group-details-image" src={item.previewImage} alt={item.name} />
                     
                     <div>
+                        <p>{formatDate(item.startDate)}</p>
                 <p>{item.name}</p>
-                <p>{item.description}</p>
+                <p>{item.Venue.city}, {item.Venue.state}</p>
                     </div>
                     </div>
+                    <p className="group-event-description">{item.description}</p>
                   </NavLink>
                 </li>
               ))}

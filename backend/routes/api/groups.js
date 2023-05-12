@@ -339,7 +339,7 @@ router.post("/:id/images",[requireAuth, validateGroupImage] , async (req, res, n
 // //Edit a Group 
 router.put("/:id", [requireAuth, validateGroups], async (req, res, next) => {
 
-  console.log(req.body,444444444444444444)
+
   try {
     const group = await Group.findByPk(req.params.id)
 
@@ -357,7 +357,7 @@ router.put("/:id", [requireAuth, validateGroups], async (req, res, next) => {
         status:403,
       })
     }
-    console.log(req.body,444444444444444444)
+   
     await group.update(req.body)
    
     res.json(
@@ -821,7 +821,7 @@ router.get("/:id/events", async (req, res, next) => {
       delete item.locationId
       delete item.price
       delete item.capacity
-      delete item.description
+      // delete item.description
     })
 
 

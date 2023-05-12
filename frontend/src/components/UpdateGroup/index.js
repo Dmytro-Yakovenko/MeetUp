@@ -6,7 +6,7 @@ function UpdateGroup() {
   const user = useSelector((state) => state.session.user);
   const {id}=useParams()
   const group =useSelector(state=>state.groups[id])
-  console.log(group)
+ 
  const dispatch= useDispatch()
  const history=useHistory()
   const [address, setAddress] = useState(`${group.city}, ${group.state}`);
@@ -73,7 +73,7 @@ function UpdateGroup() {
      reset()
      
   let group = await dispatch(updateGroup(id,formData))
-  console.log(group)
+ 
       history.push(`/groups/${group.id}`)
     }
    
