@@ -59,7 +59,7 @@ dispatch(getGroupDetails(id))
 
   const handleSubmit =async (e) => {
     e.preventDefault();
-console.log(e)
+
     if(!Object.values(error).length){
       const [city, state] = address.split(", ");
       const formData = {
@@ -75,10 +75,10 @@ console.log(e)
       };
 
      
-    //  reset()
-     console.log(id)
+     reset()
+   
   let group = await dispatch(updateGroupById(id,formData))
- console.log(group)
+
       history.push(`/groups/${group.id}`)
     }
    

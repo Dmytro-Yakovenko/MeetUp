@@ -89,7 +89,7 @@ export const getGroupDetails = (groupId) => async (dispatch) => {
 };
 
 export const updateGroupById = (groupId, data) => async (dispatch) => {
-  console.log(`/api/groups/${groupId}`)
+ 
 
  
   const response = await csrfFetch(`/api/groups/${groupId}`, {
@@ -130,8 +130,7 @@ const groupReducer = (state = {}, action) => {
       return { ...state, [action.group.id]: action.group };
 
       case UPDATE_GROUP:
-        console.log(state)
-        console.log(action)
+       
         return { ...state, [action.group.id]: action.group };
 
     case GET_DETAILS:

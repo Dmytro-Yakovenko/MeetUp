@@ -11,7 +11,7 @@ function CreateEventForm() {
 const {id}=useParams()
 const history= useHistory()
   const group = useSelector((state) => state.groups.details || {});
-console.log(group)
+
  
   //states
   const [name, setName] = useState("");
@@ -63,7 +63,7 @@ useEffect(()=>{
 
   const handleSubmit =async (e) => {
     e.preventDefault();
-    console.log(e)
+  
     if(!Object.values(error).length){
         
         const formData = {
