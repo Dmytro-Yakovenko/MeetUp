@@ -841,7 +841,7 @@ router.get("/:id/events", async (req, res, next) => {
 //Create an Event for a Group specified by its id 
 
 router.post("/:id/events", [requireAuth, validateEvents], async (req, res, next) => {
-
+console.log(req.body)
   try {
     const group = await Group.findByPk(req.params.id)
     if (!group) {
