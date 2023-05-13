@@ -60,6 +60,24 @@ const data = [
     url: "https://res.cloudinary.com/dr1ekjmf4/image/upload/v1683122041/pokerEventImages/pexels-rodnae-productions-6412829_bceqxy.jpg",
     groupId: 3,
     preview: true
+  },
+  {
+   
+    url: "https://res.cloudinary.com/dr1ekjmf4/image/upload/v1678422933/pokerEventImages/pexels-pixabay-208745_uxmaqe.jpg",
+    groupId: 4,
+    preview: true
+  },
+  {
+   
+    url: "https://res.cloudinary.com/dr1ekjmf4/image/upload/v1683923833/pokerEventImages/pexels-pixabay-533881_hlkywm.jpg",
+    groupId: 5,
+    preview: true
+  },
+  {
+   
+    url: "https://res.cloudinary.com/dr1ekjmf4/image/upload/v1683924151/pokerEventImages/Dmytro_dragons_game_of_thrones_8f67536f-679c-4ec8-ba49-60f29fc124f7_d2vkdj.png",
+    groupId: 6,
+    preview: true
   }
 
 ]
