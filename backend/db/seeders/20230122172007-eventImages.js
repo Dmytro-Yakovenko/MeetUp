@@ -8,7 +8,7 @@ const eventImages = [
   {
     eventId:1,
     
-    url:"https://res.cloudinary.com/dr1ekjmf4/image/upload/v1674409076/pokerEventImages/istockphoto-1410017313-1024x1024_dstt1d.webp",
+    url:"https://res.cloudinary.com/dr1ekjmf4/image/upload/v1674409504/pokerEventImages/istockphoto-914839102-612x612_csw0gr.jpg",
     preview:true
   },
   {
@@ -26,7 +26,7 @@ const eventImages = [
   {
     eventId:2,
    
-    url:"https://res.cloudinary.com/dr1ekjmf4/image/upload/v1674409032/pokerEventImages/istockphoto-619397934-1024x1024_h675cn.webp",
+    url:"https://res.cloudinary.com/dr1ekjmf4/image/upload/v1674409511/pokerEventImages/istockphoto-915607656-612x612_g0vrtl.jpg",
     preview:true
   },
   {
