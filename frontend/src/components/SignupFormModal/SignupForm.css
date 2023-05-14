@@ -5,10 +5,10 @@
     width: 420px;
     height: 700px;
     margin-right: -4px;
-    padding: 10px;
+    padding: 50px;
 }
 .signup-title{
-    margin-bottom: 10px
+    margin-bottom: 10px;
 }
 .signup-info {
      /* display: flex; */

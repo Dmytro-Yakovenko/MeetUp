@@ -176,7 +176,7 @@ function GroupDetails() {
                         />
 
                         <div>
-                          <p>{formatDate(item.startDate)}</p>
+                          {formatDate(item.startDate)}
                           <p>{item.name}</p>
                         {item.Venue && <p>
                             {item.Venue.city}, {item.Venue.state}
@@ -211,7 +211,7 @@ function GroupDetails() {
                         />
 
                         <div>
-                          <p>{formatDate(item.startDate)}</p>
+                          {formatDate(item.startDate)}
                           <p>{item.name}</p>
                           {item.Venue && (
                             <p>

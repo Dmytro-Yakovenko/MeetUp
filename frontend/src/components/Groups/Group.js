@@ -1,10 +1,12 @@
 import "./Groups.css";
+
 import { NavLink } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getEventsForGroup } from "../../store/event";
-function Group({ group }) {
+function Group({ group, count }) {
   const dispatch = useDispatch();
+
   const {
     name,
     about,
@@ -22,7 +24,7 @@ function Group({ group }) {
   }, [dispatch]);
  const eventsLength=events.filter(item=>item.id===id).length
   let content=(status)?'public':"private"
- 
+
   return (
 
 <>
@@ -32,7 +34,7 @@ function Group({ group }) {
         <div className="group-wrapper">
           <h2>{name}</h2>
           <p>{about}</p>
-          <p>  {eventsLength} events	&middot; {content}  </p>
+          <p>  {count} events	&middot; {content}  </p>
           <p>
             Location: {state}, {city}
           </p>
