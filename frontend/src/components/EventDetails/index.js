@@ -18,7 +18,7 @@ const deleteConfig = {
 function EventDetail() {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const history =useHistory()
+  const history = useHistory();
 
   const group = useSelector((state) => state.groups.details);
 
@@ -27,20 +27,19 @@ function EventDetail() {
 
   useEffect(() => {
     dispatch(getEventById(+id));
-
   }, [id, dispatch]);
   const eventDetails = useSelector((state) => state.events.details);
   useEffect(() => {
     dispatch(getGroupDetails(+id));
   }, [dispatch, id]);
-  if (!user.id) {
-    return <Redirect to="/login" />;
-  }
+  // if (!user.id) {
+  //   return <Redirect to="/login" />;
+  // }
 
   const handleDeleteEvent = (e) => {
     e.preventDefault();
     dispatch(deleteEventById(id));
-    history.push(`/groups/${group.id}`)
+    history.push(`/groups/${group.id}`);
   };
 
   // const {
@@ -72,18 +71,25 @@ function EventDetail() {
   if (eventDetails) {
     endDateContent = formatDate(eventDetails.endDate);
   }
- let btnContent= null
-if(user && group){
-  if(user.id===group.organizerId){
-    btnContent=(<>
-    
-    <button className="event-btn" onClick={() => alert("This feature coming soon ...")}>
-                  Update
-                </button>
-                <button className="event-btn" onClick={() => setIsModalOpen(true)}> Delete </button>
-    </>)
+  let btnContent = null;
+  if (user && group) {
+    if (user.id === group.organizerId) {
+      btnContent = (
+        <>
+          <button
+            className="event-btn"
+            onClick={() => alert("This feature coming soon ...")}
+          >
+            Update
+          </button>
+          <button className="event-btn" onClick={() => setIsModalOpen(true)}>
+            {" "}
+            Delete{" "}
+          </button>
+        </>
+      );
+    }
   }
-}
 
   return (
     <main>
@@ -104,7 +110,7 @@ if(user && group){
             <div className="event-details-wrapper">
               {!!eventDetails.EventImages.length && (
                 <img
-                className="event-image"
+                  className="event-image"
                   src={eventDetails.EventImages[0].url}
                   alt={eventDetails.name}
                 />
@@ -115,23 +121,28 @@ if(user && group){
                     <img
                       className="group-details-img"
                       src={group.GroupImage[0].url}
+                      alt={group.name}
                     />
 
                     <div>
-                      {group.name}
+                    <p>{group.name}</p>  
                       {group.privateStatus ? <p>private</p> : <p>public</p>}
                     </div>
                   </div>
                 )}
-                <svg className="icon"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 522 522">
+                <svg
+                  className="icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 522 522"
+                >
                   <path d="M464 256A208 208 0 1 1 48 256a208 208 0 1 1 416 0zM0 256a256 256 0 1 0 512 0A256 256 0 1 0 0 256zM232 120V256c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2V120c0-13.3-10.7-24-24-24s-24 10.7-24 24z" />
                 </svg>
-                <p >START {startDateContent}</p>
-                <p >END {endDateContent}</p>
+                <div>START {startDateContent}</div>
+                <div>END {endDateContent}</div>
 
                 <div>
                   <img
-                  className="icon" 
+                    className="icon"
                     src="https://res.cloudinary.com/dr1ekjmf4/image/upload/v1683484017/pokerEventImages/icons8-average-price-50_dc1ssp.png"
                     alt="cost"
                   />
@@ -143,12 +154,14 @@ if(user && group){
                 </div>
 
                 <div>
-                  <img className="icon" src="https://res.cloudinary.com/dr1ekjmf4/image/upload/v1683485223/pokerEventImages/icons8-map-pin-50_rgppcz.png" />
+                  <img
+                    className="icon"
+                    src="https://res.cloudinary.com/dr1ekjmf4/image/upload/v1683485223/pokerEventImages/icons8-map-pin-50_rgppcz.png"
+                    alt="icon"
+                  />
                   <p className="event-text">{eventDetails.type}</p>
                 </div>
-{
-  btnContent
-}
+                {btnContent}
               </div>
             </div>
 

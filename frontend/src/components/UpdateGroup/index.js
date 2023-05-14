@@ -14,14 +14,28 @@ dispatch(getGroupDetails(id))
  
  
  const history=useHistory()
-  const [address, setAddress] = useState(group?`${group.city}, ${group.state}`:"");
-  const [name, setName] = useState(group? group.name:"");
-  const [about, setAbout] = useState(group? group.about:"");
-  const [type, setType] = useState(group? group.type:"");
-  const [privateStatus, setPrivateStatus] = useState(group? group.private:"");
-  const [url, setUrl] = useState(group? group.previewImage:"");
+  const [address, setAddress] = useState("");
+  const [name, setName] = useState("");
+  const [about, setAbout] = useState("");
+  const [type, setType] = useState("select one");
+  const [privateStatus, setPrivateStatus] = useState("select one");
+  const [url, setUrl] = useState("");
 
   const [error, setError] = useState({});
+
+  useEffect(()=>{
+    if(group){
+      setAddress(`${group.city}, ${group.state}`) 
+      setName(group.name)
+      setAbout(group.about)
+      setType(group.type)
+      setPrivateStatus(group.private)
+      setUrl(group.GroupImage[0].url)
+
+    }
+   
+  },[group])
+
 
   useEffect(() => {
     const errors = {};
