@@ -162,8 +162,8 @@ function CreateGroupForm() {
                 <option value="select one" disabled>
                   (select one)
                 </option>
-                <option value="InPerson">In Person</option>
-                <option value="On Line">On Line</option>
+                <option value="inPerson">inPerson</option>
+                <option value="onLine">onLine</option>
               </select>
               {error.type && <span className="error">{error.type}</span>}
             </label>

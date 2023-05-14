@@ -22,8 +22,8 @@ const validateGroups = [
     .withMessage("About must be 50 characters or more"),
   check("type")
     .exists({ checkFalsy: true })
-    .isIn(["On Line", "InPerson"])
-    .withMessage("Type must be 'Online' or 'InPerson'"),
+    .isIn(["onLine", "inPerson"])
+    .withMessage("Type must be 'online' or 'inPerson'"),
   check("private")
     .exists({ checkFalsy: true })
     .isBoolean()
@@ -69,8 +69,8 @@ const validateEvents = [
     .withMessage("Name must be at least 5 characters"),
   check("type")
     .exists({ checkFalsy: true })
-    .isIn(["Online", "InPerson"])
-    .withMessage("Type must be Online or InPerson"),
+    .isIn(["online", "inPerson"])
+    .withMessage("Type must be online or inPerson"),
   check("capacity")
     .exists({ checkFalsy: true })
     .isInt()
@@ -337,9 +337,9 @@ router.post("/:id/images",[requireAuth, validateGroupImage] , async (req, res, n
 
 
 // //Edit a Group 
-router.put("/:id", [requireAuth, validateGroups], async (req, res, next) => {
+// router.put("/:id", [requireAuth, validateGroups], async (req, res, next) => {
 
-
+router.put("/:id", [requireAuth], async (req, res, next) => {
   try {
     const group = await Group.findByPk(req.params.id)
 
