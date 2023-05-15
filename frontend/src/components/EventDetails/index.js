@@ -20,7 +20,7 @@ function EventDetail() {
   const { id } = useParams();
   const history = useHistory();
 
-  const group = useSelector((state) => state.groups.details);
+  
 
   const user = useSelector((state) => state.session.user);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -30,8 +30,12 @@ function EventDetail() {
   }, [id, dispatch]);
   const eventDetails = useSelector((state) => state.events.details);
   useEffect(() => {
-    dispatch(getGroupDetails(+id));
-  }, [dispatch, id]);
+    if(eventDetails){
+      dispatch(getGroupDetails(eventDetails.groupId));
+    }
+    
+  }, [dispatch, eventDetails]);
+  const group = useSelector((state) => state.groups.details);
   // if (!user.id) {
   //   return <Redirect to="/login" />;
   // }

@@ -66,6 +66,16 @@ function ProfileButton({ user }) {
                   Log Out
                 </button>
               </li>
+              <li style={{ listStyleType: "none" }}>
+                <NavLink className="navlink-drop-down" to="/groups">
+                  View groups
+                </NavLink>
+              </li>
+              <li style={{ listStyleType: "none" }}>
+                <NavLink className="navlink-drop-down" to="/events">
+                  View events
+                </NavLink>
+              </li>
             </div>
           </>
         ) : (

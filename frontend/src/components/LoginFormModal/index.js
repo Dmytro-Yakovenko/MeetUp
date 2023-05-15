@@ -16,7 +16,9 @@ const [frontErrors, setFrontErrors]=useState({})
     e.preventDefault();
     setCredential("yakovenko@gmail.com");
     setPassword("password");
-    dispatch(sessionActions.login("Demo-lition", "password"));
+    dispatch(sessionActions.login("yakovenko@gmail.com", "password"));
+   
+   
   };
 useEffect(()=>{
 const errors ={}

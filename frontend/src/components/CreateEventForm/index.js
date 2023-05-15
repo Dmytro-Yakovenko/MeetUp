@@ -81,9 +81,9 @@ useEffect(()=>{
             
         };
        reset()
-       
+       console.log(formData, group.id)
         let event = await   dispatch(createEventByGroupId(group.id,formData))
-        
+        console.log(event)
         history.push(`/events/${event.id}`)
   }
 }
