@@ -18,7 +18,7 @@ function Group({ group, count }) {
     id,
   } = group;
   const events = useSelector((state) => Object.values(state.events));
-  console.log(events)
+ 
   useEffect(() => {
     dispatch(getEventsForGroup(id));
   }, [dispatch]);

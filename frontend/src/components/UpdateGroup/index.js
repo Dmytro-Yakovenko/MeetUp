@@ -88,7 +88,7 @@ dispatch(getGroupDetails(id))
        
       };
 
-     console.log(formData)
+  
      reset()
    
   let group = await dispatch(updateGroupById(id,formData))

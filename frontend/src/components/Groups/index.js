@@ -17,7 +17,7 @@ function Groups() {
     dispatch(getAllGroups());
   }, [dispatch]);
   const events = useSelector((state) => Object.values(state.events));
-console.log(events)
+
   return (
     <main>
       <div className="container">
@@ -39,7 +39,7 @@ console.log(events)
         <ul>
           {groups.map((item) => {
             const count = events.filter(el=>item.id===el.groupId).length
-            console.log(count)
+         
             return <Group key={item.id} group={item} count={count} />;
           })}
         </ul>

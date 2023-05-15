@@ -16,8 +16,13 @@ const [frontErrors, setFrontErrors]=useState({})
     e.preventDefault();
     setCredential("yakovenko@gmail.com");
     setPassword("password");
-    dispatch(sessionActions.login("yakovenko@gmail.com", "password"));
-   
+   return dispatch(sessionActions.login({credential:"yakovenko@gmail.com", password:"password"}))
+   .then(closeModal)
+   .catch(async (res) => {
+     const data = await res.json();
+    
+     if (data ) setErrors(data);
+   });
    
   };
 useEffect(()=>{
