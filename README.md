@@ -30,41 +30,38 @@ A user can log in with their login credentials. If a user doesn't have an accoun
 
 ## Landing Page:
 
-![](https://res.cloudinary.com/dwphwqyrn/image/upload/v1690574002/Screen_Shot_2023-07-28_at_12.50.31_PM_ydmgtb.png)
+![](https://res.cloudinary.com/dr1ekjmf4/image/upload/v1692546025/Screen_Shot_2023-08-20_at_8.38.06_AM_oo87sk.png)
 
 This a the landing page where a logged in/out user can navigate to groups and events. Only a logged in user can access the 'Start a new group' link.
 
 ## Groups:
 
-![](https://res.cloudinary.com/dwphwqyrn/image/upload/v1690573998/Screen_Shot_2023-07-28_at_12.50.42_PM_sfehqj.png)
+![](https://res.cloudinary.com/dr1ekjmf4/image/upload/v1692546029/Screen_Shot_2023-08-20_at_8.39.22_AM_pg9ic6.png)
 
 Presented are the list of groups on Meetup.
 
-![](https://res.cloudinary.com/dwphwqyrn/image/upload/v1690573998/Screen_Shot_2023-07-28_at_12.51.18_PM_iihwwj.png)
+![](https://res.cloudinary.com/dr1ekjmf4/image/upload/v1692546237/Screen_Shot_2023-08-20_at_8.42.25_AM_klb691.png)
 
-![](https://res.cloudinary.com/dwphwqyrn/image/upload/v1690574003/Screen_Shot_2023-07-28_at_12.51.33_PM_kjyel1.png)
+![](https://res.cloudinary.com/dr1ekjmf4/image/upload/v1692546238/Screen_Shot_2023-08-20_at_8.42.54_AM_kknhcs.png)
 
 When a user clicks on a group, they are redirected to the group detail page. This page has the group information such as name, description, and list of associated events. These events are listed in chronological order of most recent to past events. If the user is the organizer of the group, they have the option to update and delete the group, as well as adding an event to the group.
 
 ## Events:
 
-![](https://res.cloudinary.com/dwphwqyrn/image/upload/v1690574002/Screen_Shot_2023-07-28_at_12.52.42_PM_z1xbem.png)
+![](https://res.cloudinary.com/dr1ekjmf4/image/upload/v1692546308/Screen_Shot_2023-08-20_at_8.43.13_AM_mn6np7.png)
 
 This presents the event detail page listing all the event information. On the right top of the screen is the group it is associated with.
 
 ## Post Group/Event Forms:
 
-![](https://res.cloudinary.com/dwphwqyrn/image/upload/v1690573997/Screen_Shot_2023-07-28_at_12.51.58_PM_cqe9an.png)
+![](https://res.cloudinary.com/dr1ekjmf4/image/upload/v1692546613/Screen_Shot_2023-08-20_at_8.49.31_AM_cckx2p.png)
 
 Displayed here is the form to create a new group.
 
-![](https://res.cloudinary.com/dwphwqyrn/image/upload/v1690573997/Screen_Shot_2023-07-28_at_12.51.48_PM_omjlqc.png)
-
-Displayed above is the form to create a new group associated event.
 
 ## Database Schema Design
 
-![](https://res.cloudinary.com/dwphwqyrn/image/upload/v1677191134/Project%20Schema/Untitled_1_h8boqw.png)
+![](https://res.cloudinary.com/dr1ekjmf4/image/upload/v1675011027/pokerEventImages/Screenshot_at_Jan_29_08-49-30_d3gbsv.png)
 
 ## API Documentation
 
